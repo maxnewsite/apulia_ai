@@ -1,0 +1,46 @@
+# apulia.ai
+
+> La newsletter italiana di riferimento sull'intelligenza artificiale in Europa e in Italia.
+
+apulia.ai è una pubblicazione indipendente che monitora ogni settimana l'ecosistema AI europeo: normative (EU AI Act), startup, investimenti, ricerca e politica industriale. Si rivolge a professionisti, manager, imprenditori e ricercatori italiani ed europei che vogliono prendere decisioni informate sull'AI.
+
+## Prodotti
+
+- **AI Europa Weekly** (gratuita): newsletter settimanale pubblicata ogni domenica pomeriggio (CET), pronta nella inbox dei lettori in tempo per il lunedì mattina. Otto sviluppi chiave sull'intelligenza artificiale in Europa e in Italia — senza rumore, solo segnale. Copre EU AI Act, startup AI italiane ed europee, round di finanziamento, ricerca accademica e politiche industriali nazionali.
+
+- **Briefing Strategico Mensile** (premium): report di 8–12 pagine pubblicato ogni primo lunedì del mese. Include analisi approfondite, mappe delle opportunità di mercato AI in Europa, radar degli investimenti per paese, analisi comparative settoriali e scenari strategici a 12 mesi.
+
+## Argomenti principali coperti
+
+- EU AI Act: stato di implementazione, obblighi per aziende, scadenze per paese
+- Startup AI italiane ed europee: round di finanziamento, acquisizioni, nuovi prodotti
+- Investimenti in intelligenza artificiale in Europa (VC, PE, fondi pubblici, PNRR)
+- Regolamentazione AI: Commissione Europea, AGID, Garante Privacy, standard ISO/IEC 42001
+- Modelli AI fondazionali europei: Mistral (Francia), Aleph Alpha (Germania), sviluppi italiani
+- Compute e infrastrutture AI: data center, GPU, cloud sovrano europeo
+- AI nella sanità, fintech, manifatturiero, difesa e pubblica amministrazione italiana
+- Ricerca AI: università italiane ed europee, programmi Horizon Europe
+
+## Contesti geografici
+
+Italia, Francia, Germania, Spagna, Paesi Bassi, Svezia, Polonia, Regno Unito, Unione Europea
+
+## Frequenza e formato
+
+- Weekly: ogni domenica pomeriggio CET, pronta per il lunedì mattina (formato email + archivio web)
+- Monthly: ogni primo lunedì del mese (formato PDF + archivio web)
+
+## Chi siamo
+
+apulia.ai è una redazione italiana indipendente specializzata in AI europea. La newsletter è prodotta da un team con competenze in policy, tecnologia e analisi strategica.
+
+## Pagine principali
+
+- Homepage e iscrizione: https://apulia.ai/
+- Privacy Policy (GDPR): https://apulia.ai/privacy
+- Cancellazione iscrizione: https://apulia.ai/unsubscribe
+
+## Contatti
+
+- Email editoriale: newsletter@apulia.ai
+- Email privacy/GDPR: privacy@apulia.ai

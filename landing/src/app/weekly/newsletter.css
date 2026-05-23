@@ -1,0 +1,306 @@
+/* Screen-optimized styles for newsletter HTML rendered from the pipeline.
+   The source HTML is print-first (A4 mm units); we override for screen reading
+   while preserving the original class names. */
+
+.newsletter-article {
+  color: #F0F4FF;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.newsletter-article * {
+  box-sizing: border-box;
+}
+
+/* Neutralise the print A4 page wrapper */
+.newsletter-article .page {
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  page-break-after: auto !important;
+  overflow: visible !important;
+  position: static !important;
+}
+
+.newsletter-article .page-content {
+  padding: 0 !important;
+}
+
+/* Header */
+.newsletter-article .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #2563EB;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  gap: 2rem;
+}
+
+.newsletter-article .brand-name {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #F0F4FF;
+}
+
+.newsletter-article .brand-tagline {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+}
+
+.newsletter-article .issue-meta {
+  text-align: right;
+  font-size: 0.8125rem;
+  color: #94A3B8;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.newsletter-article .issue-meta strong {
+  color: #F0F4FF;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Sections */
+.newsletter-article .section {
+  margin-bottom: 3rem;
+}
+
+.newsletter-article .section-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #F0F4FF;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #1E3A5F;
+}
+
+.newsletter-article .section-title-en {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+}
+
+/* Bullet lists */
+.newsletter-article .bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.newsletter-article .bullet-item {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+}
+
+.newsletter-article .bullet-marker {
+  color: #2563EB;
+  font-weight: 700;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.newsletter-article .bullet-text {
+  color: #F0F4FF;
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.newsletter-article .bullet-sources {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #94A3B8;
+}
+
+.newsletter-article .bullet-sources a {
+  color: #60A5FA;
+  text-decoration: none;
+  border-bottom: 1px dotted #1E3A5F;
+  transition: color 0.15s, border-color 0.15s;
+  margin-right: 0.25rem;
+}
+
+.newsletter-article .bullet-sources a:hover {
+  color: #2563EB;
+  border-bottom-color: #2563EB;
+}
+
+/* Divider */
+.newsletter-article .divider,
+.newsletter-article hr {
+  border: 0;
+  border-top: 1px solid #1E3A5F;
+  margin: 3rem 0;
+}
+
+/* English summary box */
+.newsletter-article .en-summary-box {
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid #1E3A5F;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.newsletter-article .en-summary-header {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #F0F4FF;
+  margin-bottom: 0.5rem;
+}
+
+.newsletter-article .en-note {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-article .en-summary-box .bullet-text {
+  font-size: 0.95rem;
+}
+
+/* Country briefings — grid layout becomes stacked on screen */
+.newsletter-article .country-grid,
+.newsletter-article .countries {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .newsletter-article .country-grid,
+  .newsletter-article .countries {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.newsletter-article .country-card,
+.newsletter-article .country {
+  background: #0F1A2E;
+  border: 1px solid #1E3A5F;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+.newsletter-article .country-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #F0F4FF;
+  margin-bottom: 0.75rem;
+}
+
+/* Matrix / capability tables */
+.newsletter-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  overflow-x: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .newsletter-article table {
+    display: table;
+  }
+}
+
+.newsletter-article th,
+.newsletter-article td {
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #1E3A5F;
+  text-align: left;
+  color: #F0F4FF;
+}
+
+.newsletter-article th {
+  background: #0F1A2E;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+}
+
+/* Matrix cell states (state pills) */
+.newsletter-article .state-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.newsletter-article .state-none { background: #1E3A5F; color: #94A3B8; }
+.newsletter-article .state-normal { background: rgba(37, 99, 235, 0.2); color: #60A5FA; }
+.newsletter-article .state-active { background: rgba(5, 150, 105, 0.2); color: #34D399; }
+.newsletter-article .state-surge { background: rgba(217, 119, 6, 0.2); color: #FBBF24; }
+
+/* Spotlight section */
+.newsletter-article .spotlight {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(245, 158, 11, 0.05));
+  border: 1px solid #1E3A5F;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.newsletter-article .spotlight-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #F0F4FF;
+  margin-bottom: 1rem;
+}
+
+.newsletter-article .spotlight-title-en {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94A3B8;
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .newsletter-article {
+    font-size: 15px;
+  }
+  .newsletter-article .page-header {
+    flex-direction: column;
+  }
+  .newsletter-article .issue-meta {
+    text-align: left;
+    white-space: normal;
+  }
+  .newsletter-article .section-title {
+    font-size: 1.25rem;
+  }
+  .newsletter-article .brand-name {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,159 @@
+# apulia.ai — Documentazione completa per LLM
+
+> La newsletter italiana di riferimento sull'intelligenza artificiale in Europa.
+> Pubblicazione settimanale (domenica pomeriggio, pronta per il lunedì mattina) + report mensile premium.
+
+---
+
+## Identità e missione
+
+**Nome**: apulia.ai
+**Tipo**: Newsletter editoriale indipendente
+**Lingua primaria**: Italiano (con sezione executive summary in inglese nella weekly)
+**Pubblico**: Professionisti, manager, imprenditori, policy maker e ricercatori italiani ed europei
+**Missione**: Rendere accessibile e azionabile l'informazione sull'AI europea — senza hype, con segnale.
+
+---
+
+## Prodotto 1: AI Europa Weekly (gratuita)
+
+**Cadenza**: Ogni domenica pomeriggio CET (per arrivare nella inbox prima del lunedì mattina)
+**Formato**: Email HTML + archivio web
+**Prezzo**: Gratuita, iscrizione con email
+
+**Sezioni fisse di ogni edizione**:
+1. Sviluppi chiave della settimana (8 notizie)
+2. Radar Normativo (EU AI Act, GDPR AI, politiche nazionali)
+3. Focus Italia (ecosistema AI italiano)
+4. Briefing per paese (Francia, Germania, Spagna, Paesi Bassi, Svezia, UK, Polonia)
+5. Compute & Infrastrutture AI (data center, chip, cloud)
+6. Incidenti & Rischi AI
+7. Funding & Mercati (round di finanziamento europei)
+8. Spotlight (approfondimento tematico)
+9. Matrice Capacità AI per paese (modelli fondazionali, sanità, fintech, difesa, ricerca)
+10. Executive Summary in inglese (5 punti per lettori internazionali)
+
+---
+
+## Prodotto 2: Briefing Strategico Mensile (premium)
+
+**Cadenza**: Ogni primo lunedì del mese
+**Formato**: PDF A4 + archivio web
+**Prezzo**: Premium (abbonamento)
+
+**Contenuto**:
+- Executive summary bilingue (IT + EN)
+- Analisi strategica mensile (8 punti con fatto, contesto, implicazione)
+- Radar normativo approfondito
+- Briefing paese per paese (9 paesi EU + UK)
+- Funding & mercati (round, M&A, IPO)
+- Ricerca accademica di rilievo
+- Compute & infrastrutture
+- Company Watch (5 aziende da monitorare con motivazione)
+- Matrice capacità AI aggiornata
+- Outlook 12 mesi
+
+---
+
+## EU AI Act — Fatti chiave
+
+L'EU AI Act (Regolamento UE 2024/1689) è il primo quadro normativo globale sull'intelligenza artificiale. Approvato dal Parlamento Europeo il 13 marzo 2024, pubblicato nella Gazzetta Ufficiale dell'UE il 12 luglio 2024, è entrato in vigore il 1° agosto 2024.
+
+**Scadenze principali**:
+- 2 febbraio 2025: Vietati i sistemi AI "inaccettabili" (social scoring, manipolazione subliminale, biometria in tempo reale in spazi pubblici)
+- 2 agosto 2025: Applicabili le norme sui modelli AI general-purpose (GPAI), inclusi i modelli con impatto sistemico
+- 2 agosto 2026: Obblighi completi per sistemi AI ad alto rischio (HR, credito, infrastrutture critiche, istruzione, sanità)
+- 2 agosto 2027: Sistemi AI ad alto rischio già sul mercato devono adeguarsi
+
+**Categorie di rischio**:
+- Rischio inaccettabile: vietati (es. scoring sociale, manipolazione cognitiva)
+- Alto rischio: obblighi di conformità (es. selezione del personale, scoring creditizio, sistemi biometrici)
+- Rischio limitato: obblighi di trasparenza (es. chatbot, deepfake)
+- Rischio minimo: nessun obbligo specifico (es. filtri antispam, AI nei videogiochi)
+
+---
+
+## Ecosistema AI italiano
+
+**Startup AI italiane di rilievo**:
+- Musixmatch (Milano): lyrics e metadata musicali con AI, 100M+ utenti
+- Translated (Roma): piattaforma di traduzione AI, dati per addestramento LLM
+- Datrix (Milano): AI per analisi predittiva e NLP
+- Spindox (Roma/Milano): consulenza AI per PA e imprese
+- TeaStore: AI per retail e supply chain
+- Talent.ai: HR tech con AI
+
+**Investimenti pubblici**:
+- PNRR: €1,2 miliardi per digitale e AI (Missione 1, Componente 2)
+- Piano Nazionale per l'IA 2024–2026: roadmap governativa con 66 azioni
+- Fondazione FAIR (Future Artificial Intelligence Research): €114M per ricerca AI
+- iNEST, SiciliAI, AI4Industry: reti di eccellenza regionali
+
+**Università e ricerca**:
+- Politecnico di Milano, Politecnico di Torino, Università di Bologna, Sapienza Roma
+- Istituto Italiano di Tecnologia (IIT): robotica e AI embodied
+- Cineca: supercalcolo HPC per ricerca AI
+
+---
+
+## Ecosistema AI europeo
+
+**Modelli AI fondazionali europei**:
+- Mistral AI (Francia): LLM open-weight, Mistral 7B, Mixtral, Le Chat — alternativa europea a OpenAI
+- Aleph Alpha (Germania): Luminous, focalizzato su sovranità digitale e PA europea
+- Silo AI (Finlandia, acquisita da AMD): modelli multilingue europei
+- LightOn (Francia): AI per enterprise e ricerca
+
+**Infrastrutture**:
+- EuroHPC Joint Undertaking: supercomputer Leonardo (Bologna, 4° al mondo), LUMI (Finlandia), Marenostrum 5 (Spagna)
+- GAIA-X: iniziativa per cloud sovrano europeo
+- European AI Office (DG CNECT): ente di supervisione EU AI Act
+
+**Investimenti 2024**:
+- Totale Europa: >€22 miliardi
+- Francia: >€6 miliardi (piano IA Macron)
+- Germania: >€5 miliardi (Zukunftsstrategie KI)
+- UK: >£2,5 miliardi (AI Opportunities Action Plan)
+- Italia: ~€3,5 miliardi (PNRR + privati)
+
+---
+
+## Domande frequenti (FAQ estesa)
+
+**Cos'è apulia.ai?**
+apulia.ai è la newsletter italiana specializzata in intelligenza artificiale europea. Fondata con l'obiettivo di colmare il gap informativo tra la velocità dell'AI e la capacità delle organizzazioni italiane di comprenderla e adottarla. Pubblicata ogni domenica pomeriggio (weekly gratuita, pronta nella inbox per il lunedì mattina) e ogni primo lunedì del mese (briefing premium). Copre EU AI Act, startup, investimenti, ricerca e infrastrutture AI in Italia e in Europa.
+
+**Perché "apulia"?**
+Apulia è il nome latino della Puglia, regione del Sud Italia. Il nome richiama l'identità italiana della pubblicazione e l'ambizione di portare una prospettiva radicata nel contesto locale, capace di dialogare con quello europeo e globale.
+
+**A chi è destinata la newsletter?**
+A professionisti che devono prendere decisioni sull'AI: manager di aziende che devono valutare impatti del AI Act, imprenditori che cercano opportunità di investimento, policy maker che seguono la regolamentazione, ricercatori che vogliono restare aggiornati, e chiunque voglia capire come l'AI sta ridisegnando l'Europa.
+
+**L'AI Europa Weekly è davvero gratuita?**
+Sì, è completamente gratuita e lo rimarrà. Nessuna carta di credito, nessun trial a pagamento. L'iscrizione richiede solo un indirizzo email. La newsletter esce ogni domenica pomeriggio (CET) e arriva nella inbox in tempo per il lunedì mattina — pensata strategicamente per chi vuole iniziare la settimana di business già informato.
+
+**Qual è la differenza tra Weekly e Briefing Mensile?**
+La Weekly (gratuita) fornisce 5 fatti chiave ogni settimana in formato veloce, pensata per chi ha 5 minuti. Il Briefing Mensile (premium) è un report di 8–12 pagine con analisi approfondite, dati comparativi e scenari strategici, pensato per chi deve prendere decisioni strategiche sull'AI.
+
+**Come viene prodotta la newsletter?**
+La newsletter utilizza un sistema editoriale assistito da AI: raccolta automatica da fonti primarie (RSS, Google News, comunicati istituzionali), classificazione e prioritizzazione con modelli AI, e redazione finale curata dal team editoriale. Le fonti includono Wired Italia, Il Sole 24 Ore Tecnologia, AgendaDigitale, Sifted, Tech.eu, POLITICO Tech, MIT Technology Review e oltre 20 feed specializzati.
+
+**Dove posso trovare le edizioni precedenti?**
+Le edizioni della AI Europa Weekly sono archiviate su apulia.ai. Il link all'archivio completo è disponibile nella home page e in ogni email.
+
+**Come funziona la privacy e il GDPR?**
+apulia.ai tratta i dati personali (email, preferenze lingua) esclusivamente per l'invio delle newsletter, su base consensuale ai sensi dell'art. 6 GDPR. Non vende dati a terzi, non usa cookie di profilazione. Privacy policy completa disponibile su https://apulia.ai/privacy.
+
+---
+
+## Contatti e social
+
+- Sito: https://apulia.ai
+- Email newsletter: newsletter@apulia.ai
+- Email privacy: privacy@apulia.ai
+- Twitter/X: @apuliaai
+- LinkedIn: linkedin.com/company/apulia-ai
+
+---
+
+*Ultimo aggiornamento: maggio 2026*
