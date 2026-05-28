@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ brief.title }} — {{ brief.reporting_period }}</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+{# ═══════════════════════════════════════════════════════════
+   PAGINA 1: Copertina · Sintesi Esecutiva · Analisi Strategica
+   ═══════════════════════════════════════════════════════════ #}
+<div class="page">
+  <div class="page-content">
+
+    {# HEADER #}
+    <header class="page-header">
+      <div class="brand">
+        <div class="brand-name">{{ brief.title }}</div>
+        <div class="brand-tagline">{{ brief.tagline }}</div>
+      </div>
+      <div class="issue-meta">
+        <strong>{{ brief.reporting_period }}</strong><br>
+        Generato il {{ now }}<br>
+        {{ brief.article_count }} articoli · {{ brief.source_count }} fonti
+      </div>
+    </header>
+
+    {# ── SINTESI ESECUTIVA (IT) #}
+    {% if brief.executive_summary_it %}
+    <div class="section">
+      <div class="section-title">
+        Sintesi Esecutiva
+        <span class="section-title-en">Executive Summary</span>
+      </div>
+      {% for para in brief.executive_summary_it %}
+      <p style="margin-bottom: 6px; font-size: 8.5pt; line-height: 1.5;">{{ para }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── SINTESI ESECUTIVA (EN) #}
+    {% if brief.executive_summary_en %}
+    <div class="section">
+      <div class="en-summary-box">
+        <div class="en-summary-header">Executive Summary (EN)</div>
+        {% for para in brief.executive_summary_en %}
+        <p style="margin-bottom: 5px; font-size: 8pt; line-height: 1.5;">{{ para }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <hr class="divider">
+
+    {# ── ANALISI STRATEGICA DEL MESE #}
+    {% if brief.strategic_analysis %}
+    <div class="section">
+      <div class="section-title">
+        Analisi Strategica del Mese
+        <span class="section-title-en">Monthly Strategic Analysis</span>
+      </div>
+      <ul class="bullet-list">
+        {% for b in brief.strategic_analysis %}
+        <li class="bullet-item">
+          <span class="bullet-marker">▸</span>
+          <span class="bullet-text">{{ b.text }}
+            {% if b.sources %}
+            <span class="bullet-sources">
+              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
+            </span>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>{# /page-content #}
+  <footer class="page-footer">
+    <span class="footer-brand">apulia.ai</span>
+    <span>{{ brief.reporting_period }} · Briefing Strategico Mensile</span>
+    <span class="footer-url">apulia.ai</span>
+  </footer>
+</div>
+
+
+{# ═══════════════════════════════════════════════════════════
+   PAGINA 2: Radar Normativo · Briefing per Paese · Funding
+   ═══════════════════════════════════════════════════════════ #}
+<div class="page">
+  <div class="page-content">
+
+    <header class="page-header">
+      <div class="brand">
+        <div class="brand-name">{{ brief.title }}</div>
+        <div class="brand-tagline">Normativa · Paesi · Mercati</div>
+      </div>
+      <div class="issue-meta">
+        <strong>{{ brief.reporting_period }}</strong><br>Pagina 2
+      </div>
+    </header>
+
+    {# ── RADAR NORMATIVO #}
+    {% if brief.radar_normativo %}
+    <div class="section">
+      <div class="section-title">
+        Radar Normativo
+        <span class="section-title-en">Regulatory Radar · EU AI Act</span>
+      </div>
+      <ul class="bullet-list">
+        {% for b in brief.radar_normativo %}
+        <li class="bullet-item">
+          <span class="bullet-marker">▸</span>
+          <span class="bullet-text">{{ b.text }}
+            {% if b.sources %}
+            <span class="bullet-sources">
+              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name %}}</a>{% endfor %}
+            </span>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <hr class="divider">
+
+    {# ── BRIEFING PER PAESE #}
+    {% if brief.country_briefings %}
+    <div class="section">
+      <div class="section-title">
+        Briefing per Paese
+        <span class="section-title-en">Country Briefings</span>
+      </div>
+      <div class="country-grid">
+        {% for cb in brief.country_briefings %}
+        <div class="country-block">
+          <div class="country-name">{{ cb.country }}</div>
+          <ul class="bullet-list">
+            {% for b in cb.bullets %}
+            <li class="bullet-item">
+              <span class="bullet-marker">▸</span>
+              <span class="bullet-text">{{ b.text }}
+                {% if b.sources %}
+                <span class="bullet-sources">
+                  {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
+                </span>
+                {% endif %}
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <hr class="divider">
+
+    {# ── FUNDING & MERCATI #}
+    {% if brief.funding_markets %}
+    <div class="section">
+      <div class="section-title">
+        Mappa degli Investimenti
+        <span class="section-title-en">Investment Map · Funding & Markets</span>
+      </div>
+      <ul class="bullet-list">
+        {% for b in brief.funding_markets %}
+        <li class="bullet-item">
+          <span class="bullet-marker">▸</span>
+          <span class="bullet-text">{{ b.text }}
+            {% if b.sources %}
+            <span class="bullet-sources">
+              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
+            </span>
+            {% endif %}
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>{# /page-content #}
+  <footer class="page-footer">
+    <span class="footer-brand">apulia.ai</span>
+    <span>{{ brief.reporting_period }} · Briefing Strategico Mensile</span>
+    <span class="footer-url">apulia.ai</span>
+  </footer>
+</div>
+
+
+{# ═══════════════════════════════════════════════════════════
+   PAGINA 3: Company Watch · Ricerca · Compute · Matrice · Outlook
+   ═══════════════════════════════════════════════════════════ #}
+<div class="page">
+  <div class="page-content">
+
+    <header class="page-header">
+      <div class="brand">
+        <div class="brand-name">{{ brief.title }}</div>
+        <div class="brand-tagline">Aziende · Ricerca · Matrice · Outlook</div>
+      </div>
+      <div class="issue-meta">
+        <strong>{{ brief.reporting_period }}</strong><br>Pagina 3
+      </div>
+    </header>
+
+    {# ── COMPANY WATCH #}
+    {% if brief.company_watch %}
+    <div class="section">
+      <div class="section-title">
+        Aziende da Tenere d'Occhio
+        <span class="section-title-en">Companies to Watch</span>
+      </div>
+      {% for co in brief.company_watch %}
+      <div style="margin-bottom: 6px; padding: 5px 7px; background: var(--gray-50); border-left: 2px solid var(--blue-lt);">
+        <div style="font-size: 7.5pt; font-weight: 700; color: var(--navy);">
+          {{ co.name }}
+          {% if co.country %}<span style="font-weight: 400; color: var(--gray-600);">· {{ co.country }}</span>{% endif %}
+          {% if co.sector %}<span style="font-weight: 400; color: var(--gray-400); font-size: 6.5pt;">· {{ co.sector }}</span>{% endif %}
+        </div>
+        <div style="font-size: 7.5pt; margin-top: 2px;">{{ co.summary }}</div>
+        {% if co.why_watch %}
+        <div style="font-size: 7pt; color: var(--blue); margin-top: 2px; font-style: italic;">→ {{ co.why_watch }}</div>
+        {% endif %}
+        {% if co.sources %}
+        <div style="font-size: 6pt; color: var(--gray-400); margin-top: 1px;">
+          {% for s in co.sources %}<a href="{{ s.url }}" style="color: var(--gray-400);">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <hr class="divider">
+
+    <div class="two-col">
+      <div class="col">
+        {# ── RICERCA & INNOVAZIONE #}
+        {% if brief.research_innovation %}
+        <div class="section">
+          <div class="section-title">
+            Ricerca & Innovazione
+            <span class="section-title-en">R&I</span>
+          </div>
+          <ul class="bullet-list">
+            {% for b in brief.research_innovation %}
+            <li class="bullet-item">
+              <span class="bullet-marker">▸</span>
+              <span class="bullet-text">{{ b.text }}
+                {% if b.sources %}
+                <span class="bullet-sources">
+                  {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
+                </span>
+                {% endif %}
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      <div class="col">
+        {# ── OUTLOOK MESE PROSSIMO #}
+        {% if brief.outlook %}
+        <div class="section">
+          <div class="section-title">
+            Outlook Mese Prossimo
+            <span class="section-title-en">Next Month Outlook</span>
+          </div>
+          <ul class="bullet-list">
+            {% for b in brief.outlook %}
+            <li class="bullet-item">
+              <span class="bullet-marker">▸</span>
+              <span class="bullet-text">{{ b.text }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    {# ── CAPABILITY MATRIX #}
+    <div class="section">
+      <div class="section-title">
+        Matrice Paesi × Capacità AI
+        <span class="section-title-en">Country × AI Capability Matrix</span>
+      </div>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th class="row-header">Paese</th>
+            {% for cap in capabilities %}
+            <th>{{ cap }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for country in countries %}
+          {% set row = brief.capability_matrix.get(country, {}) %}
+          <tr>
+            <td style="text-align: left; font-weight: 600; font-size: 7pt;">{{ country }}</td>
+            {% for cap in capabilities %}
+            {% set cell = row.get(cap) %}
+            {% set state = cell.state if cell else 'none' %}
+            {% set note = cell.note if cell else '' %}
+            <td class="state-{{ state }}" title="{{ note }}">
+              <span class="state-pill pill-{{ state }}">
+                {% if state == 'none' %}—
+                {% elif state == 'normal' %}●
+                {% elif state == 'active' %}▲
+                {% elif state == 'surge' %}★
+                {% endif %}
+              </span>
+              {% if note %}<br><span style="font-size:5.5pt; color: var(--gray-600);">{{ note }}</span>{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div style="margin-top: 5px; font-size: 6pt; color: var(--gray-600); display: flex; gap: 10px;">
+        <span><span class="state-pill pill-none">—</span> Nessuna attività</span>
+        <span><span class="state-pill pill-normal">●</span> Normale</span>
+        <span><span class="state-pill pill-active">▲</span> Attivo</span>
+        <span><span class="state-pill pill-surge">★</span> Surge</span>
+      </div>
+    </div>
+
+  </div>{# /page-content #}
+  <footer class="page-footer">
+    <span class="footer-brand">apulia.ai</span>
+    <span>{{ brief.reporting_period }} · Briefing Strategico Mensile</span>
+    <span>apulia.ai · Analisi strategica AI in Europa e Italia</span>
+  </footer>
+</div>
+
+</body>
+</html>

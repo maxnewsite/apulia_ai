@@ -5,6 +5,28 @@ import Logo from './Logo'
 import { useLanguage } from '@/context/LanguageContext'
 import type { Language } from '@/lib/i18n'
 
+function FlagIT({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2" className={className} aria-hidden="true">
+      <rect width="3" height="2" fill="#CE2B37"/>
+      <rect width="2" height="2" fill="#FFFFFF"/>
+      <rect width="1" height="2" fill="#009246"/>
+    </svg>
+  )
+}
+
+function FlagGB({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" className={className} aria-hidden="true">
+      <rect width="60" height="30" fill="#012169"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4"/>
+      <path d="M30,0 V30 M0,15 H60" stroke="#fff" strokeWidth="10"/>
+      <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6"/>
+    </svg>
+  )
+}
+
 export default function Header() {
   const { t, language, setLanguage } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
@@ -60,14 +82,18 @@ export default function Header() {
 
           {/* Right side: Lang toggle + CTA */}
           <div className="flex items-center gap-3">
-            {/* Language toggle */}
+            {/* Language toggle — shows destination language flag */}
             <button
               onClick={toggleLanguage}
-              aria-label={`Switch to ${language === 'it' ? 'English' : 'Italiano'}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-[#1E3A5F] text-[#94A3B8] hover:text-[#F0F4FF] hover:border-[#2563EB]/50 transition-all duration-200"
+              aria-label={language === 'it' ? 'Switch to English' : 'Passa all\'Italiano'}
+              title={language === 'it' ? 'Switch to English' : 'Passa all\'Italiano'}
+              className="hover:scale-110 active:scale-95 transition-transform duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded-sm"
             >
-              <span>{language === 'it' ? '🇮🇹' : '🇬🇧'}</span>
-              <span>{t.nav.langToggle}</span>
+              {language === 'it' ? (
+                <FlagGB className="w-8 h-5 rounded-[3px] shadow-md ring-1 ring-white/20" />
+              ) : (
+                <FlagIT className="w-8 h-5 rounded-[3px] shadow-md ring-1 ring-white/20" />
+              )}
             </button>
 
             {/* CTA - desktop only */}

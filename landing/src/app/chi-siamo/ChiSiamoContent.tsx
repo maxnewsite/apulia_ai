@@ -146,7 +146,7 @@ const content = {
   },
 }
 
-export default function ChiSiamoContent() {
+export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boolean }) {
   const { language } = useLanguage()
   const c = content[language]
 
@@ -157,7 +157,17 @@ export default function ChiSiamoContent() {
       <nav aria-label="Breadcrumb" className="mb-8 text-sm text-[#94A3B8]">
         <Link href="/" className="hover:text-[#F0F4FF] transition-colors">Home</Link>
         <span className="mx-2" aria-hidden="true">/</span>
-        <span className="text-[#F0F4FF]">{c.breadcrumb}</span>
+        {isSubPage ? (
+          <>
+            <Link href="/chi-siamo" className="hover:text-[#F0F4FF] transition-colors">
+              {c.breadcrumb}
+            </Link>
+            <span className="mx-2" aria-hidden="true">/</span>
+            <span className="text-[#F0F4FF]">Massimiliano Masi</span>
+          </>
+        ) : (
+          <span className="text-[#F0F4FF]">{c.breadcrumb}</span>
+        )}
       </nav>
 
       {/* Page header */}

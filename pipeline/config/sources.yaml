@@ -1,0 +1,127 @@
+# Fonti RSS per la pipeline newsletter apulia.ai
+# Focus: intelligenza artificiale in Europa e Italia
+# Lingue: italiano + inglese
+
+rss_feeds:
+  # --- Fonti italiane ---
+  - name: Wired Italia
+    url: https://www.wired.it/feed/rss
+    weight: primary
+
+  - name: StartupItalia
+    url: https://startupitalia.eu/feed
+    weight: primary
+
+  - name: AI4Business
+    url: https://www.ai4business.it/feed/
+    weight: primary
+
+  - name: Il Sole 24 Ore Tecnologia
+    url: https://www.ilsole24ore.com/rss/tecnologie-e-scienze.xml
+    weight: secondary
+
+  - name: AgendaDigitale
+    url: https://www.agendadigitale.eu/feed/
+    weight: secondary
+
+  - name: CorCom
+    url: https://www.corrierecomunicazioni.it/feed/
+    weight: secondary
+
+  # --- Fonti europee ---
+  - name: Sifted
+    url: https://sifted.eu/feed
+    weight: primary
+
+  - name: Tech.eu
+    url: https://tech.eu/feed/
+    weight: primary
+
+  - name: EU Startups
+    url: https://www.eu-startups.com/feed/
+    weight: secondary
+
+  - name: Silicon Canals
+    url: https://siliconcanals.com/feed/
+    weight: secondary
+
+  - name: The Next Web
+    url: https://thenextweb.com/feed/
+    weight: secondary
+
+  # --- Fonti internazionali con rilevanza EU ---
+  - name: VentureBeat AI
+    url: https://venturebeat.com/category/ai/feed/
+    weight: secondary
+
+  - name: MIT Technology Review
+    url: https://www.technologyreview.com/feed/
+    weight: secondary
+
+  - name: POLITICO Tech
+    url: https://www.politico.eu/feed/
+    weight: secondary
+
+# Query Google News — scoperta notizie non coperte dai feed curati
+google_news_queries:
+  # Policy e normativa UE
+  - '"EU AI Act" OR "AI Act europeo"'
+  - '"intelligenza artificiale" normativa UE OR Europa'
+  - '"European Commission" AI OR "artificial intelligence" policy'
+  - '"AI Act" compliance OR enforcement'
+
+  # Investimenti e startup
+  - 'AI startup Italia funding OR finanziamento'
+  - 'AI Europe startup "Series A" OR "Series B" OR "seed" 2026'
+  - 'intelligenza artificiale investimento Italia OR Spagna OR Francia OR Germania'
+  - 'AI Europe venture capital funding'
+
+  # Paesi UE specifici
+  - 'AI Italy OR Italia intelligenza artificiale'
+  - 'AI France OR Mistral AI OR "French AI"'
+  - 'AI Germany OR Germania OR "German AI" Aleph Alpha'
+  - 'AI Spain OR Spagna OR Barcelona AI'
+  - 'AI Netherlands OR Olanda OR Amsterdam AI'
+  - 'AI Sweden OR Svezia OR Stockholm AI'
+  - 'AI Poland OR Polonia OR Warsaw AI'
+
+  # Aziende europee rilevanti
+  - 'Mistral AI OR "Aleph Alpha" OR "Stability AI" OR "Hugging Face"'
+  - 'AI "Made in Italy" OR "National AI strategy" Europe'
+  - 'CINECA OR "IIT Istituto Italiano" AI OR "Fondazione Bruno Kessler"'
+
+  # Infrastrutture
+  - 'AI "data center" Europa OR Italy OR France OR Germany'
+  - 'GPU supercomputer Europa OR Italy AI'
+  - 'cloud AI sovrano Europa OR sovereign AI Europe'
+
+  # Sanità e settori verticali
+  - 'AI healthcare Europa OR sanità intelligenza artificiale'
+  - 'AI fintech Europa OR banca intelligenza artificiale'
+  - 'AI difesa Europa OR "defense AI" Europe'
+  - 'AI ricerca università Europa OR "AI research" Europe university'
+
+  # Incidenti e sicurezza
+  - 'AI incidente OR deepfake Europa OR Italy 2026'
+  - 'AI safety bias rischio Europa'
+
+countries:
+  - Italia
+  - Francia
+  - Germania
+  - Spagna
+  - Paesi Bassi
+  - Svezia
+  - Regno Unito
+  - Polonia
+  - Unione Europea
+
+capabilities:
+  - Modelli AI Fondazionali
+  - Cloud & Data Center
+  - AI Sanitaria
+  - AI Difesa & Sicurezza
+  - AI FinTech
+  - Ricerca & Università
+
+lookback_days: 7

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- EDITOR: aggiorna titolo, slug e date per ogni issue -->
+<title>[TITOLO PRINCIPALE] | apulia.ai — AI Europa Weekly</title>
+<meta name="description" content="[SOMMARIO 160 CARATTERI]" />
+<meta name="keywords" content="AI Europa, AI Act, intelligenza artificiale Italia, startup AI europee, newsletter AI" />
+<meta name="author" content="apulia.ai" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://apulia.ai/weekly/[YYYY-MM-DD]-[SLUG]" />
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="apulia.ai — AI Europa Weekly" />
+<meta property="og:title" content="[TITOLO PRINCIPALE]" />
+<meta property="og:description" content="[SOMMARIO OG]" />
+<meta property="og:url" content="https://apulia.ai/weekly/[YYYY-MM-DD]-[SLUG]" />
+<meta property="og:image" content="https://apulia.ai/og/weekly-[YYYY-MM-DD].png" />
+<meta property="og:locale" content="it_IT" />
+<meta property="article:published_time" content="[YYYY-MM-DD]T08:00:00+02:00" />
+<meta property="article:section" content="AI Intelligence" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@apulia_ai" />
+<meta name="twitter:title" content="[TITOLO PRINCIPALE]" />
+<meta name="twitter:description" content="[SOMMARIO TWITTER]" />
+<meta name="twitter:image" content="https://apulia.ai/og/weekly-[YYYY-MM-DD].png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "[TITOLO PRINCIPALE]",
+  "alternativeHeadline": "apulia.ai AI Europa Weekly — Issue [N], [MESE] [ANNO]",
+  "description": "[SOMMARIO]",
+  "datePublished": "[YYYY-MM-DD]T08:00:00+02:00",
+  "dateModified": "[YYYY-MM-DD]T08:00:00+02:00",
+  "author": { "@type": "Organization", "name": "apulia.ai", "url": "https://apulia.ai" },
+  "publisher": { "@type": "Organization", "name": "apulia.ai", "url": "https://apulia.ai",
+    "logo": { "@type": "ImageObject", "url": "https://apulia.ai/brand/logo.webp" } },
+  "about": [
+    {"@type": "Thing", "name": "Intelligenza Artificiale in Europa"},
+    {"@type": "Thing", "name": "AI Act Europeo"},
+    {"@type": "Place", "name": "Italia"}
+  ],
+  "keywords": "AI Europa, AI Act, startup AI Italia, investimenti AI, policy AI europea"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #050A14;
+    --bg-card:  #0D1828;
+    --bg-alt:   #071020;
+    --accent:   #2563EB;
+    --accent2:  #F59E0B;
+    --text:     #F0F4FF;
+    --muted:    #94A3B8;
+    --border:   #1E3A5F;
+    --badge-procure:   #1E3A5F;
+    --badge-partner:   #1C3A2A;
+    --badge-capital:   #2D2A10;
+    --badge-platform:  #2A1C3A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+  }
+  .masthead-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand-mark svg { display: block; }
+  .brand-text { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .brand-name span { color: var(--accent); }
+  .brand-tagline {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .issue-meta { text-align: right; }
+  .issue-date, .issue-number {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .issue-divider { margin: 0 8px; color: var(--border); }
+  .issue-sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #071428 0%, var(--bg) 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 32px;
+  }
+  .hero-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    align-items: start;
+  }
+  .kicker {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  h1 { font-family: 'Manrope', sans-serif; line-height: 0.95; margin-bottom: 24px; }
+  .h1-line-1 { display: block; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 400; color: var(--muted); }
+  .h1-line-2 { display: block; font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+  .h1-line-3 { display: block; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; color: var(--accent); }
+  .dek { font-size: 1.05rem; color: var(--muted); max-width: 620px; margin-bottom: 36px; line-height: 1.65; }
+  .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+  .stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .stat-icon { margin-bottom: 8px; }
+  .stat-value { font-family: 'Manrope', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); line-height: 1; }
+  .stat-label { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+  .sources { font-size: 0.65rem; color: var(--border); margin-top: 8px; }
+
+  .hero-audience {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .audience-header { margin-bottom: 20px; }
+  .audience-kicker { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .audience-header h2 { font-family: 'Manrope', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.35; color: var(--text); }
+  .audience-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .audience-row { display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .audience-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .audience-icon { flex-shrink: 0; width: 32px; height: 32px; background: rgba(37,99,235,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .audience-type { font-weight: 600; font-size: 0.85rem; color: var(--text); }
+  .audience-sub { font-size: 0.68rem; color: var(--accent); margin: 1px 0; }
+  .audience-need { font-size: 0.72rem; color: var(--muted); }
+
+  /* ── THREE COLUMNS ── */
+  .three-column {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .story {
+    background: var(--bg);
+    padding: 40px 32px;
+  }
+  .story-header { margin-bottom: 24px; }
+  .story-icon {
+    width: 44px; height: 44px;
+    background: rgba(37,99,235,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+  .story-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .story h2 { font-family: 'Manrope', sans-serif; font-size: 1.2rem; font-weight: 800; line-height: 1.25; margin-bottom: 8px; }
+  .story-sub { font-size: 0.82rem; color: var(--muted); }
+  .story-thesis {
+    background: rgba(37,99,235,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 20px 0;
+    line-height: 1.6;
+  }
+  .story-body p { font-size: 0.88rem; color: var(--muted); margin-bottom: 14px; line-height: 1.7; }
+  .story-body p:last-child { margin-bottom: 0; }
+  .story-action {
+    margin-top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .action-title { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent2); margin-bottom: 10px; }
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .action-list li { font-size: 0.8rem; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.55; }
+  .action-list li::before { content: '›'; position: absolute; left: 0; color: var(--accent2); font-weight: 700; }
+
+  /* ── OPPORTUNITIES TABLE ── */
+  .opportunities {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 32px;
+  }
+  .opportunities-inner { max-width: 1100px; margin: 0 auto; }
+  .opp-header { margin-bottom: 32px; }
+  .opp-kicker { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .opp-header h2 { font-family: 'Manrope', sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 10px; }
+  .opp-dek { font-size: 0.85rem; color: var(--muted); max-width: 720px; }
+  .opp-table-wrap { overflow-x: auto; }
+  .opp-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .opp-table th {
+    background: var(--bg-card);
+    color: var(--muted);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .opp-table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--muted);
+  }
+  .opp-table tr:hover td { background: rgba(37,99,235,0.04); }
+  .opp-table td strong { color: var(--text); }
+  .opp-desc { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
+  .badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .badge-procure  { background: var(--badge-procure);  color: #7BAAE8; border: 1px solid #1E3A5F; }
+  .badge-partner  { background: var(--badge-partner);  color: #6EC48A; border: 1px solid #1C3A2A; }
+  .badge-capital  { background: var(--badge-capital);  color: #E8B84B; border: 1px solid #3A3010; }
+  .badge-platform { background: var(--badge-platform); color: #C07AE8; border: 1px solid #3A1C5F; }
+  .opp-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--muted); }
+
+  /* ── SPREAD ── */
+  .spread { padding: 60px 32px; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .spread-title {
+    max-width: 1100px; margin: 0 auto 36px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .spread-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .spread-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .card-icon {
+    width: 38px; height: 38px;
+    background: rgba(37,99,235,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-header h3 { font-family: 'Manrope', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
+  .card-sub { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+  /* funding table */
+  .funding-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .funding-table th {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 6px 8px; border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  .funding-table td { padding: 9px 8px; border-bottom: 1px solid rgba(30,58,95,0.5); color: var(--muted); vertical-align: top; }
+  .funding-table td strong { color: var(--text); }
+  .funding-table tr:last-child td { border-bottom: none; }
+  .card-foot { font-size: 0.68rem; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+  /* regulatory */
+  .reg-item { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .reg-flag { font-size: 1.3rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .reg-title { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .reg-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+  /* number */
+  .spread-number { grid-column: span 1; }
+  .big-number {
+    font-family: 'Manrope', sans-serif;
+    font-size: 5rem; font-weight: 900;
+    color: var(--accent);
+    line-height: 1; margin: 8px 0 16px;
+    letter-spacing: -0.03em;
+  }
+  .number-context { font-size: 1rem; color: var(--text); line-height: 1.55; margin-bottom: 14px; }
+  .number-meaning { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+  /* watch list */
+  .watch-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .watch-list li { font-size: 0.82rem; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.6; counter-increment: watch; }
+  .watch-list li::before { content: counter(watch); position: absolute; left: 0; top: 0; color: var(--accent2); font-weight: 800; font-size: 0.75rem; }
+  .watch-list { counter-reset: watch; }
+  .watch-list li strong { color: var(--text); }
+
+  /* ── CTA ── */
+  .cta {
+    background: linear-gradient(135deg, #071428 0%, #0A1A35 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 32px;
+  }
+  .cta-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 32px;
+  }
+  .cta-text { max-width: 620px; }
+  .cta-text h2 { font-family: 'Manrope', sans-serif; font-size: 1.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+  .cta-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.65; }
+  .cta-button {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.88rem; font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .cta-button:hover { background: #1D4ED8; text-decoration: none; }
+
+  /* ── FOOTER ── */
+  .footer { background: var(--bg-alt); padding: 40px 32px; }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-name { font-family: 'Manrope', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text); }
+  .footer-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 2px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+  .footer-links a { font-size: 0.8rem; color: var(--muted); }
+  .footer-links a:hover { color: var(--text); }
+  .footer-meta { font-size: 0.72rem; color: var(--border); text-align: right; }
+  .footer-meta p { margin-bottom: 4px; }
+  .footer-meta a { color: var(--muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .three-column { grid-template-columns: 1fr; }
+    .spread-grid { grid-template-columns: 1fr; }
+    .cta-inner { flex-direction: column; align-items: flex-start; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-meta { text-align: left; }
+  }
+  @media (max-width: 600px) {
+    .masthead, .hero, .opportunities, .spread, .cta, .footer { padding-left: 16px; padding-right: 16px; }
+    .story { padding: 28px 16px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+  MASTHEAD
+  EDITOR: aggiorna data e numero issue
+============================================================ -->
+<header class="masthead" role="banner">
+  <div class="masthead-inner">
+    <a class="brand" href="https://apulia.ai" aria-label="apulia.ai home">
+      <span class="brand-mark" aria-hidden="true">
+        <!-- EDITOR: sostituire con <img src="cid:logo" /> per invio email -->
+        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L32.72 10.5V27.5L18 36L3.28 27.5V10.5L18 2Z" fill="#0F1A2E" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="18" y="24" text-anchor="middle" fill="#2563EB" font-size="15" font-weight="700" font-family="Inter,sans-serif">A</text>
+          <circle cx="18" cy="7.5" r="0.8" fill="#F59E0B" opacity="0.8"/>
+          <circle cx="26.5" cy="12" r="0.8" fill="#F59E0B" opacity="0.6"/>
+          <circle cx="26.5" cy="24" r="0.8" fill="#F59E0B" opacity="0.6"/>
+          <circle cx="18" cy="28.5" r="0.8" fill="#F59E0B" opacity="0.8"/>
+          <circle cx="9.5" cy="24" r="0.8" fill="#F59E0B" opacity="0.6"/>
+          <circle cx="9.5" cy="12" r="0.8" fill="#F59E0B" opacity="0.6"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">apulia<span>.ai</span></span>
+        <span class="brand-tagline">AI Europa Weekly</span>
+      </span>
+    </a>
+    <div class="issue-meta">
+      <!-- EDITOR: aggiorna MARTEDÌ DD MESE ANNO e numero issue -->
+      <span class="issue-date">MARTEDÌ [DD MESE ANNO]</span>
+      <span class="issue-divider">|</span>
+      <span class="issue-number">ISSUE [N]</span>
+      <div class="issue-sub">La newsletter settimanale sull'AI in Europa</div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ============================================================
+  HERO
+  EDITOR: titolo principale (3 righe), dek (2-3 frasi), 4 stat
+============================================================ -->
+<section class="hero" aria-labelledby="lead-title">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <!-- EDITOR: kicker = tema dominante della settimana -->
+      <p class="kicker">ISSUE [N] · [TEMA DOMINANTE SETTIMANA]</p>
+      <h1 id="lead-title">
+        <!-- EDITOR: 3 righe — la prima corta, la seconda grande, la terza in blu -->
+        <span class="h1-line-1">IL</span>
+        <span class="h1-line-2">[PAROLA CHIAVE]</span>
+        <span class="h1-line-3">[COMPLEMENTO]</span>
+      </h1>
+      <!-- EDITOR: 2-3 frasi che spiegano perché questa settimana conta. Concreto, numeri se disponibili -->
+      <p class="dek">
+        [SOMMARIO DEK: 2-3 frasi che inquadrano il tema della settimana. Esempio: "L'AI Act entra nella fase di enforcement. Ecco cosa cambia per le imprese italiane, quali obblighi scattano da agosto e quale finestra si apre per i vendor di compliance AI."]
+      </p>
+
+      <div class="hero-stats" role="group" aria-label="Indicatori chiave AI Europa">
+        <!-- EDITOR: 4 statistiche rilevanti per la settimana -->
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </div>
+          <div class="stat-value">[VALORE 1]</div>
+          <div class="stat-label">[LABEL STAT 1]</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          </div>
+          <div class="stat-value">[VALORE 2]</div>
+          <div class="stat-label">[LABEL STAT 2]</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+          </div>
+          <div class="stat-value">[VALORE 3]</div>
+          <div class="stat-label">[LABEL STAT 3]</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2l9 5v10l-9 5-9-5V7z"/></svg>
+          </div>
+          <div class="stat-value">[VALORE 4]</div>
+          <div class="stat-label">[LABEL STAT 4]</div>
+        </div>
+      </div>
+      <p class="sources">Fonti: [LISTA FONTI PRINCIPALI DELLA SETTIMANA] · apulia.ai Weekly Briefs ([MESE ANNO])</p>
+    </div>
+
+    <aside class="hero-audience" aria-labelledby="audience-title">
+      <div class="audience-header">
+        <p class="audience-kicker">CHI LEGGE QUESTA NEWSLETTER</p>
+        <h2 id="audience-title">Costruita per chi decide nel panorama AI europeo e italiano.</h2>
+      </div>
+      <ul class="audience-list">
+        <li class="audience-row">
+          <div class="audience-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>
+          </div>
+          <div class="audience-body">
+            <div class="audience-type">CTO / CIO enterprise</div>
+            <div class="audience-sub">Industria · Banche · PA</div>
+            <div class="audience-need">Quali implementazioni AI stanno scalando in Europa</div>
+          </div>
+        </li>
+        <li class="audience-row">
+          <div class="audience-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </div>
+          <div class="audience-body">
+            <div class="audience-type">Investitori VC / PE</div>
+            <div class="audience-sub">Fondi early stage · Family office</div>
+            <div class="audience-need">Deal flow AI europeo: chi sta raccogliendo adesso</div>
+          </div>
+        </li>
+        <li class="audience-row">
+          <div class="audience-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><path d="M5 19l4-4M13 5l6 6-9 9H4v-6L13 5z"/></svg>
+          </div>
+          <div class="audience-body">
+            <div class="audience-type">Founder startup AI</div>
+            <div class="audience-sub">Pre-seed · Series A</div>
+            <div class="audience-need">Bandi, programmi e mercati aperti in EU/IT</div>
+          </div>
+        </li>
+        <li class="audience-row">
+          <div class="audience-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h2M13 9h2M9 13h2M13 13h2M9 17h2M13 17h2"/></svg>
+          </div>
+          <div class="audience-body">
+            <div class="audience-type">Policy maker / PA</div>
+            <div class="audience-sub">Ministeri · Regioni · Enti locali</div>
+            <div class="audience-need">AI Act: obblighi, scadenze, benchmark europei</div>
+          </div>
+        </li>
+        <li class="audience-row">
+          <div class="audience-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 15a4 4 0 014-4 6 6 0 0111.7-1A4.5 4.5 0 0119 19H7a4 4 0 01-4-4z"/></svg>
+          </div>
+          <div class="audience-body">
+            <div class="audience-type">Consulenti strategici</div>
+            <div class="audience-sub">Strategy · Legal · Compliance</div>
+            <div class="audience-need">Panorama competitivo e regolatorio, settimana per settimana</div>
+          </div>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  LE TRE STORIE
+  EDITOR: scrivi 3 storie — LA MOSSA, L'APERTURA, IL SEGNALE
+  Ogni storia: titolo, sottotitolo, tesi, 2-3 paragrafi, azioni
+============================================================ -->
+<main class="three-column" role="main">
+
+  <!-- STORIA 1 — LA MOSSA -->
+  <article class="story story-1" aria-labelledby="story-1-title">
+    <div class="story-header">
+      <div class="story-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#2563EB" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+      </div>
+      <p class="story-label">LA MOSSA</p>
+      <!-- EDITOR: il fatto più importante della settimana che ha CAMBIATO qualcosa -->
+      <h2 id="story-1-title">[TITOLO LA MOSSA]</h2>
+      <p class="story-sub">[SOTTOTITOLO: 1 frase che spiega il cambio di scenario]</p>
+    </div>
+
+    <div class="story-thesis">
+      <!-- EDITOR: La tesi in 2-3 righe. Inizia con "La tesi." -->
+      <strong>La tesi.</strong> [TESI DELLA MOSSA: cosa è successo, perché è strutturale e non episodico, quali scenari apre o chiude. Max 80 parole.]
+    </div>
+
+    <div class="story-body">
+      <!-- EDITOR: 2-3 paragrafi. Ogni paragrafo: un punto concreto, verificabile, con implicazioni -->
+      <p>[PARAGRAFO 1: il contesto e il fatto preciso]</p>
+      <p>[PARAGRAFO 2: le implicazioni commerciali/strategiche]</p>
+      <p>[PARAGRAFO 3 OPZIONALE: cosa ci aspettiamo nei prossimi 30-60 giorni]</p>
+    </div>
+
+    <div class="story-action">
+      <p class="action-title">COSA APRE QUESTA SETTIMANA</p>
+      <ul class="action-list">
+        <!-- EDITOR: 2-3 azioni/opportunità specifiche per tipo di lettore -->
+        <li><strong>Vendor:</strong> [opportunità specifica per vendor tecnologici]</li>
+        <li><strong>Investitori:</strong> [segnale rilevante per chi investe]</li>
+        <li><strong>Operatori:</strong> [implicazione per chi gestisce AI in azienda/PA]</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- STORIA 2 — L'APERTURA -->
+  <article class="story story-2" aria-labelledby="story-2-title">
+    <div class="story-header">
+      <div class="story-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      </div>
+      <p class="story-label">L'APERTURA</p>
+      <!-- EDITOR: un'opportunità di mercato concreta emersa questa settimana -->
+      <h2 id="story-2-title">[TITOLO L'APERTURA]</h2>
+      <p class="story-sub">[SOTTOTITOLO: per chi è l'opportunità e perché adesso]</p>
+    </div>
+
+    <div class="story-thesis">
+      <strong>La tesi.</strong> [TESI APERTURA: descrivere l'opportunità, chi può coglierla, con quale urgenza. Max 80 parole.]
+    </div>
+
+    <div class="story-body">
+      <p>[PARAGRAFO 1: natura dell'opportunità — bando, procurement, funding, partnership]</p>
+      <p>[PARAGRAFO 2: chi è avvantaggiato e perché — settore, dimensione, competenze richieste]</p>
+      <p>[PARAGRAFO 3 OPZIONALE: come entrare — contatti, piattaforme, procedure]</p>
+    </div>
+
+    <div class="story-action">
+      <!-- EDITOR: finestra temporale specifica -->
+      <p class="action-title">FINESTRA [X] GIORNI</p>
+      <ul class="action-list">
+        <li>[azione specifica n.1 con deadline o contesto temporale]</li>
+        <li>[azione specifica n.2]</li>
+        <li>[azione specifica n.3]</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- STORIA 3 — IL SEGNALE -->
+  <article class="story story-3" aria-labelledby="story-3-title">
+    <div class="story-header">
+      <div class="story-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2L4 8v8l8 6 8-6V8z"/><path d="M12 2v20M4 8l16 8M20 8L4 16"/></svg>
+      </div>
+      <p class="story-label">IL SEGNALE</p>
+      <!-- EDITOR: un trend emergente o segnale regolatorio che indica dove si va -->
+      <h2 id="story-3-title">[TITOLO IL SEGNALE]</h2>
+      <p class="story-sub">[SOTTOTITOLO: perché questo segnale conta per i prossimi 6-12 mesi]</p>
+    </div>
+
+    <div class="story-thesis">
+      <strong>La tesi.</strong> [TESI SEGNALE: la tendenza strutturale che questo fatto rivela. Non ovvia, verificabile. Max 80 parole.]
+    </div>
+
+    <div class="story-body">
+      <p>[PARAGRAFO 1: il segnale — paper, normativa, mossa corporate, dato macro]</p>
+      <p>[PARAGRAFO 2: perché è un segnale e non rumore — pattern, precedenti, logica]</p>
+      <p>[PARAGRAFO 3 OPZIONALE: come posizionarsi adesso rispetto a questo segnale]</p>
+    </div>
+
+    <div class="story-action">
+      <p class="action-title">COSA MONITORARE</p>
+      <ul class="action-list">
+        <li>[elemento da tracciare n.1]</li>
+        <li>[elemento da tracciare n.2]</li>
+        <li>[elemento da tracciare n.3]</li>
+      </ul>
+    </div>
+  </article>
+
+</main>
+
+
+<!-- ============================================================
+  FUNDING RADAR + REGULATORY PULSE + NUMBER + NEXT WEEK WATCH
+  EDITOR: compila con dati della settimana
+============================================================ -->
+<section class="spread" aria-labelledby="spread-title">
+  <h2 id="spread-title" class="spread-title">IL RADAR DI QUESTA SETTIMANA — [MESE ANNO]</h2>
+
+  <div class="spread-grid">
+
+    <!-- FUNDING RADAR -->
+    <div class="spread-card spread-funding">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+        </div>
+        <div>
+          <h3>FUNDING RADAR</h3>
+          <!-- EDITOR: aggiorna il periodo -->
+          <p class="card-sub">Deal AI europei e italiani · [SETTIMANA DD-DD MESE]</p>
+        </div>
+      </div>
+      <table class="funding-table">
+        <thead>
+          <tr>
+            <th>Azienda</th>
+            <th>Paese</th>
+            <th>Round</th>
+            <th>€M</th>
+            <th>Focus AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- EDITOR: inserisci 3-6 deal della settimana -->
+          <tr><td><strong>[Azienda 1]</strong></td><td>🇮🇹</td><td>Serie A</td><td>[X]M</td><td>[Focus]</td></tr>
+          <tr><td><strong>[Azienda 2]</strong></td><td>🇫🇷</td><td>Serie B</td><td>[X]M</td><td>[Focus]</td></tr>
+          <tr><td><strong>[Azienda 3]</strong></td><td>🇩🇪</td><td>Seed</td><td>[X]M</td><td>[Focus]</td></tr>
+          <tr><td><strong>[Azienda 4]</strong></td><td>🇪🇺</td><td>[Round]</td><td>[X]M</td><td>[Focus]</td></tr>
+        </tbody>
+      </table>
+      <!-- EDITOR: totale e nota -->
+      <p class="card-foot"><strong>Totale deal tracciati:</strong> €[X]M · <strong>Settore più attivo:</strong> [settore]</p>
+    </div>
+
+    <!-- REGULATORY PULSE -->
+    <div class="spread-card spread-regulatory">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2v20M5 7h14M5 17h14M3 12h18"/></svg>
+        </div>
+        <div>
+          <h3>REGULATORY PULSE</h3>
+          <p class="card-sub">Cosa è cambiato, cosa significa commercialmente</p>
+        </div>
+      </div>
+      <!-- EDITOR: 2-3 aggiornamenti normativi della settimana -->
+      <div class="reg-item">
+        <div class="reg-flag">🇪🇺</div>
+        <div>
+          <div class="reg-title">[TITOLO AGGIORNAMENTO AI ACT]</div>
+          <p>[Descrizione 2-3 righe. Cosa è successo, impatto commerciale concreto.]</p>
+        </div>
+      </div>
+      <div class="reg-item">
+        <div class="reg-flag">🇮🇹</div>
+        <div>
+          <div class="reg-title">[TITOLO AGGIORNAMENTO NORMATIVA ITALIANA]</div>
+          <p>[Descrizione 2-3 righe. AGCOM, MIMIT, ACN, o PNRR. Impatto su aziende italiane.]</p>
+        </div>
+      </div>
+      <!-- EDITOR: terzo aggiornamento opzionale (GDPR×AI, ENISA, ecc.) -->
+      <div class="reg-item">
+        <div class="reg-flag">🔒</div>
+        <div>
+          <div class="reg-title">[TITOLO GDPR×AI O SICUREZZA]</div>
+          <p>[Descrizione breve. Guidance EDPB, ENISA report, o enforcement action.]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE NUMBER -->
+    <div class="spread-card spread-number">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/></svg>
+        </div>
+        <div>
+          <h3>IL NUMERO</h3>
+        </div>
+      </div>
+      <!-- EDITOR: il dato più significativo della settimana -->
+      <div class="big-number">[X%]</div>
+      <p class="number-context">
+        [Una frase di contesto: cosa misura questo numero, da dove viene.]
+      </p>
+      <p class="number-meaning">
+        <strong>Perché conta:</strong> [2-3 frasi sull'implicazione strategica per chi opera nel mercato AI europeo/italiano.]
+      </p>
+    </div>
+
+    <!-- NEXT WEEK WATCH -->
+    <div class="spread-card spread-watch">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+        </div>
+        <div>
+          <h3>SETTIMANA PROSSIMA</h3>
+          <p class="card-sub">Tre cose da tenere d'occhio</p>
+        </div>
+      </div>
+      <ol class="watch-list">
+        <!-- EDITOR: 3 eventi/scadenze/annunci attesi la settimana prossima -->
+        <li>
+          <strong>[Evento/scadenza 1].</strong> [Descrizione: cosa aspettarsi, perché conta, chi è coinvolto.]
+        </li>
+        <li>
+          <strong>[Evento/scadenza 2].</strong> [Descrizione: cosa aspettarsi, perché conta.]
+        </li>
+        <li>
+          <strong>[Evento/scadenza 3].</strong> [Descrizione: cosa aspettarsi, opportunità o rischio associato.]
+        </li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+  CTA — BRIEFING MENSILE PREMIUM
+============================================================ -->
+<section class="cta" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <h2 id="cta-title">Vuoi l'analisi completa del mese?</h2>
+      <p>
+        Il <strong>Briefing Strategico Mensile</strong> va oltre le notizie: mappa le 8 finestre di opportunità
+        aperte in Europa e in Italia, traccia i deal di investimento significativi, analizza le milestone
+        dell'AI Act e dedica un focus esclusivo all'ecosistema italiano.
+        Ogni primo martedì del mese.
+      </p>
+    </div>
+    <a href="https://apulia.ai/subscribe?plan=monthly" class="cta-button">Accedi al Briefing Mensile →</a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  FOOTER
+============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+        <path d="M18 2L32.72 10.5V27.5L18 36L3.28 27.5V10.5L18 2Z" fill="#0F1A2E" stroke="#2563EB" stroke-width="1.5"/>
+        <text x="18" y="24" text-anchor="middle" fill="#2563EB" font-size="13" font-weight="700" font-family="Inter,sans-serif">A</text>
+      </svg>
+      <div>
+        <div class="footer-name">apulia.ai</div>
+        <div class="footer-tag">AI Europa Weekly</div>
+      </div>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://apulia.ai/weekly">Weekly</a>
+      <a href="https://apulia.ai/briefing">Briefing Mensile</a>
+      <a href="https://apulia.ai/archivio">Archivio</a>
+      <a href="https://apulia.ai/about">About</a>
+      <a href="https://apulia.ai/contatti">Contatti</a>
+    </nav>
+    <div class="footer-meta">
+      <p>© 2026 apulia.ai · Tutti i diritti riservati</p>
+      <!-- EDITOR: aggiorna issue number, data e slug -->
+      <p>Issue [N] · [DD MESE ANNO] · <a href="https://apulia.ai/weekly/[YYYY-MM-DD]-[SLUG]">apulia.ai/weekly/[SLUG]</a></p>
+      <p style="margin-top:8px; font-size:0.65rem;">
+        Sei iscritto come <strong>[EMAIL]</strong> ·
+        <a href="https://apulia.ai/unsubscribe?token=[TOKEN]">Cancella iscrizione</a> ·
+        <a href="https://apulia.ai/privacy">Privacy</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

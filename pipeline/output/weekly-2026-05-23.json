@@ -1,0 +1,1097 @@
+{
+  "title": "AI EUROPA WEEKLY",
+  "tagline": "Intelligence strategica sull'AI in Europa e Italia",
+  "cadence": "weekly",
+  "issue_date": "2026-05-23",
+  "reporting_period": "17–23 maggio 2026",
+  "key_developments": [
+    {
+      "text": "Anthropic ha aperto la sua prima sede italiana a Milano, scelta come hub europeo per l'AI; la presidente Daniela Amodei ha dichiarato al Corriere della Sera che servono regole immediate sull'AI per evitare gli stessi errori commessi con i social network.",
+      "sources": [
+        {
+          "name": "triestenews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPYTZIeXBNS2JYeWp0WGNvbHhodHJERXhNY0RUY092TnByWFk3dE9Od1NFaWVUcDZzbllSR1UzRVQ4blYwT0ZOZGhRUGNvX3pWYVpCQlBBVjFXa0FuQmtzSXhhYTJVSDhnRDJFUXRGOF9vSEJiZDR6NFFUd2x3a0diY1lGcldXV0VHcng4YjZwVEVpRzV6cmExUDZoc2c?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Corriere della Sera",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaXUtVDFLRkVFYm96VVZQOHhZeUxsX0luZ00xNnZoc1BYUGpiYWp1ckpLMUpzbFFLLWFmdENURmN1LVJLMzBUMGVaaUdGR2pMbE9vUVF1ZUhWby1nTFQxbTVMMDlyRHVVOFIzQjNxcDhTaWNiSE9xS0lzTGQyTzE3cWl1N2ZSVUg3ay1ZVTQybXZMd1ZsTzVfN051dGxaU2tyLWJDNElvZHc5dzhucmVvQmVfc2pVbXZpZkN6aHhucHQ5cmvSAcMBQVVfeXFMUGl1LVQxS0ZFRWJvelVWUDh4WXlMbF9JbmdNMTZ2aHNQWFBqYmFqdXJKSzFKc2xRSy1hZnRDVEZjdS1SSzMwVDBlWmlHRkdqTGxPb1FRdWVIVm8tZ0xUMW01TDA5ckR1VThSM0IzcXA4U2ljYkhPcUtJc0xkMk8xN3FpdTdmUlVIN2stWVU0Mm12THdWbE81XzdOdXRsWlNrci1iQzRJb2R3OXc4bnJlb0JlX3NqVW12aWZDemh4bnB0OXJr?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "youmark.it",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONHVXMTJaS1QycTREVVJKejliTTlkNmx5U3FvR3d2UkxySVVIdWpabWZlcnRkWGQ2dlRrRWV0YU5uVFRNeEc2NzFKZlVXVmwzVUxYbXU0NG5weWhERTFDMkpseVNUYkF2Zk53OE1fYUVieHJ6YWdIT2E2R09ITDR4MHdyREZCWFkzbFppUA?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "La Commissione europea ha avviato una consultazione pubblica sulle linee guida per i sistemi AI ad alto rischio previsti dall'AI Act, mentre prosegue un nuovo round di incontri sul codice di trasparenza per i modelli di uso generale.",
+      "sources": [
+        {
+          "name": "AI4Business",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNeXNPaGVvRjREc3lxbklrY3hCcHpVVndETTBKSWxqaVM4NGwyZjVYRDJvRDY5anVlR0JZT1ItblJPSmpDMnZNVnpSOTY3SDE3QzdoM3ZHNlptdVUwVDNEenhuQ0VWQ0l4b3RObGdBTzNzeEs2VlVQU3ptRVBmbERkQUI0NG9xVzFUVmpIN0k1blRUSHgtd2psSDctcFBBejlscEV3NG1ZeDNqVWNSZzFsMllwRWc5OU9fZV9R?oc=5",
+          "date": "19 mag"
+        },
+        {
+          "name": "TGWEBAI",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9rbXJzOVNKRlJ2YUl1MGNjLU5oZWJwclJTbTVaMWExd0NpSVFkNG4wVUx2QUJDSC00dnBEVFFhQzBqSkJQMko2dEhsLTU0dmlLNHhoSmNZaGVWbHpHMnNjM2pPSnl2MU1m?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il Digital Omnibus ha rinviato alcune scadenze dell'AI Act, suscitando critiche: la Repubblica ha identificato tre rischi principali nel passo indietro europeo sulla regolamentazione, tra cui il rischio di perdere credibilità normativa a livello globale.",
+      "sources": [
+        {
+          "name": "Notiziario USPI",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaFpsOHRxb2VOLTdEOWs4ZXk2TVBaVXV5dVlqeXBhcDB0LV9SWE96UnY2SHViSE5vM0pxVjNPNHhSWVRpcUs3eWdzWVdUdHp5Mi1SYlhiTmJiWTVnRXNYandPVXd1UHdKbnhZQU45eThsc19RTFVoLVZKQWlLZkRkcHV5aGlQZjNlR25BTC03ekg5ZGdDSjFXZk5B?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "la Repubblica",
+          "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNUzJoOXpVSk03c0kzektaNmpfTERjNGpfVU91cUtzRFZ1eTh3QmtOSUJQZVdKUkF6Z1RSeWpWTzc5T2h2Uzh6bmJhLVpJVjZ4cGtSWHZUcVRMT2ZxX2RTdkdQbTVwYUwyWS1oczFiQVBBbzVTWll3dm4waXJHQ25vLWN5SlFnRE54MGpURzhtRkxleHJlLU5LazhwZUNjSk9iRXRSUTdPcTlSWWRMTlRsY2pqZHpKTHgybWtYekVVOTlaV2FHRGF1cEl4aw?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Allianz Research ha pubblicato un rapporto in cui avverte che l'Europa deve agire congiuntamente nel settore AI per evitare la dipendenza tecnologica da attori extraeuropei, in particolare statunitensi e cinesi.",
+      "sources": [
+        {
+          "name": "Bitget",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1YZWMwa3Q5WW1EdGQ5N3RqVGY1aUZ4RGRPLVZFV2NUOUhPOVJRaWFNQXNNcW9MRkc5UGpuakRGUlRILVI3ZG5KRUM1NFluamExUFhqUjZfdXhWVWdwOE1uMTZ30gFnQVVfeXFMUHFOb1lsUkhKdlU0ZHNza2tBSHNQaGFWT0x3N2ZVSGZnQnpZbHRSZGxiaGl6eGQ1LThxQXJqOUlJS0ZCenp5Q290VWN1aEluSmt2N29jWl83Wng3TWo1V3V5SVo3Z2YyMA?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Le aziende europee di AI hanno raccolto complessivamente oltre 5,3 miliardi di euro nel 2025, con il capitale concentrato su un ristretto gruppo guidato da Mistral AI, Helsing, Black Forest Labs, Synthesia ed ElevenLabs.",
+      "sources": [
+        {
+          "name": "Tech.eu",
+          "url": "https://tech.eu/2026/05/21/ai-10-companies-that-raised-the-most-in-2025/",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il premio Nobel per l'economia Philippe Aghion ha sostenuto che il futuro dell'AI europea dipende dalla creazione di un'alleanza DARPA-like tra Regno Unito, Francia e Germania per finanziare la ricerca fondamentale.",
+      "sources": [
+        {
+          "name": "Sifted",
+          "url": "https://sifted.eu/articles/philippe-aghion-uk-france-germany-darpa/",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "L'Italia ha avanzato la propria candidatura nel settore dei supercomputer per l'AI, posizionandosi in competizione con gli Stati Uniti su infrastrutture di calcolo ad alta potenza.",
+      "sources": [
+        {
+          "name": "Italia Informa",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9QYkhJejRFelZnT2w2LVE0ek5SNFhyanhEV1NHZGdmdXFMOFcxaGdybXowX1hoOHdMbmd5V2hIVnhKd3ZzQjlLOUFTNlJIWjVka2xxc2pkTkNWWFFYSkFkUzUtbGpZT29XUUxodlF1Zi1kQjEwckR4OXVtMUNJdw?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il costo dell'energia e la carenza di infrastrutture per i data center rischiano di compromettere la competitività europea nell'AI, mentre il piano cloud dell'UE incontra ostacoli di fronte alla predominanza dei fornitori statunitensi.",
+      "sources": [
+        {
+          "name": "MetalliRari",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNTnlUYVBDWlNLbFlVQXFFRy10bUhwcVRwcnliWFUtTTRFckQ1WVVLY256QndSVk1HbzYyY3BrV20tVFFQZXhTMWd1ajQ3Vk90SHU1a3ktRnA4azFQcmtzQ3FtR3VZbjVBYV9TWC1halB4aVFPQ1hxakx0MHE5Sm5qWU9DSXBiTTlTTjVIYmRxVzIzVEFiZl9yd2UyUTRXdHR1cVHSAacBQVVfeXFMTVNjdnZWU2p2ZlVQZlRMb3lsMjRqbWM4c2JPV2lwUzhoM1JRRlpSaVRhOXR1WVhrZFFfRG9Fd0VsanR4VnNkYzdpYmJDeG5tbjhwWnRodURNbVVEQmZZVnJLOFV2M01lLUoyRFMxb254NmcxSXhIV180aXRsYmRNNTNmNFJRNVFNaFlIRW13Yk1rZzdvMDZXUm1XMHB4dWFudTJWYlpISDQ?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Linkiesta.it",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPR2JKTDhLbWQ3NlN0R25DaFc4MG5lOEVmdG9pVHZrMkRRSS1kTjFZVUd4M1NyUjhhbEFBU0tyclNlN1NYZHFmeG1uY2xKX0RQYkhqVksydHRNZG5QNWw0b2JOMWdYWERYbUVqdERmeXpmY2VEZFYtM0tWeVBsODhWMklLejlaYXd0MjkzNzZHSDFrVFhqVGRicnJta19MNHY4U0E?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    }
+  ],
+  "radar_normativo": [
+    {
+      "text": "La Commissione UE ha avviato una consultazione pubblica sulle linee guida per i sistemi AI ad alto rischio (AI Act, Artt. 9-15, fase di applicazione agosto 2026), strumento cruciale per definire gli obblighi concreti di conformità che ricadranno su fornitori e deployer in tutta l'UE [0].",
+      "sources": [
+        {
+          "name": "AI4Business",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNeXNPaGVvRjREc3lxbklrY3hCcHpVVndETTBKSWxqaVM4NGwyZjVYRDJvRDY5anVlR0JZT1ItblJPSmpDMnZNVnpSOTY3SDE3QzdoM3ZHNlptdVUwVDNEenhuQ0VWQ0l4b3RObGdBTzNzeEs2VlVQU3ptRVBmbERkQUI0NG9xVzFUVmpIN0k1blRUSHgtd2psSDctcFBBejlscEV3NG1ZeDNqVWNSZzFsMllwRWc5OU9fZV9R?oc=5",
+          "date": "19 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il Digital Omnibus package proposto dalla Commissione europea prevede un rinvio delle scadenze di applicazione di alcune disposizioni dell'AI Act, alleggerendo temporaneamente gli obblighi per specifiche categorie di operatori e rimettendo in discussione il calendario normativo già fissato [2, 4].",
+      "sources": [
+        {
+          "name": "Notiziario USPI",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaFpsOHRxb2VOLTdEOWs4ZXk2TVBaVXV5dVlqeXBhcDB0LV9SWE96UnY2SHViSE5vM0pxVjNPNHhSWVRpcUs3eWdzWVdUdHp5Mi1SYlhiTmJiWTVnRXNYandPVXd1UHdKbnhZQU45eThsc19RTFVoLVZKQWlLZkRkcHV5aGlQZjNlR25BTC03ekg5ZGdDSjFXZk5B?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Sifted",
+          "url": "https://sifted.eu/articles/eu-ai-act-latest-changes-explained/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "L'AI Office UE ha avviato un nuovo round di incontri sul Codice di trasparenza (AI Act, Art. 53, applicabile ai modelli GPAI da agosto 2025), con l'obiettivo di finalizzare gli standard di disclosure obbligatori per i fornitori di modelli di uso generale [1].",
+      "sources": [
+        {
+          "name": "TGWEBAI",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9rbXJzOVNKRlJ2YUl1MGNjLU5oZWJwclJTbTVaMWExd0NpSVFkNG4wVUx2QUJDSC00dnBEVFFhQzBqSkJQMko2dEhsLTU0dmlLNHhoSmNZaGVWbHpHMnNjM2pPSnl2MU1m?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il Parlamento europeo ha approvato il nuovo regolamento sul controllo degli investimenti esteri diretti (FDI screening), che estende la protezione obbligatoria ai settori AI, semiconduttori e difesa, con impatto diretto sulla governance delle infrastrutture AI strategiche negli Stati membri [6, 7].",
+      "sources": [
+        {
+          "name": "Eunews",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOcXdzNGtHOFJPWVRLcHBROGJYSjViZzJEaDhhRUVPTFNBRGVmaFk5RVA0eUdKcmo2cktaV21mZjdieTBQb0VGNTVCcG9pV3pUbk8ydFNyd2J6Z0Q2dlB6MUowZFE1Tk1GeXgwVTZrNTNVYlZpRWNHVHFNOW9TVU02aU82eW44RlVVYk9RcnNTNVJ3VVZ5SnNhQXRpYkhzZXNlcUtVdEtiN2h4SXh1VThZa0J2cFJnWmVpbVVpV0dKaERPYy0xT254N0RfYkFzdw?oc=5",
+          "date": "19 mag"
+        },
+        {
+          "name": "Adnkronos",
+          "url": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxPaXBvTXpoMGdFTXBqRlVPMHdvSXphWmM3d001Z2l2UGpmWFEzeGYzZjBES1ZNSWJtTTN1ZHNVQVFIaWJDWC1CXzVDUFpucW1zRGMzUzF2NTUzamdWaENfU0dRM2YwNEVBenNYVnAtMmF5UWpXemdyNWx2SXlJVm5rbkV6WHRTdXRmb2FUTVR5ZUkzYXNpcHprNVRnSGxVSkYwQXpacjVsZUx6bkdyc3BqWE1rT3E0SGMwOHA3aEk2azZFWWN0QkF1c2FreUtORFZ2V1VLTFBVZE4xdlpoMU9ueldjLUZHbjFrMHA4WkVNWlZvc1p3ajI4dGVPOUU4dw?oc=5",
+          "date": "19 mag"
+        }
+      ]
+    },
+    {
+      "text": "L'arrivo di Anthropic in Italia — con la CEO Daniela Amodei che invoca una regolazione AI immediata a livello nazionale — evidenzia la pressione degli operatori Big Tech sul governo italiano affinché acceleri il recepimento operativo dell'AI Act prima delle scadenze europee del 2026 [3, 9].",
+      "sources": [
+        {
+          "name": "Corriere della Sera",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaXUtVDFLRkVFYm96VVZQOHhZeUxsX0luZ00xNnZoc1BYUGpiYWp1ckpLMUpzbFFLLWFmdENURmN1LVJLMzBUMGVaaUdGR2pMbE9vUVF1ZUhWby1nTFQxbTVMMDlyRHVVOFIzQjNxcDhTaWNiSE9xS0lzTGQyTzE3cWl1N2ZSVUg3ay1ZVTQybXZMd1ZsTzVfN051dGxaU2tyLWJDNElvZHc5dzhucmVvQmVfc2pVbXZpZkN6aHhucHQ5cmvSAcMBQVVfeXFMUGl1LVQxS0ZFRWJvelVWUDh4WXlMbF9JbmdNMTZ2aHNQWFBqYmFqdXJKSzFKc2xRSy1hZnRDVEZjdS1SSzMwVDBlWmlHRkdqTGxPb1FRdWVIVm8tZ0xUMW01TDA5ckR1VThSM0IzcXA4U2ljYkhPcUtJc0xkMk8xN3FpdTdmUlVIN2stWVU0Mm12THdWbE81XzdOdXRsWlNrci1iQzRJb2R3OXc4bnJlb0JlX3NqVW12aWZDemh4bnB0OXJr?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    }
+  ],
+  "focus_italia": [
+    {
+      "text": "Anthropic ha aperto il suo primo ufficio italiano a Milano, scegliendo la città come hub europeo per l'AI; la presidente Daniela Amodei ha dichiarato al Corriere della Sera che servono regole immediate sull'AI per evitare gli errori commessi con i social network.",
+      "sources": [
+        {
+          "name": "triestenews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPYTZIeXBNS2JYeWp0WGNvbHhodHJERXhNY0RUY092TnByWFk3dE9Od1NFaWVUcDZzbllSR1UzRVQ4blYwT0ZOZGhRUGNvX3pWYVpCQlBBVjFXa0FuQmtzSXhhYTJVSDhnRDJFUXRGOF9vSEJiZDR6NFFUd2x3a0diY1lGcldXV0VHcng4YjZwVEVpRzV6cmExUDZoc2c?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Corriere della Sera",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaXUtVDFLRkVFYm96VVZQOHhZeUxsX0luZ00xNnZoc1BYUGpiYWp1ckpLMUpzbFFLLWFmdENURmN1LVJLMzBUMGVaaUdGR2pMbE9vUVF1ZUhWby1nTFQxbTVMMDlyRHVVOFIzQjNxcDhTaWNiSE9xS0lzTGQyTzE3cWl1N2ZSVUg3ay1ZVTQybXZMd1ZsTzVfN051dGxaU2tyLWJDNElvZHc5dzhucmVvQmVfc2pVbXZpZkN6aHhucHQ5cmvSAcMBQVVfeXFMUGl1LVQxS0ZFRWJvelVWUDh4WXlMbF9JbmdNMTZ2aHNQWFBqYmFqdXJKSzFKc2xRSy1hZnRDVEZjdS1SSzMwVDBlWmlHRkdqTGxPb1FRdWVIVm8tZ0xUMW01TDA5ckR1VThSM0IzcXA4U2ljYkhPcUtJc0xkMk8xN3FpdTdmUlVIN2stWVU0Mm12THdWbE81XzdOdXRsWlNrci1iQzRJb2R3OXc4bnJlb0JlX3NqVW12aWZDemh4bnB0OXJr?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "youmark.it",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONHVXMTJaS1QycTREVVJKejliTTlkNmx5U3FvR3d2UkxySVVIdWpabWZlcnRkWGQ2dlRrRWV0YU5uVFRNeEc2NzFKZlVXVmwzVUxYbXU0NG5weWhERTFDMkpseVNUYkF2Zk53OE1fYUVieHJ6YWdIT2E2R09ITDR4MHdyREZCWFkzbFppUA?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "L'Italia ha avviato un programma per competere con gli Stati Uniti nel settore dei supercomputer dedicati all'intelligenza artificiale, secondo quanto riportato da Italia Informa.",
+      "sources": [
+        {
+          "name": "Italia Informa",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9QYkhJejRFelZnT2w2LVE0ek5SNFhyanhEV1NHZGdmdXFMOFcxaGdybXowX1hoOHdMbmd5V2hIVnhKd3ZzQjlLOUFTNlJIWjVka2xxc2pkTkNWWFFYSkFkUzUtbGpZT29XUUxodlF1Zi1kQjEwckR4OXVtMUNJdw?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Beltramino ha avvertito che l'Italia rischia di perdere investimenti nei data center se non verranno garantiti tempi certi per le autorizzazioni e le infrastrutture necessarie.",
+      "sources": [
+        {
+          "name": "CorCom",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOWkZfbmg1cEtCQmVtN3ZhOXV2SzZRU2dCeXQyaC1qSDAxM1l0c3V6VUxFRzhIUERNQlZoTDRlLVNadmlNZ1RNc1JBV0FfMGUxOWJVWGdaNFJ2czg4UDhReXhvT1BtY1dCRzdNZHF2UXg3cWhScDd2bG9WcV9xdXBtMzQ4eEwzS2NFV1RwaHRQSW5MbkhkV1RNeWF2Y2VhYllKSFYtRktidzh4VFpVOWJsUDI3YUtERHFVc1J0YWgzc19UZTFFSjhteVFha21ZR3M?oc=5",
+          "date": "20 mag"
+        }
+      ]
+    },
+    {
+      "text": "È stato lanciato EVA, presentato come il primo LLM sviluppato interamente in Italia, progettato per semplificare l'uso e la manutenzione dei macchinari industriali.",
+      "sources": [
+        {
+          "name": "Innovation Post",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOTnExNnRWdmtxWEt6TFNwZ3hSOGxUakkxRjJzV203Qm11Y0stUGlMZk9PZ2puZ2k5Q2dXeHpPVjI5eFBSY3o3VUMyM1dHYXJ3QldVOERKMGljV05KeUU1SS1GRXY4SUV5aGNlcWNTZ2h1NVJJWmZiOE9NRVFjWVl4NkRINmg4NTdTeFR3VlBxTzBmNzlUWlhJTmU3czhjY0R1U0YzYUxTRFBsTVV2aEJtd01nY1BmejRlbmc?oc=5",
+          "date": "19 mag"
+        }
+      ]
+    },
+    {
+      "text": "Mediobanca Premier ha dichiarato che l'AI generativa diventerà uno strumento centrale nel wealth management, senza fornire dettagli su investimenti o iniziative concrete già avviate.",
+      "sources": [
+        {
+          "name": "Il Giornale d'Italia",
+          "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNS3NMWnVfWXYxQVJoZ2hKUmN1MFNyMTZrdDhtVU5RTjZLeVFlRGhRQ0ozdVhQUDkxYllUV3RYamxRblk0MDN4QUltNEdaTlpZWnJXeVBBN2tCc0ExRW5aNlhWcmlSZFItSHJQUjIxWndOWUVXaG96aWRIeXhyVGdzZ093OXZnOEFIRXJOLUhvZlVybFY4NHRuSDhtZFNBc2lfejdCRVlUejlJNmJVQnRUazFCUWNVbUduay1FMkhnczAyQmNoT3VzSGR6LUQ2ZVltRG5NMjR3aU5HMVBSQ0JTMHRNLWlCR0lUSnAtVk1tVWxBSkhMU01UOFExaDFPXzB2M3c?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    }
+  ],
+  "country_briefings": [
+    {
+      "country": "Francia",
+      "bullets": [
+        {
+          "text": "Mistral AI ha avvertito che l'Europa dispone di circa due anni per costruire un'infrastruttura di AI sovrana prima che il divario con USA e Cina diventi incolmabile.",
+          "sources": [
+            {
+              "name": "AI4Business",
+              "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQTDVtUnpXbHUxY2pxdnJCU0djXzB5Nk5oX1phTW9LMEF2ZEVWeDduR1VVOXNkSHNNWklZaVRIWFhjMDlBNVZqWlpjdEFRaHhRNWJWQnc3a1RCcWJqdDl6VWxQZ0s2Y21GTFJ0Rk5OZlA5MjBEUG1aWGZ5TzhIX0FuQTVWWGtPd1NsQ3BwR3dKcENpdjhWWkYxNE14T0tUcERKQkFHUW0zVUVhenFLdHhQWW5lR2NFYlgydW9EOQ?oc=5",
+              "date": "19 mag"
+            }
+          ]
+        },
+        {
+          "text": "Mistral AI ha acquisito Emmi AI, startup specializzata in agenti AI, rafforzando la propria offerta enterprise nel segmento dell'automazione dei processi.",
+          "sources": [
+            {
+              "name": "Tech.eu",
+              "url": "https://tech.eu/2026/05/22/eos-x-space-raises-140m-mistral-acquires-emmi-ai-and-bliq-approved-for-fully-driverless-road-operations-in-estonia/",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Alice & Bob, startup francese di quantum computing fault-tolerant, ha ricevuto un investimento da NVentures — il braccio di venture capital di NVIDIA — che amplia il suo Series B da 100 milioni di euro.",
+          "sources": [
+            {
+              "name": "Tech.eu",
+              "url": "https://tech.eu/2026/05/22/alice-bob-expands-series-b-with-investment-from-nvidias-venture-arm/",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Pivot, piattaforma parigina di procurement e finance operations basata su AI, ha chiuso un Series B da 40 milioni di dollari oversubscribed, guidato da Forestay Capital e Notion Capital.",
+          "sources": [
+            {
+              "name": "Tech.eu",
+              "url": "https://tech.eu/2026/05/21/pivot-raises-40m-to-expand-ai-powered-enterprise-procurement-platform/",
+              "date": "21 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Germania",
+      "bullets": [
+        {
+          "text": "Cohere ha acquisito una seconda startup tedesca di AI a poche settimane dall'accordo con Aleph Alpha, rafforzando la propria presenza nel mercato europeo con due operazioni consecutive in Germania.",
+          "sources": [
+            {
+              "name": "Sifted",
+              "url": "https://sifted.eu/articles/cohere-aleph-alpha-germany-second-deal/",
+              "date": "19 mag"
+            }
+          ]
+        },
+        {
+          "text": "Il premio Nobel per l'economia Philippe Aghion ha dichiarato che il futuro dell'AI europea dipende da un'alleanza DARPA-style tra UK, Francia e Germania, capace di coordinare investimenti pubblici in ricerca fondamentale.",
+          "sources": [
+            {
+              "name": "Sifted",
+              "url": "https://sifted.eu/articles/philippe-aghion-uk-france-germany-darpa/",
+              "date": "21 mag"
+            }
+          ]
+        },
+        {
+          "text": "ClearOps, startup SaaS di Monaco, ha chiuso un Series A da 8,6 milioni di euro guidato da Hitachi Ventures con la partecipazione di Schoeller Group e Barkawi Group, per sviluppare una piattaforma AI di after-sales per OEM industriali.",
+          "sources": [
+            {
+              "name": "EU Startups",
+              "url": "https://www.eu-startups.com/2026/05/munich-based-clearops-raises-e8-6-million-series-a-to-build-ai-operating-system-for-industrial-after-sales/",
+              "date": "21 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Spagna",
+      "bullets": [
+        {
+          "text": "Magnific, piattaforma AI con sede a Málaga (già Freepik), ha lanciato il Magnific Fund da 10 milioni di euro per aiutare team di marketing, pubblicità e creativi a integrare l'AI in workflow di produzione pronti per campagne reali, con focus su PMI nell'Unione Europea.",
+          "sources": [
+            {
+              "name": "EU Startups",
+              "url": "https://www.eu-startups.com/2026/05/malagas-magnific-launches-e10-million-fund-to-help-creative-teams-turn-ai-experiments-into-production-ready-campaigns/",
+              "date": "22 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Paesi Bassi",
+      "bullets": [
+        {
+          "text": "AVIAN, startup con sede a Zurigo specializzata in monitoraggio termico industriale con AI, ha raccolto 2,6 milioni di dollari in un round pre-seed guidato da Founderful per espandere la sorveglianza 24/7 nei siti industriali ad alto rischio di incendio.",
+          "sources": [
+            {
+              "name": "Tech.eu",
+              "url": "https://tech.eu/2026/05/20/avian-raises-26m-to-bring-always-on-thermal-intelligence-to-high-risk-industrial-sites/",
+              "date": "20 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Svezia",
+      "bullets": [
+        {
+          "text": "Il Politecnico di Torino ha incontrato i principali player svedesi del settore automotive per discutere di mobilità elettrica e intelligenza artificiale, consolidando la collaborazione italo-svedese su ricerca e innovazione nel trasporto.",
+          "sources": [
+            {
+              "name": "Torino Cronaca",
+              "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQcnZLOEU4WDFtS0hzNEZHQWl2UzdERGl4Z1p6NDBFNDA2bktYMjJyYWtmVHB4cXpweGFyQ1dWQVRrZkhKQ1ppaF9idW9VQUxJVGhWSzd5NW1qY1hXQ2cyQzc0TDF3LWxVd1BkZVNWdXlydEhrdV91Qm1SV3Z4SVd3dnRndDlfT1l6SWtNNHJJam03enhKSW8ydEd0N0tnRE5uWU1QVVFGTWhpc2cxczA1NUd3U0R3bnhFR0hCQWd0WVg3X0ZuYldCYURDYjVSSkpLdmdJWHJR?oc=5",
+              "date": "21 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Regno Unito",
+      "bullets": [
+        {
+          "text": "Il premio Nobel per l'economia Philippe Aghion ha dichiarato che il futuro dell'AI europea dipende da un'alleanza DARPA-like tra Regno Unito, Francia e Germania, capace di coordinare investimenti pubblici in ricerca fondamentale su scala continentale.",
+          "sources": [
+            {
+              "name": "Sifted",
+              "url": "https://sifted.eu/articles/philippe-aghion-uk-france-germany-darpa/",
+              "date": "21 mag"
+            }
+          ]
+        },
+        {
+          "text": "Fresha, piattaforma londinese AI per il settore beauty e wellness, ha raccolto 68,9 milioni di euro da KKR raggiungendo una valutazione superiore a 861,9 milioni di euro e lo status di unicorno, con un totale di capitale raccolto pari a 245,5 milioni di euro.",
+          "sources": [
+            {
+              "name": "EU Startups",
+              "url": "https://www.eu-startups.com/2026/05/uk-gets-a-fresh-new-unicorn-as-beauty-and-wellness-platform-fresha-lands-e68-9-million-from-kkr/",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Scope, startup londinese di AI per ispezioni industriali, ha raccolto 17,2 milioni di euro in un round guidato da Index Ventures con la partecipazione di Susa Ventures, Entrepreneurs First e Syndicate 1, per espandere il team e accelerare l'adozione globale.",
+          "sources": [
+            {
+              "name": "EU Startups",
+              "url": "https://www.eu-startups.com/2026/05/uk-ai-startup-scope-raises-e17-3-million-funding-led-by-index-ventures-to-speed-up-industrial-inspection-workflows/",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Searchable, piattaforma londinese di AI performance marketing per la visibilità nei motori di ricerca AI-driven, ha chiuso un round da 11,9 milioni di euro a una valutazione di 72,1 milioni, con il round guidato da Headline.",
+          "sources": [
+            {
+              "name": "EU Startups",
+              "url": "https://www.eu-startups.com/2026/05/londons-searchable-raises-e11-9-million-at-e72-1-million-valuation-to-help-brands-boost-visibility-across-ai-led-search/",
+              "date": "21 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Polonia",
+      "bullets": [
+        {
+          "text": "Il professore Francesco Pira ha partecipato come relatore a un convegno internazionale in Polonia dedicato al rapporto tra famiglia, educazione e intelligenza artificiale.",
+          "sources": [
+            {
+              "name": "Qui Licata",
+              "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNR0JGYzV4M3JNN2tsUGVkcGpPcVJuNnZpYk9IZUtDVkg4YmVyaXdhcndZcWlkdnBDWGZsUm5CZTQwNjZodEsyMTlGMEtsTnBPdUQxa2RCVXd6YU15MmJNdExsS3M0QzJlMU43d21FMXZ0SFlCdTNOU2VIUUg3d0N3TmZpZDBmRURYUldyRmN0QkhNMmZkd2xVa0hMYmNBdzF3VUV4OHRxZ0pQWmlzT2c?oc=5",
+              "date": "23 mag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Unione Europea",
+      "bullets": [
+        {
+          "text": "La Commissione europea ha avviato una consultazione pubblica sulle linee guida per i sistemi AI ad alto rischio previsti dall'AI Act, mentre è in corso un nuovo round di incontri tecnici per definire il codice di condotta sulla trasparenza dei modelli general-purpose.",
+          "sources": [
+            {
+              "name": "AI4Business",
+              "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNeXNPaGVvRjREc3lxbklrY3hCcHpVVndETTBKSWxqaVM4NGwyZjVYRDJvRDY5anVlR0JZT1ItblJPSmpDMnZNVnpSOTY3SDE3QzdoM3ZHNlptdVUwVDNEenhuQ0VWQ0l4b3RObGdBTzNzeEs2VlVQU3ptRVBmbERkQUI0NG9xVzFUVmpIN0k1blRUSHgtd2psSDctcFBBejlscEV3NG1ZeDNqVWNSZzFsMllwRWc5OU9fZV9R?oc=5",
+              "date": "19 mag"
+            },
+            {
+              "name": "TGWEBAI",
+              "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9rbXJzOVNKRlJ2YUl1MGNjLU5oZWJwclJTbTVaMWExd0NpSVFkNG4wVUx2QUJDSC00dnBEVFFhQzBqSkJQMko2dEhsLTU0dmlLNHhoSmNZaGVWbHpHMnNjM2pPSnl2MU1m?oc=5",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Il pacchetto Digital Omnibus ha rinviato alcune scadenze dell'AI Act, modificando il calendario di compliance per le imprese e sollevando interrogativi sulla tenuta del quadro normativo europeo.",
+          "sources": [
+            {
+              "name": "Notiziario USPI",
+              "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaFpsOHRxb2VOLTdEOWs4ZXk2TVBaVXV5dVlqeXBhcDB0LV9SWE96UnY2SHViSE5vM0pxVjNPNHhSWVRpcUs3eWdzWVdUdHp5Mi1SYlhiTmJiWTVnRXNYandPVXd1UHdKbnhZQU45eThsc19RTFVoLVZKQWlLZkRkcHV5aGlQZjNlR25BTC03ekg5ZGdDSjFXZk5B?oc=5",
+              "date": "22 mag"
+            },
+            {
+              "name": "Sifted",
+              "url": "https://sifted.eu/articles/eu-ai-act-latest-changes-explained/",
+              "date": "22 mag"
+            }
+          ]
+        },
+        {
+          "text": "Allianz Research ha pubblicato un'analisi in cui avverte che l'Europa rischia una dipendenza strutturale dall'AI sviluppata fuori dal continente se gli Stati membri non coordineranno investimenti e politiche industriali in modo congiunto.",
+          "sources": [
+            {
+              "name": "Bitget",
+              "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1YZWMwa3Q5WW1EdGQ5N3RqVGY1aUZ4RGRPLVZFV2NUOUhPOVJRaWFNQXNNcW9MRkc5UGpuakRGUlRILVI3ZG5KRUM1NFluamExUFhqUjZfdXhWVWdwOE1uMTZ30gFnQVVfeXFMUHFOb1lsUkhKdlU0ZHNza2tBSHNQaGFWT0x3N2ZVSGZnQnpZbHRSZGxiaGl6eGQ1LThxQXJqOUlJS0ZCenp5Q290VWN1aEluSmt2N29jWl83Wng3TWo1V3V5SVo3Z2YyMA?oc=5",
+              "date": "21 mag"
+            }
+          ]
+        },
+        {
+          "text": "L'alto costo dell'energia e la frammentazione delle infrastrutture cloud frenano la costruzione di data center AI in Europa, dove il piano dell'UE per un cloud sovrano incontra la concorrenza dei grandi operatori statunitensi.",
+          "sources": [
+            {
+              "name": "MetalliRari",
+              "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNTnlUYVBDWlNLbFlVQXFFRy10bUhwcVRwcnliWFUtTTRFckQ1WVVLY256QndSVk1HbzYyY3BrV20tVFFQZXhTMWd1ajQ3Vk90SHU1a3ktRnA4azFQcmtzQ3FtR3VZbjVBYV9TWC1halB4aVFPQ1hxakx0MHE5Sm5qWU9DSXBiTTlTTjVIYmRxVzIzVEFiZl9yd2UyUTRXdHR1cVHSAacBQVVfeXFMTVNjdnZWU2p2ZlVQZlRMb3lsMjRqbWM4c2JPV2lwUzhoM1JRRlpSaVRhOXR1WVhrZFFfRG9Fd0VsanR4VnNkYzdpYmJDeG5tbjhwWnRodURNbVVEQmZZVnJLOFV2M01lLUoyRFMxb254NmcxSXhIV180aXRsYmRNNTNmNFJRNVFNaFlIRW13Yk1rZzdvMDZXUm1XMHB4dWFudTJWYlpISDQ?oc=5",
+              "date": "23 mag"
+            },
+            {
+              "name": "Linkiesta.it",
+              "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPR2JKTDhLbWQ3NlN0R25DaFc4MG5lOEVmdG9pVHZrMkRRSS1kTjFZVUd4M1NyUjhhbEFBU0tyclNlN1NYZHFmeG1uY2xKX0RQYkhqVksydHRNZG5QNWw0b2JOMWdYWERYbUVqdERmeXpmY2VEZFYtM0tWeVBsODhWMklLejlaYXd0MjkzNzZHSDFrVFhqVGRicnJta19MNHY4U0E?oc=5",
+              "date": "22 mag"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "compute_status": {
+    "Italia": "active",
+    "Francia": "none",
+    "Germania": "none",
+    "Spagna": "none",
+    "Paesi Bassi": "none",
+    "Svezia": "none",
+    "Regno Unito": "none",
+    "Polonia": "none",
+    "Unione Europea": "active"
+  },
+  "compute_infra": [
+    {
+      "text": "L'Europa sconta costi energetici e burocrazia che rallentano la costruzione di data center AI, mentre il piano cloud UE stenta a competere con i grandi provider statunitensi, secondo analisi di MetalliRari e Linkiesta.",
+      "sources": [
+        {
+          "name": "MetalliRari",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNTnlUYVBDWlNLbFlVQXFFRy10bUhwcVRwcnliWFUtTTRFckQ1WVVLY256QndSVk1HbzYyY3BrV20tVFFQZXhTMWd1ajQ3Vk90SHU1a3ktRnA4azFQcmtzQ3FtR3VZbjVBYV9TWC1halB4aVFPQ1hxakx0MHE5Sm5qWU9DSXBiTTlTTjVIYmRxVzIzVEFiZl9yd2UyUTRXdHR1cVHSAacBQVVfeXFMTVNjdnZWU2p2ZlVQZlRMb3lsMjRqbWM4c2JPV2lwUzhoM1JRRlpSaVRhOXR1WVhrZFFfRG9Fd0VsanR4VnNkYzdpYmJDeG5tbjhwWnRodURNbVVEQmZZVnJLOFV2M01lLUoyRFMxb254NmcxSXhIV180aXRsYmRNNTNmNFJRNVFNaFlIRW13Yk1rZzdvMDZXUm1XMHB4dWFudTJWYlpISDQ?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Linkiesta.it",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPR2JKTDhLbWQ3NlN0R25DaFc4MG5lOEVmdG9pVHZrMkRRSS1kTjFZVUd4M1NyUjhhbEFBU0tyclNlN1NYZHFmeG1uY2xKX0RQYkhqVksydHRNZG5QNWw0b2JOMWdYWERYbUVqdERmeXpmY2VEZFYtM0tWeVBsODhWMklLejlaYXd0MjkzNzZHSDFrVFhqVGRicnJta19MNHY4U0E?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Agenda Digitale",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNTXpZc01BVE1wNm1kbzR0Q3VYRU1Md3BObkg2YkxpZ2ZoeDRSZmw1ak1UNXhtaEJFcTRmU1ZyaTRFelAyVW1ULU5yWVFkYTVORjVxcHJJdnJjX2o5ZWgyX1BweGZxT05OOUtKRWwta0xzd1llMW5Pam1uSGwyR0dRbjlMUVFHVk5FcUttSGFfVzdpcHNyVVZtUUJPRHVMRkliMDRuWGhocUc4UUdwc0E?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il Parlamento europeo ha avviato un'inchiesta sulla trasparenza dei dati ambientali dei data center, sollecitando obblighi di rendicontazione su consumi idrici ed energetici degli impianti AI.",
+      "sources": [
+        {
+          "name": "Altreconomia",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQcGM1TWFjdmk3UXRXUmRoYVNyNW1UWFhVYWdBNk00bktkRVY4cHpHQ01pV2VrM3ZMbXctbXA1eXlZMmFsR1k1c19hbXBPX1VuenhXUnBrRUp3SWJfQWFNY3hpWk5HcktZM1RyNkJ2dGNjdF9IcnRtMGxuNkNTQXhKalRvX1lUMnB0dG9EaTBEYl9iaHgzVUZFNU9Dd1Bhc0NrSXozbDNCOVlHcnVPcjZR?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Open Fiber ha annunciato la realizzazione di una rete di edge data center per supportare l'AI; il CEO Gola ha fissato al 2035 l'obiettivo di switch-off del rame, a condizione che la pianificazione degli interventi venga definita entro il 2028-2029.",
+      "sources": [
+        {
+          "name": "Il Giornale d'Italia",
+          "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxNQWxROVhtcEZIWVFKaUtyRjRaejBDUVBKUWNsM29vRURndEpOU2xmckRUMjZwUU1iWFVPb1ZXdWdwWEhkcXp1VElvcEp1SGIyNV9IaXFfRHlmMHQ2V0xOM2N4N0ZObjhUM3JTcXp3anQtM0pPVzg1WGN5TmxwczBWUjQtSXN5enJPc1FfNDZ4enA5S3dDZG9EemhVaWhJZmdzN1B0M2VsSTNDSmFjbkl2bmR1WWluZWxkUXZ6VmtxOW1MUENZWDdxeTZ4MEVyaFVQbFh1LUMySUliUnA3U013ZTJiSDk1dXpURmJUQ2s0Z0FDVUhnOUt6VmhuSkdRcy10Tjh2UGZUNmhPQQ?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "CorCom",
+          "url": "https://www.corrierecomunicazioni.it/digital-economy/spegnimento-rame-gola-switch-off-al-2035-se-si-accelera-la-pianificazione/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Nokia ha aperto un laboratorio a Sunnyvale per testare architetture multi-vendor di AI networking, con l'obiettivo di ridurre i rischi operativi nelle reti di data center e telco su larga scala.",
+      "sources": [
+        {
+          "name": "CorCom",
+          "url": "https://www.corrierecomunicazioni.it/digital-economy/dai-data-center-alle-telco-nokia-spinge-sullai-networking-per-ridurre-i-rischi-della-rete/",
+          "date": "22 mag"
+        }
+      ]
+    }
+  ],
+  "capability_matrix": {
+    "Italia": {
+      "Modelli AI Fondazionali": {
+        "state": "active",
+        "note": "Anthropic apre ufficio Milano, primo in Italia"
+      },
+      "Cloud & Data Center": {
+        "state": "active",
+        "note": "Infrastruttura AI e data center, Italia sfida USA"
+      },
+      "AI Sanitaria": {
+        "state": "normal",
+        "note": "Formedica in AI Week, applicazioni sanitarie"
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "normal",
+        "note": "Cybersecurity e AI, governance digitale Italia"
+      },
+      "AI FinTech": {
+        "state": "normal",
+        "note": "AI generativa in wealth management e underwriting"
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Francia": {
+      "Modelli AI Fondazionali": {
+        "state": "active",
+        "note": "Mistral avverte Europa: AI sovrana in 2 anni"
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "normal",
+        "note": "Pivot raise $40M, polizze AI Francia"
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Germania": {
+      "Modelli AI Fondazionali": {
+        "state": "active",
+        "note": "Cohere acquisisce startup AI tedesca"
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Spagna": {
+      "Modelli AI Fondazionali": {
+        "state": "none",
+        "note": ""
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Paesi Bassi": {
+      "Modelli AI Fondazionali": {
+        "state": "none",
+        "note": ""
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Svezia": {
+      "Modelli AI Fondazionali": {
+        "state": "none",
+        "note": ""
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Regno Unito": {
+      "Modelli AI Fondazionali": {
+        "state": "none",
+        "note": ""
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "normal",
+        "note": "Imperagen seed £5M enzyme engineering"
+      }
+    },
+    "Polonia": {
+      "Modelli AI Fondazionali": {
+        "state": "none",
+        "note": ""
+      },
+      "Cloud & Data Center": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "none",
+        "note": ""
+      },
+      "AI FinTech": {
+        "state": "none",
+        "note": ""
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "Unione Europea": {
+      "Modelli AI Fondazionali": {
+        "state": "normal",
+        "note": "Europa dipendenza AI, Claude managed agents"
+      },
+      "Cloud & Data Center": {
+        "state": "active",
+        "note": "Data center, costi cluster AI, UE vs USA"
+      },
+      "AI Sanitaria": {
+        "state": "none",
+        "note": ""
+      },
+      "AI Difesa & Sicurezza": {
+        "state": "active",
+        "note": "Scudo UE investimenti difesa, IA, critici"
+      },
+      "AI FinTech": {
+        "state": "normal",
+        "note": "Tallinn capitale AI fintech innovazione"
+      },
+      "Ricerca & Università": {
+        "state": "none",
+        "note": ""
+      }
+    }
+  },
+  "incidents": [
+    {
+      "text": "Il Data Breach Investigations Report 2024 di Verizon Business ha evidenziato come l'AI stia ridisegnando la mappa delle vulnerabilità aziendali: falle software, rischio mobile, shadow AI e attacchi alla supply chain emergono come priorità critiche per la sicurezza delle imprese.",
+      "sources": [
+        {
+          "name": "CorCom",
+          "url": "https://www.corrierecomunicazioni.it/cyber-security/cybersecurity-lai-mette-a-nudo-le-vulnerabilita-e-cambia-la-mappa-dei-data-breach/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Un'analisi dei forum underground ha identificato due scenari di adozione dell'AI generativa nel cybercrime: il 'Vibercrime', in cui il vibe coding abbassa la soglia d'accesso al crimine informatico, e lo 'Stand-Alone Complex', ipotesi di una gang automatizzata end-to-end senza intervento umano.",
+      "sources": [
+        {
+          "name": "AI4Business",
+          "url": "https://www.ai4business.it/intelligenza-artificiale/vibercrime-come-lai-generativa-entra-nel-cybercrime-underground/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Documenti desecretati relativi al 'Project Panama' di Anthropic hanno rivelato che la società ha acquistato, smembrato e digitalizzato milioni di libri cartacei per addestrare Claude, in quello che alcuni esperti interpretano come un tentativo di aggirare le normative sul copyright.",
+      "sources": [
+        {
+          "name": "Wired Italia",
+          "url": "https://www.wired.it/article/anthropic-distrutto-milioni-libri-cartacei-claude/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Una ricerca di NewsGuard ha confermato i limiti persistenti dei software di rilevamento deepfake e immagini AI-generate: i sistemi producono un elevato tasso di falsi positivi, segnalando come false immagini fotografiche autentiche.",
+      "sources": [
+        {
+          "name": "Wired Italia",
+          "url": "https://www.wired.it/article/software-per-individuare-deepfake-immagini-create-con-ai-newsguard/",
+          "date": "23 mag"
+        }
+      ]
+    }
+  ],
+  "spotlight_title_it": "Anthropic sceglie Milano: la posta in gioco per l'Italia",
+  "spotlight_title_en": "Anthropic Opens Milan Office: What It Means for Italy",
+  "spotlight_bullets": [
+    {
+      "text": "Anthropic ha scelto Milano come prima sede italiana e hub europeo, un segnale che l'Italia sta emergendo come destinazione credibile per i grandi player globali dell'AI — complice anche la spinta infrastrutturale sui data center che il governo sta incentivando.",
+      "sources": [
+        {
+          "name": "triestenews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPYTZIeXBNS2JYeWp0WGNvbHhodHJERXhNY0RUY092TnByWFk3dE9Od1NFaWVUcDZzbllSR1UzRVQ4blYwT0ZOZGhRUGNvX3pWYVpCQlBBVjFXa0FuQmtzSXhhYTJVSDhnRDJFUXRGOF9vSEJiZDR6NFFUd2x3a0diY1lGcldXV0VHcng4YjZwVEVpRzV6cmExUDZoc2c?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "La scelta non è solo simbolica: Milano diventa punto di riferimento per il deployment di Claude in Europa, in un momento in cui la competizione tra le capitali del continente (Londra, Parigi, Berlino) per attrarre sedi di AI lab è feroce.",
+      "sources": [
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Daniela Amodei ha lanciato un avvertimento esplicito: regolamentare l'AI subito, prima che diventi sistemica come i social media — una posizione che alimenta il dibattito europeo sull'AI Act proprio mentre Bruxelles discute rinvii e semplificazioni via Digital Omnibus.",
+      "sources": [
+        {
+          "name": "Notiziario USPI",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaFpsOHRxb2VOLTdEOWs4ZXk2TVBaVXV5dVlqeXBhcDB0LV9SWE96UnY2SHViSE5vM0pxVjNPNHhSWVRpcUs3eWdzWVdUdHp5Mi1SYlhiTmJiWTVnRXNYandPVXd1UHdKbnhZQU45eThsc19RTFVoLVZKQWlLZkRkcHV5aGlQZjNlR25BTC03ekg5ZGdDSjFXZk5B?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Corriere della Sera",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaXUtVDFLRkVFYm96VVZQOHhZeUxsX0luZ00xNnZoc1BYUGpiYWp1ckpLMUpzbFFLLWFmdENURmN1LVJLMzBUMGVaaUdGR2pMbE9vUVF1ZUhWby1nTFQxbTVMMDlyRHVVOFIzQjNxcDhTaWNiSE9xS0lzTGQyTzE3cWl1N2ZSVUg3ay1ZVTQybXZMd1ZsTzVfN051dGxaU2tyLWJDNElvZHc5dzhucmVvQmVfc2pVbXZpZkN6aHhucHQ5cmvSAcMBQVVfeXFMUGl1LVQxS0ZFRWJvelVWUDh4WXlMbF9JbmdNMTZ2aHNQWFBqYmFqdXJKSzFKc2xRSy1hZnRDVEZjdS1SSzMwVDBlWmlHRkdqTGxPb1FRdWVIVm8tZ0xUMW01TDA5ckR1VThSM0IzcXA4U2ljYkhPcUtJc0xkMk8xN3FpdTdmUlVIN2stWVU0Mm12THdWbE81XzdOdXRsWlNrci1iQzRJb2R3OXc4bnJlb0JlX3NqVW12aWZDemh4bnB0OXJr?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Il tempismo è rilevante: Anthropic arriva in Italia mentre l'Europa fatica a trattenere capitali e infrastrutture AI (costi energetici, burocrazia, sovranità cloud), rendendo ogni insediamento di un lab Tier-1 un asset geopolitico oltre che economico.",
+      "sources": [
+        {
+          "name": "MetalliRari",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNTnlUYVBDWlNLbFlVQXFFRy10bUhwcVRwcnliWFUtTTRFckQ1WVVLY256QndSVk1HbzYyY3BrV20tVFFQZXhTMWd1ajQ3Vk90SHU1a3ktRnA4azFQcmtzQ3FtR3VZbjVBYV9TWC1halB4aVFPQ1hxakx0MHE5Sm5qWU9DSXBiTTlTTjVIYmRxVzIzVEFiZl9yd2UyUTRXdHR1cVHSAacBQVVfeXFMTVNjdnZWU2p2ZlVQZlRMb3lsMjRqbWM4c2JPV2lwUzhoM1JRRlpSaVRhOXR1WVhrZFFfRG9Fd0VsanR4VnNkYzdpYmJDeG5tbjhwWnRodURNbVVEQmZZVnJLOFV2M01lLUoyRFMxb254NmcxSXhIV180aXRsYmRNNTNmNFJRNVFNaFlIRW13Yk1rZzdvMDZXUm1XMHB4dWFudTJWYlpISDQ?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Linkiesta.it",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPR2JKTDhLbWQ3NlN0R25DaFc4MG5lOEVmdG9pVHZrMkRRSS1kTjFZVUd4M1NyUjhhbEFBU0tyclNlN1NYZHFmeG1uY2xKX0RQYkhqVksydHRNZG5QNWw0b2JOMWdYWERYbUVqdERmeXpmY2VEZFYtM0tWeVBsODhWMklLejlaYXd0MjkzNzZHSDFrVFhqVGRicnJta19MNHY4U0E?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Per l'ecosistema pugliese e meridionale, la presenza di Anthropic in Italia abbassa le barriere di accesso a partnership, API enterprise e programmi per startup — ma solo se le realtà locali sapranno posizionarsi attivamente nella rete che si sta costruendo attorno a Milano.",
+      "sources": [
+        {
+          "name": "triestenews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPYTZIeXBNS2JYeWp0WGNvbHhodHJERXhNY0RUY092TnByWFk3dE9Od1NFaWVUcDZzbllSR1UzRVQ4blYwT0ZOZGhRUGNvX3pWYVpCQlBBVjFXa0FuQmtzSXhhYTJVSDhnRDJFUXRGOF9vSEJiZDR6NFFUd2x3a0diY1lGcldXV0VHcng4YjZwVEVpRzV6cmExUDZoc2c?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        }
+      ]
+    }
+  ],
+  "funding_markets": [
+    {
+      "text": "Le aziende europee di AI hanno raccolto oltre €5,3 miliardi nel 2025, con la concentrazione del capitale su un gruppo ristretto guidato da Mistral AI, Helsing, Black Forest Labs, Synthesia ed ElevenLabs.",
+      "sources": [
+        {
+          "name": "Tech.eu",
+          "url": "https://tech.eu/2026/05/21/ai-10-companies-that-raised-the-most-in-2025/",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Alice & Bob, startup francese di quantum computing fault-tolerant, ha ricevuto un investimento da NVentures, il braccio di venture capital di NVIDIA, ampliando il proprio Series B oltre i €100 milioni già annunciati.",
+      "sources": [
+        {
+          "name": "Tech.eu",
+          "url": "https://tech.eu/2026/05/22/alice-bob-expands-series-b-with-investment-from-nvidias-venture-arm/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Fresha, piattaforma londinese per il settore beauty e wellness, ha ottenuto €68,9 milioni da KKR raggiungendo una valutazione superiore a €861,9 milioni e acquisendo lo status di unicorno con €245,5 milioni di capitale totale raccolto.",
+      "sources": [
+        {
+          "name": "EU Startups",
+          "url": "https://www.eu-startups.com/2026/05/uk-gets-a-fresh-new-unicorn-as-beauty-and-wellness-platform-fresha-lands-e68-9-million-from-kkr/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Pivot, startup parigina di procurement enterprise, ha chiuso un Series B oversubscribed da $40 milioni guidato da Forestay Capital e Notion Capital per espandere la propria piattaforma AI di finance operations.",
+      "sources": [
+        {
+          "name": "Tech.eu",
+          "url": "https://tech.eu/2026/05/21/pivot-raises-40m-to-expand-ai-powered-enterprise-procurement-platform/",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "Scope, startup londinese AI per ispezioni industriali, ha raccolto €17,2 milioni in un round guidato da Index Ventures con partecipazione di Susa Ventures, Entrepreneurs First e Syndicate 1.",
+      "sources": [
+        {
+          "name": "EU Startups",
+          "url": "https://www.eu-startups.com/2026/05/uk-ai-startup-scope-raises-e17-3-million-funding-led-by-index-ventures-to-speed-up-industrial-inspection-workflows/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "Magnific, piattaforma AI per creativi con sede a Málaga, ha lanciato un fondo da €10 milioni destinato a PMI e team creativi dell'Unione Europea per integrare l'AI in workflow di produzione per campagne pubblicitarie.",
+      "sources": [
+        {
+          "name": "EU Startups",
+          "url": "https://www.eu-startups.com/2026/05/malagas-magnific-launches-e10-million-fund-to-help-creative-teams-turn-ai-experiments-into-production-ready-campaigns/",
+          "date": "22 mag"
+        }
+      ]
+    }
+  ],
+  "english_summary": [
+    {
+      "text": "Anthropic opened its first Italian office in Milan, positioning the city as a European hub for AI operations and signalling growing US AI investment in Italy.",
+      "sources": [
+        {
+          "name": "triestenews",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPYTZIeXBNS2JYeWp0WGNvbHhodHJERXhNY0RUY092TnByWFk3dE9Od1NFaWVUcDZzbllSR1UzRVQ4blYwT0ZOZGhRUGNvX3pWYVpCQlBBVjFXa0FuQmtzSXhhYTJVSDhnRDJFUXRGOF9vSEJiZDR6NFFUd2x3a0diY1lGcldXV0VHcng4YjZwVEVpRzV6cmExUDZoc2c?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "MilanoToday",
+          "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBROWJCUVktRzVkbEZsTTlkTDZjQ01JVVVuMmxxaEZ2by1kVHFyVWo4TW9yMk9zRjA4bTFNRE1fejFxYlZnNmJ6TmRycG9oWVQ4RHlYUHZZb3E3ZmkzbW5PRGhNd0VTclZ4WHhXckI4N1I?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "Borsa&Finanza",
+          "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOSmpxellLZS15eWtCcGFITDh5VGZhTENMNTk3Wkg3ckN1TEpkMHBaaEZLTW9mMGZfaTdhRmw2UWJQODUtcnhvc2pPT0lzckNmMnlhWUNtajBOSlB3dkpRSzJrdkNYQkJ5Nzk4aTVkUlNvM2Vkc0hoSDVyY25rODVnZ2hR?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Corriere della Sera",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaXUtVDFLRkVFYm96VVZQOHhZeUxsX0luZ00xNnZoc1BYUGpiYWp1ckpLMUpzbFFLLWFmdENURmN1LVJLMzBUMGVaaUdGR2pMbE9vUVF1ZUhWby1nTFQxbTVMMDlyRHVVOFIzQjNxcDhTaWNiSE9xS0lzTGQyTzE3cWl1N2ZSVUg3ay1ZVTQybXZMd1ZsTzVfN051dGxaU2tyLWJDNElvZHc5dzhucmVvQmVfc2pVbXZpZkN6aHhucHQ5cmvSAcMBQVVfeXFMUGl1LVQxS0ZFRWJvelVWUDh4WXlMbF9JbmdNMTZ2aHNQWFBqYmFqdXJKSzFKc2xRSy1hZnRDVEZjdS1SSzMwVDBlWmlHRkdqTGxPb1FRdWVIVm8tZ0xUMW01TDA5ckR1VThSM0IzcXA4U2ljYkhPcUtJc0xkMk8xN3FpdTdmUlVIN2stWVU0Mm12THdWbE81XzdOdXRsWlNrci1iQzRJb2R3OXc4bnJlb0JlX3NqVW12aWZDemh4bnB0OXJr?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "youmark.it",
+          "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONHVXMTJaS1QycTREVVJKejliTTlkNmx5U3FvR3d2UkxySVVIdWpabWZlcnRkWGQ2dlRrRWV0YU5uVFRNeEc2NzFKZlVXVmwzVUxYbXU0NG5weWhERTFDMkpseVNUYkF2Zk53OE1fYUVieHJ6YWdIT2E2R09ITDR4MHdyREZCWFkzbFppUA?oc=5",
+          "date": "21 mag"
+        }
+      ]
+    },
+    {
+      "text": "The European Commission advanced AI Act implementation by launching a new consultation round on high-risk AI system guidelines and a transparency code for general-purpose models.",
+      "sources": [
+        {
+          "name": "AI4Business",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNeXNPaGVvRjREc3lxbklrY3hCcHpVVndETTBKSWxqaVM4NGwyZjVYRDJvRDY5anVlR0JZT1ItblJPSmpDMnZNVnpSOTY3SDE3QzdoM3ZHNlptdVUwVDNEenhuQ0VWQ0l4b3RObGdBTzNzeEs2VlVQU3ptRVBmbERkQUI0NG9xVzFUVmpIN0k1blRUSHgtd2psSDctcFBBejlscEV3NG1ZeDNqVWNSZzFsMllwRWc5OU9fZV9R?oc=5",
+          "date": "19 mag"
+        },
+        {
+          "name": "TGWEBAI",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9rbXJzOVNKRlJ2YUl1MGNjLU5oZWJwclJTbTVaMWExd0NpSVFkNG4wVUx2QUJDSC00dnBEVFFhQzBqSkJQMko2dEhsLTU0dmlLNHhoSmNZaGVWbHpHMnNjM2pPSnl2MU1m?oc=5",
+          "date": "22 mag"
+        },
+        {
+          "name": "Sifted",
+          "url": "https://sifted.eu/articles/eu-ai-act-latest-changes-explained/",
+          "date": "22 mag"
+        }
+      ]
+    },
+    {
+      "text": "The European Parliament approved a foreign-investment screening shield covering AI, defence, and critical raw materials, tightening oversight of non-EU capital entering strategic sectors.",
+      "sources": [
+        {
+          "name": "Eunews",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOcXdzNGtHOFJPWVRLcHBROGJYSjViZzJEaDhhRUVPTFNBRGVmaFk5RVA0eUdKcmo2cktaV21mZjdieTBQb0VGNTVCcG9pV3pUbk8ydFNyd2J6Z0Q2dlB6MUowZFE1Tk1GeXgwVTZrNTNVYlZpRWNHVHFNOW9TVU02aU82eW44RlVVYk9RcnNTNVJ3VVZ5SnNhQXRpYkhzZXNlcUtVdEtiN2h4SXh1VThZa0J2cFJnWmVpbVVpV0dKaERPYy0xT254N0RfYkFzdw?oc=5",
+          "date": "19 mag"
+        }
+      ]
+    },
+    {
+      "text": "Mistral AI warned that Europe has a two-year window to establish AI sovereignty, while Allianz Research called for coordinated EU-level action to avoid strategic dependency on US and Chinese providers.",
+      "sources": [
+        {
+          "name": "Bitget",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1YZWMwa3Q5WW1EdGQ5N3RqVGY1aUZ4RGRPLVZFV2NUOUhPOVJRaWFNQXNNcW9MRkc5UGpuakRGUlRILVI3ZG5KRUM1NFluamExUFhqUjZfdXhWVWdwOE1uMTZ30gFnQVVfeXFMUHFOb1lsUkhKdlU0ZHNza2tBSHNQaGFWT0x3N2ZVSGZnQnpZbHRSZGxiaGl6eGQ1LThxQXJqOUlJS0ZCenp5Q290VWN1aEluSmt2N29jWl83Wng3TWo1V3V5SVo3Z2YyMA?oc=5",
+          "date": "21 mag"
+        },
+        {
+          "name": "AI4Business",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQTDVtUnpXbHUxY2pxdnJCU0djXzB5Nk5oX1phTW9LMEF2ZEVWeDduR1VVOXNkSHNNWklZaVRIWFhjMDlBNVZqWlpjdEFRaHhRNWJWQnc3a1RCcWJqdDl6VWxQZ0s2Y21GTFJ0Rk5OZlA5MjBEUG1aWGZ5TzhIX0FuQTVWWGtPd1NsQ3BwR3dKcENpdjhWWkYxNE14T0tUcERKQkFHUW0zVUVhenFLdHhQWW5lR2NFYlgydW9EOQ?oc=5",
+          "date": "19 mag"
+        }
+      ]
+    },
+    {
+      "text": "Italy's data-centre permitting delays drew industry warnings that the country risks losing infrastructure investment, as European energy costs and grid constraints continued to threaten the continent's AI competitiveness.",
+      "sources": [
+        {
+          "name": "MetalliRari",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNTnlUYVBDWlNLbFlVQXFFRy10bUhwcVRwcnliWFUtTTRFckQ1WVVLY256QndSVk1HbzYyY3BrV20tVFFQZXhTMWd1ajQ3Vk90SHU1a3ktRnA4azFQcmtzQ3FtR3VZbjVBYV9TWC1halB4aVFPQ1hxakx0MHE5Sm5qWU9DSXBiTTlTTjVIYmRxVzIzVEFiZl9yd2UyUTRXdHR1cVHSAacBQVVfeXFMTVNjdnZWU2p2ZlVQZlRMb3lsMjRqbWM4c2JPV2lwUzhoM1JRRlpSaVRhOXR1WVhrZFFfRG9Fd0VsanR4VnNkYzdpYmJDeG5tbjhwWnRodURNbVVEQmZZVnJLOFV2M01lLUoyRFMxb254NmcxSXhIV180aXRsYmRNNTNmNFJRNVFNaFlIRW13Yk1rZzdvMDZXUm1XMHB4dWFudTJWYlpISDQ?oc=5",
+          "date": "23 mag"
+        },
+        {
+          "name": "CorCom",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOWkZfbmg1cEtCQmVtN3ZhOXV2SzZRU2dCeXQyaC1qSDAxM1l0c3V6VUxFRzhIUERNQlZoTDRlLVNadmlNZ1RNc1JBV0FfMGUxOWJVWGdaNFJ2czg4UDhReXhvT1BtY1dCRzdNZHF2UXg3cWhScDd2bG9WcV9xdXBtMzQ4eEwzS2NFV1RwaHRQSW5MbkhkV1RNeWF2Y2VhYllKSFYtRktidzh4VFpVOWJsUDI3YUtERHFVc1J0YWgzc19UZTFFSjhteVFha21ZR3M?oc=5",
+          "date": "20 mag"
+        }
+      ]
+    }
+  ],
+  "article_count": 232,
+  "source_count": 131,
+  "skipped_dedup": 0
+}
