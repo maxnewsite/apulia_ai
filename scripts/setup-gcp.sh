@@ -5,19 +5,21 @@
 # Prereqs:
 #   gcloud auth login       (interactive, do this once)
 #   gcloud config set project apuliaai
+#   bash scripts/grant-build-roles.sh   (one-time, fresh project only)
 #
 # What this script does:
 #   1. Enables required GCP APIs
 #   2. Creates the Artifact Registry repo
 #   3. Uploads secrets to Secret Manager from local .env files
-#   4. Builds + deploys the landing as a Cloud Run service
-#   5. Builds + deploys the pipeline as a Cloud Run job
-#   6. Creates a Cloud Scheduler trigger for Sundays 15:00 Europe/Rome
+#   4. Delegates to deploy-landing.sh + deploy-pipeline.sh
+#      (so service/job config lives in one place, not duplicated here)
+#   5. Creates a Cloud Scheduler trigger for Sundays 15:00 Europe/Rome
 #
 # Re-runnable: every step uses --quiet + checks-for-existence so re-running
 # is a no-op when nothing changed.
 
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ─── Config ──────────────────────────────────────────────────────────────
 PROJECT_ID="${PROJECT_ID:-apuliaai}"
@@ -27,7 +29,6 @@ LANDING_SERVICE="${LANDING_SERVICE:-apulia-landing}"
 PIPELINE_JOB="${PIPELINE_JOB:-apulia-weekly}"
 SCHEDULER_JOB="${SCHEDULER_JOB:-apulia-weekly-trigger}"
 SCHEDULER_SA_NAME="${SCHEDULER_SA_NAME:-apulia-scheduler}"
-APP_URL_PUBLIC="${APP_URL_PUBLIC:-https://apulia.ai}"
 
 # These come from the local env files. We never write them into the repo.
 LANDING_ENV_FILE="${LANDING_ENV_FILE:-landing/.env.local}"
@@ -35,7 +36,6 @@ PIPELINE_ENV_FILE="${PIPELINE_ENV_FILE:-pipeline/.env}"
 
 say() { printf "\n\033[1;36m▸ %s\033[0m\n" "$*"; }
 ok()  { printf "  \033[32m✓\033[0m %s\n" "$*"; }
-warn(){ printf "  \033[33m!\033[0m %s\n" "$*"; }
 
 require() {
   local var="$1" file="$2"
@@ -47,6 +47,9 @@ require() {
   fi
   printf "%s" "${val}"
 }
+
+# Export config so the delegated deploy scripts inherit it.
+export PROJECT_ID REGION REPO
 
 # ─── 0. Sanity ───────────────────────────────────────────────────────────
 say "Active project"
@@ -94,8 +97,6 @@ create_or_update_secret() {
   fi
 }
 
-# Read from local env files
-SUPABASE_URL="$(require NEXT_PUBLIC_SUPABASE_URL "${LANDING_ENV_FILE}")"
 SUPABASE_ANON_KEY="$(require NEXT_PUBLIC_SUPABASE_ANON_KEY "${LANDING_ENV_FILE}")"
 SUPABASE_SERVICE_ROLE_KEY="$(require SUPABASE_SERVICE_ROLE_KEY "${LANDING_ENV_FILE}")"
 ZEPTO_API_TOKEN="$(require ZEPTO_API_TOKEN "${LANDING_ENV_FILE}")"
@@ -122,74 +123,13 @@ for s in supabase-anon-key supabase-service-role-key zepto-api-token admin-jwt-s
 done
 ok "Compute SA can access secrets"
 
-# ─── 4. Landing — build + deploy ─────────────────────────────────────────
-say "Building landing image"
-LANDING_IMG="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/landing:latest"
+# ─── 4. Delegate landing deploy ──────────────────────────────────────────
+say "Delegating landing deploy"
+bash "${SCRIPT_DIR}/deploy-landing.sh"
 
-gcloud builds submit landing \
-  --tag "${LANDING_IMG}" \
-  --quiet
-ok "Image pushed: ${LANDING_IMG}"
-
-say "Deploying landing service"
-gcloud run deploy "${LANDING_SERVICE}" \
-  --image "${LANDING_IMG}" \
-  --region "${REGION}" \
-  --allow-unauthenticated \
-  --port 8080 \
-  --min-instances 0 --max-instances 5 \
-  --memory 512Mi --cpu 1 \
-  --set-env-vars "NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}" \
-  --set-env-vars "NEXT_PUBLIC_APP_URL=${APP_URL_PUBLIC}" \
-  --set-env-vars "ZEPTO_API_HOST=api.zeptomail.com" \
-  --set-env-vars "ZEPTO_FROM_EMAIL_CONFIRM=noreply@apulia.ai" \
-  --set-env-vars "ZEPTO_FROM_EMAIL_ISSUES=newsletter@apulia.ai" \
-  --set-env-vars "ZEPTO_FROM_NAME=apulia.ai" \
-  --set-env-vars "ADMIN_EMAIL=max@kalym.me" \
-  --set-secrets "NEXT_PUBLIC_SUPABASE_ANON_KEY=supabase-anon-key:latest" \
-  --set-secrets "SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest" \
-  --set-secrets "ZEPTO_API_TOKEN=zepto-api-token:latest" \
-  --set-secrets "ADMIN_JWT_SECRET=admin-jwt-secret:latest" \
-  --set-secrets "ADMIN_PASSWORD=admin-password:latest" \
-  --quiet
-
-LANDING_URL="$(gcloud run services describe "${LANDING_SERVICE}" --region "${REGION}" --format='value(status.url)')"
-ok "Landing live at: ${LANDING_URL}"
-
-# ─── 5. Pipeline — build + deploy as job ─────────────────────────────────
-say "Building pipeline image"
-PIPELINE_IMG="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/pipeline:latest"
-
-gcloud builds submit pipeline \
-  --tag "${PIPELINE_IMG}" \
-  --quiet
-ok "Image pushed: ${PIPELINE_IMG}"
-
-say "Creating/updating pipeline job"
-JOB_FLAGS=(
-  --image "${PIPELINE_IMG}"
-  --region "${REGION}"
-  --max-retries 1
-  --task-timeout 30m
-  --memory 2Gi --cpu 2
-  --set-env-vars "SUPABASE_URL=${SUPABASE_URL}"
-  --set-env-vars "APP_URL=${APP_URL_PUBLIC}"
-  --set-env-vars "ZEPTO_API_HOST=api.zeptomail.com"
-  --set-env-vars "ZEPTO_FROM_EMAIL_ISSUES=newsletter@apulia.ai"
-  --set-env-vars "ZEPTO_FROM_NAME=apulia.ai"
-  --set-secrets "SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest"
-  --set-secrets "ZEPTO_API_TOKEN=zepto-api-token:latest"
-  --set-secrets "ANTHROPIC_API_KEY=anthropic-api-key:latest"
-  --quiet
-)
-
-if gcloud run jobs describe "${PIPELINE_JOB}" --region "${REGION}" >/dev/null 2>&1; then
-  gcloud run jobs update "${PIPELINE_JOB}" "${JOB_FLAGS[@]}"
-  ok "Updated"
-else
-  gcloud run jobs create "${PIPELINE_JOB}" "${JOB_FLAGS[@]}"
-  ok "Created"
-fi
+# ─── 5. Delegate pipeline deploy ─────────────────────────────────────────
+say "Delegating pipeline deploy"
+bash "${SCRIPT_DIR}/deploy-pipeline.sh"
 
 # ─── 6. Cloud Scheduler ──────────────────────────────────────────────────
 say "Scheduler service account"
@@ -234,6 +174,8 @@ else
 fi
 
 # ─── Done ────────────────────────────────────────────────────────────────
+LANDING_URL="$(gcloud run services describe "${LANDING_SERVICE}" --region "${REGION}" --format='value(status.url)')"
+
 cat <<EOF
 
 ────────────────────────────────────────────────────────────────────────
@@ -245,7 +187,7 @@ cat <<EOF
             → next trigger via gcloud scheduler jobs describe ${SCHEDULER_JOB} --location ${REGION}
 
   Manual test run:
-    gcloud run jobs execute ${PIPELINE_JOB} --region ${REGION} --args="--dry-run"
+    gcloud run jobs execute ${PIPELINE_JOB} --region ${REGION} --args=--dry-run
 
   Watch logs:
     gcloud beta run jobs executions list --job ${PIPELINE_JOB} --region ${REGION}
