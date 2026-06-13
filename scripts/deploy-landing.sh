@@ -27,7 +27,8 @@ gcloud run deploy "${SERVICE}" \
   --project "${PROJECT_ID}" \
   --allow-unauthenticated \
   --port 8080 \
-  --min-instances 0 --max-instances 5 \
+  --min-instances 0 --max-instances 3 \
+  --concurrency 80 \
   --memory 512Mi --cpu 1 \
   --set-env-vars "NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}" \
   --set-env-vars "NEXT_PUBLIC_APP_URL=${APP_URL_PUBLIC}" \
