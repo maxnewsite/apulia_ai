@@ -5,7 +5,7 @@ import SourceTicker from '@/components/SourceTicker'
 import HowItWorks from '@/components/HowItWorks'
 import Products from '@/components/Products'
 import Audience from '@/components/Audience'
-import PreviewTeaser from '@/components/PreviewTeaser'
+import LatestIssue from '@/components/LatestIssue'
 import FAQ from '@/components/FAQ'
 import SubscribeForm from '@/components/SubscribeForm'
 import SisterPublication from '@/components/SisterPublication'
@@ -33,7 +33,7 @@ export default function HomePage() {
           <HowItWorks />
           <Products />
           <Audience />
-          <PreviewTeaser />
+          <LatestIssue />
           <FAQ />
           <SisterPublication />
           <SubscribeForm />

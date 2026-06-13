@@ -3,7 +3,7 @@
    while preserving the original class names. */
 
 .newsletter-article {
-  color: #F0F4FF;
+  color: #0F172A;
   font-size: 16px;
   line-height: 1.7;
 }
@@ -43,12 +43,12 @@
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -0.02em;
-  color: #F0F4FF;
+  color: #0F172A;
 }
 
 .newsletter-article .brand-tagline {
   font-size: 0.75rem;
-  color: #94A3B8;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-top: 0.25rem;
@@ -57,13 +57,13 @@
 .newsletter-article .issue-meta {
   text-align: right;
   font-size: 0.8125rem;
-  color: #94A3B8;
+  color: #475569;
   line-height: 1.6;
   white-space: nowrap;
 }
 
 .newsletter-article .issue-meta strong {
-  color: #F0F4FF;
+  color: #0F172A;
   font-weight: 700;
   display: block;
   margin-bottom: 0.25rem;
@@ -77,17 +77,17 @@
 .newsletter-article .section-title {
   font-size: 1.5rem;
   font-weight: 900;
-  color: #F0F4FF;
+  color: #0F172A;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #1E3A5F;
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .newsletter-article .section-title-en {
   display: block;
   font-size: 0.75rem;
   font-weight: 500;
-  color: #94A3B8;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-top: 0.25rem;
@@ -118,7 +118,7 @@
 }
 
 .newsletter-article .bullet-text {
-  color: #F0F4FF;
+  color: #0F172A;
   flex: 1;
   font-size: 1rem;
   line-height: 1.65;
@@ -128,13 +128,13 @@
   display: block;
   margin-top: 0.5rem;
   font-size: 0.75rem;
-  color: #94A3B8;
+  color: #475569;
 }
 
 .newsletter-article .bullet-sources a {
   color: #60A5FA;
   text-decoration: none;
-  border-bottom: 1px dotted #1E3A5F;
+  border-bottom: 1px dotted #E2E8F0;
   transition: color 0.15s, border-color 0.15s;
   margin-right: 0.25rem;
 }
@@ -148,14 +148,14 @@
 .newsletter-article .divider,
 .newsletter-article hr {
   border: 0;
-  border-top: 1px solid #1E3A5F;
+  border-top: 1px solid #E2E8F0;
   margin: 3rem 0;
 }
 
 /* English summary box */
 .newsletter-article .en-summary-box {
   background: rgba(37, 99, 235, 0.05);
-  border: 1px solid #1E3A5F;
+  border: 1px solid #E2E8F0;
   border-radius: 1rem;
   padding: 2rem;
   margin-top: 2rem;
@@ -164,13 +164,13 @@
 .newsletter-article .en-summary-header {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #F0F4FF;
+  color: #0F172A;
   margin-bottom: 0.5rem;
 }
 
 .newsletter-article .en-note {
   font-size: 0.75rem;
-  color: #94A3B8;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 1.5rem;
@@ -198,8 +198,8 @@
 
 .newsletter-article .country-card,
 .newsletter-article .country {
-  background: #0F1A2E;
-  border: 1px solid #1E3A5F;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: 0.75rem;
   padding: 1.25rem;
 }
@@ -207,7 +207,7 @@
 .newsletter-article .country-name {
   font-size: 1rem;
   font-weight: 700;
-  color: #F0F4FF;
+  color: #0F172A;
   margin-bottom: 0.75rem;
 }
 
@@ -230,18 +230,18 @@
 .newsletter-article th,
 .newsletter-article td {
   padding: 0.625rem 0.875rem;
-  border: 1px solid #1E3A5F;
+  border: 1px solid #E2E8F0;
   text-align: left;
-  color: #F0F4FF;
+  color: #0F172A;
 }
 
 .newsletter-article th {
-  background: #0F1A2E;
+  background: #F8FAFC;
   font-weight: 700;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94A3B8;
+  color: #475569;
 }
 
 /* Matrix cell states (state pills) */
@@ -255,7 +255,7 @@
   font-weight: 600;
 }
 
-.newsletter-article .state-none { background: #1E3A5F; color: #94A3B8; }
+.newsletter-article .state-none { background: #E2E8F0; color: #475569; }
 .newsletter-article .state-normal { background: rgba(37, 99, 235, 0.2); color: #60A5FA; }
 .newsletter-article .state-active { background: rgba(5, 150, 105, 0.2); color: #34D399; }
 .newsletter-article .state-surge { background: rgba(217, 119, 6, 0.2); color: #FBBF24; }
@@ -263,7 +263,7 @@
 /* Spotlight section */
 .newsletter-article .spotlight {
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(245, 158, 11, 0.05));
-  border: 1px solid #1E3A5F;
+  border: 1px solid #E2E8F0;
   border-radius: 1rem;
   padding: 2rem;
   margin-top: 1rem;
@@ -272,7 +272,7 @@
 .newsletter-article .spotlight-title {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #F0F4FF;
+  color: #0F172A;
   margin-bottom: 1rem;
 }
 
@@ -280,7 +280,7 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #94A3B8;
+  color: #475569;
   font-style: italic;
   margin-top: 0.25rem;
 }

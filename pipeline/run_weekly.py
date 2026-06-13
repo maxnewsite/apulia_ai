@@ -31,7 +31,7 @@ from dotenv import load_dotenv
 
 from src.dedupe import SeenStore
 from src.pdf import render_pdf
-from src.pipeline import build_newsletter, save_newsletter
+from src.pipeline import build_newsletter, load_newsletter_meta, save_newsletter
 from src.render import render_html
 
 
@@ -53,12 +53,24 @@ def main() -> int:
     parser.add_argument("--no-pdf", action="store_true",
                         help="Salta la generazione PDF (solo HTML)")
     parser.add_argument("--publish", action="store_true",
-                        help="Carica PDF + HTML su Supabase e aggiorna newsletter_issues")
+                        help="Forza pubblicazione (default: auto se SUPABASE_SERVICE_ROLE_KEY è impostato)")
+    parser.add_argument("--no-publish", action="store_true",
+                        help="Sopprime la pubblicazione anche se le credenziali sono presenti")
     parser.add_argument("--deliver", action="store_true",
-                        help="Invia agli iscritti (attivato automaticamente dopo --publish)")
+                        help="Forza consegna (default: auto dopo publish)")
     parser.add_argument("--no-deliver", action="store_true", dest="no_deliver",
                         help="Sopprime la consegna anche quando si pubblica")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Sopprime sia publish che deliver (genera solo HTML/PDF)")
+    parser.add_argument("--from-existing", metavar="YYYY-MM-DD", default=None,
+                        help="Salta build/render e pubblica+invia usando i file output/weekly-DATE.{json,html,pdf} esistenti. "
+                             "Usa 'latest' per prendere l'edizione più recente.")
     args = parser.parse_args()
+
+    # ── Fast path: re-pubblica/re-invia un'edizione già generata ──────────
+    if args.from_existing:
+        load_dotenv(ROOT / ".env", override=True)
+        return _run_from_existing(args)
 
     load_dotenv(ROOT / ".env", override=True)
     if not os.environ.get("ANTHROPIC_API_KEY"):
@@ -112,9 +124,15 @@ def main() -> int:
         seen_store.save()
         print(f"[dedupe] aggiunti {added} nuovi fingerprint (totale: {len(seen_store.fingerprints())})")
 
-    # 4. Pubblica
+    # 4. Pubblica — automatica se credenziali presenti, salvo --no-publish o --dry-run
+    has_supabase = bool(os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
+    should_publish = (
+        not args.dry_run
+        and not args.no_publish
+        and (args.publish or has_supabase)
+    )
     published_issue = None
-    if args.publish:
+    if should_publish:
         if not pdf_path:
             print("[publish] saltato — nessun PDF prodotto")
         else:
@@ -124,8 +142,12 @@ def main() -> int:
             except Exception as e:
                 print(f"[publish] FALLITO: {e}")
 
-    # 5. Consegna — automatica dopo publish riuscito a meno che non sia soppressa
-    should_deliver = not args.no_deliver and (args.publish or args.deliver)
+    # 5. Consegna — automatica dopo publish riuscito, salvo --no-deliver o --dry-run
+    should_deliver = (
+        not args.dry_run
+        and not args.no_deliver
+        and (should_publish or args.deliver)
+    )
     if should_deliver:
         if not (pdf_path and published_issue):
             print("[deliver] saltato — publish non riuscito o nessun PDF")
@@ -137,6 +159,7 @@ def main() -> int:
                     issue_id=published_issue.issue_id,
                     issue_type="weekly",
                     reporting_period=nl.reporting_period,
+                    issue_slug=f"weekly-{nl.issue_date}",
                 )
             except Exception as e:
                 print(f"[deliver] FALLITO: {e}")
@@ -147,6 +170,64 @@ def main() -> int:
     if args.open:
         import webbrowser
         webbrowser.open(html_path.as_uri())
+
+    return 0
+
+
+def _run_from_existing(args) -> int:
+    """Carica i file output/weekly-DATE.* già generati e fa solo publish+deliver."""
+    target = args.from_existing
+
+    if target == "latest":
+        candidates = sorted(OUTPUT.glob("weekly-*.json"))
+        if not candidates:
+            print("[fatale] nessun output/weekly-*.json trovato", file=sys.stderr)
+            return 2
+        target = candidates[-1].stem.replace("weekly-", "")
+
+    json_path = OUTPUT / f"weekly-{target}.json"
+    html_path = OUTPUT / f"weekly-{target}.html"
+    pdf_path = OUTPUT / f"weekly-{target}.pdf"
+
+    for label, p in (("json", json_path), ("html", html_path), ("pdf", pdf_path)):
+        if not p.exists():
+            print(f"[fatale] manca {label}: {p}", file=sys.stderr)
+            return 2
+
+    print(f"[from-existing] uso edizione {target}")
+    nl = load_newsletter_meta(json_path)
+
+    if args.dry_run:
+        print("[from-existing] --dry-run: niente publish né deliver")
+        return 0
+
+    if args.no_publish:
+        print("[from-existing] --no-publish: salto pubblicazione")
+        return 0
+
+    try:
+        from src.publish import publish
+        published = publish(nl, html_path, pdf_path)
+    except Exception as e:
+        print(f"[publish] FALLITO: {e}", file=sys.stderr)
+        return 1
+
+    if args.no_deliver:
+        print("[from-existing] --no-deliver: salto consegna")
+        return 0
+
+    try:
+        from src.delivery import deliver
+        deliver(
+            pdf_path=pdf_path,
+            issue_id=published.issue_id,
+            issue_type="weekly",
+            reporting_period=nl.reporting_period,
+            issue_slug=f"weekly-{nl.issue_date}",
+        )
+    except Exception as e:
+        print(f"[deliver] FALLITO: {e}", file=sys.stderr)
+        return 1
 
     return 0
 

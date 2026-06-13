@@ -8,22 +8,43 @@
 </head>
 <body>
 
+{% set title_words = nl.title.rsplit(' ', 1) %}
+{% macro brand_title() %}{% if title_words|length == 2 %}{{ title_words[0] }} <span class="accent">{{ title_words[1] }}</span>{% else %}{{ nl.title }}{% endif %}{% endmacro %}
+{% macro bullet(b, show_date=true) %}
+<li class="bullet-item">
+  <span class="bullet-marker">▪</span>
+  <span class="bullet-text">{{ b.text }}
+    {% if b.sources %}
+    <span class="bullet-sources">
+      {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if show_date and s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
+    </span>
+    {% endif %}
+  </span>
+</li>
+{% endmacro %}
+
 {# ═══════════════════════════════════════════════════════════
-   PAGINA 1: Sviluppi chiave · Radar Normativo · Focus Italia
+   PARTE 1 — flusso editoriale continuo:
+   Sviluppi chiave · Radar Normativo · Focus Italia · EN Summary
+   · Briefing per paese · Funding · Compute · Incidenti
    ═══════════════════════════════════════════════════════════ #}
 <div class="page">
+  <div class="page-rule"></div>
   <div class="page-content">
 
-    {# HEADER #}
-    <header class="page-header">
-      <div class="brand">
-        <div class="brand-name">{{ nl.title }}</div>
-        <div class="brand-tagline">{{ nl.tagline }}</div>
+    {# MASTHEAD #}
+    <header>
+      <div class="masthead">
+        <img class="masthead-logo" src="apulia_ai.webp" alt="apulia.ai — AI News. Strategy. Impact.">
+        <div class="issue-meta">
+          <strong>{{ nl.reporting_period }}</strong><br>
+          Generato il {{ now }}<br>
+          {{ nl.article_count }} articoli · {{ nl.source_count }} fonti
+        </div>
       </div>
-      <div class="issue-meta">
-        <strong>{{ nl.reporting_period }}</strong><br>
-        Generato il {{ now }}<br>
-        {{ nl.article_count }} articoli · {{ nl.source_count }} fonti
+      <div class="masthead-title-row">
+        <div class="masthead-title">{{ brand_title() }}</div>
+        <div class="masthead-tagline">{{ nl.tagline }}</div>
       </div>
     </header>
 
@@ -35,23 +56,10 @@
         <span class="section-title-en">Key Developments</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.key_developments %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.key_developments %}{{ bullet(b) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
-
-    <hr class="divider">
 
     {# ── RADAR NORMATIVO #}
     {% if nl.radar_normativo %}
@@ -61,23 +69,10 @@
         <span class="section-title-en">Regulatory Radar · EU AI Act & Policy</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.radar_normativo %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.radar_normativo %}{{ bullet(b) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
-
-    <hr class="divider">
 
     {# ── FOCUS ITALIA #}
     {% if nl.focus_italia %}
@@ -87,18 +82,7 @@
         <span class="section-title-en">Italy Focus</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.focus_italia %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.focus_italia %}{{ bullet(b) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
@@ -107,52 +91,19 @@
     {% if nl.english_summary %}
     <div class="section">
       <div class="en-summary-box">
-        <div class="en-summary-header">English Executive Summary</div>
-        <div class="en-note">For international readers · Sintesi per lettori internazionali</div>
+        <span class="en-summary-header">English Executive Summary</span><span class="en-note">For international readers · Sintesi per lettori internazionali</span>
         <ul class="bullet-list">
-          {% for b in nl.english_summary %}
-          <li class="bullet-item">
-            <span class="bullet-marker">▸</span>
-            <span class="bullet-text">{{ b.text }}
-              {% if b.sources %}
-              <span class="bullet-sources">
-                {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
-              </span>
-              {% endif %}
-            </span>
-          </li>
-          {% endfor %}
+          {% for b in nl.english_summary %}{{ bullet(b, show_date=false) }}{% endfor %}
         </ul>
       </div>
     </div>
     {% endif %}
 
-  </div>{# /page-content #}
-
-  <footer class="page-footer">
-    <span class="footer-brand">apulia.ai</span>
-    <span>{{ nl.reporting_period }}</span>
-    <span class="footer-url">apulia.ai</span>
-  </footer>
-</div>
-
-
-{# ═══════════════════════════════════════════════════════════
-   PAGINA 2: Briefing per paese · Funding & Mercati
-   ═══════════════════════════════════════════════════════════ #}
-<div class="page">
-  <div class="page-content">
-
-    <header class="page-header">
-      <div class="brand">
-        <div class="brand-name">{{ nl.title }}</div>
-        <div class="brand-tagline">Briefing per Paese · Country Briefings</div>
-      </div>
-      <div class="issue-meta">
-        <strong>{{ nl.reporting_period }}</strong><br>
-        Pagina 2
-      </div>
-    </header>
+    {# ── DIVIDER DI CAPITOLO: BRIEFING PER PAESE #}
+    <div class="chapter-divider">
+      <span class="chapter-title">Briefing per Paese</span>
+      <span class="chapter-title-en">Country Briefings · Funding · Compute · Rischi</span>
+    </div>
 
     {# ── BRIEFING PER PAESE #}
     {% if nl.country_briefings %}
@@ -166,26 +117,13 @@
         <div class="country-block">
           <div class="country-name">{{ cb.country }}</div>
           <ul class="bullet-list">
-            {% for b in cb.bullets %}
-            <li class="bullet-item">
-              <span class="bullet-marker">▸</span>
-              <span class="bullet-text">{{ b.text }}
-                {% if b.sources %}
-                <span class="bullet-sources">
-                  {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
-                </span>
-                {% endif %}
-              </span>
-            </li>
-            {% endfor %}
+            {% for b in cb.bullets %}{{ bullet(b, show_date=false) }}{% endfor %}
           </ul>
         </div>
         {% endfor %}
       </div>
     </div>
     {% endif %}
-
-    <hr class="divider">
 
     {# ── FUNDING & MERCATI #}
     {% if nl.funding_markets %}
@@ -195,23 +133,10 @@
         <span class="section-title-en">Funding & Markets</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.funding_markets %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}{% if s.date %} {{ s.date }}{% endif %}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.funding_markets %}{{ bullet(b) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
-
-    <hr class="divider">
 
     {# ── COMPUTE & INFRASTRUTTURE #}
     {% if nl.compute_infra %}
@@ -221,18 +146,7 @@
         <span class="section-title-en">Compute & Infrastructure</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.compute_infra %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.compute_infra %}{{ bullet(b, show_date=false) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
@@ -245,18 +159,7 @@
         <span class="section-title-en">AI Incidents & Risks</span>
       </div>
       <ul class="bullet-list">
-        {% for b in nl.incidents %}
-        <li class="bullet-item">
-          <span class="bullet-marker">▸</span>
-          <span class="bullet-text">{{ b.text }}
-            {% if b.sources %}
-            <span class="bullet-sources">
-              {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
-            </span>
-            {% endif %}
-          </span>
-        </li>
-        {% endfor %}
+        {% for b in nl.incidents %}{{ bullet(b, show_date=false) }}{% endfor %}
       </ul>
     </div>
     {% endif %}
@@ -264,61 +167,49 @@
   </div>{# /page-content #}
 
   <footer class="page-footer">
-    <span class="footer-brand">apulia.ai</span>
-    <span>{{ nl.reporting_period }}</span>
-    <span class="footer-url">apulia.ai</span>
+    <span class="footer-brand">apulia<span class="accent">.ai</span></span>
+    <span>{{ nl.reporting_period }} · {{ nl.tagline }}</span>
+    <span class="footer-page">parte 1 / 2</span>
   </footer>
 </div>
 
 
 {# ═══════════════════════════════════════════════════════════
-   PAGINA 3: Spotlight · Matrice Capacità
+   PARTE 2 — dashboard: Spotlight · Matrice Capacità
    ═══════════════════════════════════════════════════════════ #}
 <div class="page">
+  <div class="page-rule"></div>
   <div class="page-content">
 
     <header class="page-header">
-      <div class="brand">
-        <div class="brand-name">{{ nl.title }}</div>
-        <div class="brand-tagline">Spotlight · Matrice Paesi × Capacità AI</div>
+      <div class="header-brand">
+        <img class="header-logo" src="apulia_ai.webp" alt="apulia.ai">
+        <div class="header-divider"></div>
+        <div>
+          <div class="brand-name">{{ brand_title() }}</div>
+          <div class="brand-tagline">Spotlight · Matrice Paesi × Capacità AI</div>
+        </div>
       </div>
       <div class="issue-meta">
-        <strong>{{ nl.reporting_period }}</strong><br>
-        Pagina 3
+        <strong>{{ nl.reporting_period }}</strong>
       </div>
     </header>
 
     {# ── SPOTLIGHT #}
     {% if nl.spotlight_bullets %}
     <div class="section">
-      <div class="section-title">
-        Spotlight della Settimana
-        <span class="section-title-en">Weekly Spotlight</span>
-      </div>
       <div class="spotlight-box">
+        <div class="spotlight-kicker">Spotlight della Settimana · Weekly Spotlight</div>
         <div class="spotlight-title-it">{{ nl.spotlight_title_it }}</div>
         {% if nl.spotlight_title_en %}
         <div class="spotlight-title-en">{{ nl.spotlight_title_en }}</div>
         {% endif %}
-        <ul class="bullet-list" style="margin-top: 6px;">
-          {% for b in nl.spotlight_bullets %}
-          <li class="bullet-item">
-            <span class="bullet-marker">▸</span>
-            <span class="bullet-text">{{ b.text }}
-              {% if b.sources %}
-              <span class="bullet-sources">
-                {% for s in b.sources %}<a href="{{ s.url }}" title="{{ s.name }}">{% if loop.index > 1 %}, {% endif %}{{ s.name }}</a>{% endfor %}
-              </span>
-              {% endif %}
-            </span>
-          </li>
-          {% endfor %}
+        <ul class="bullet-list">
+          {% for b in nl.spotlight_bullets %}{{ bullet(b, show_date=false) }}{% endfor %}
         </ul>
       </div>
     </div>
     {% endif %}
-
-    <hr class="divider">
 
     {# ── MATRICE PAESI × CAPACITÀ AI #}
     <div class="section">
@@ -339,7 +230,7 @@
           {% for country in countries %}
           {% set row = nl.capability_matrix.get(country, {}) %}
           <tr>
-            <td style="text-align: left; font-weight: 600; font-size: 7pt;">{{ country }}</td>
+            <td class="country-cell">{{ country }}</td>
             {% for cap in capabilities %}
             {% set cell = row.get(cap) %}
             {% set state = cell.state if cell else 'none' %}
@@ -352,7 +243,7 @@
                 {% elif state == 'surge' %}★
                 {% endif %}
               </span>
-              {% if note %}<br><span style="font-size:5.5pt; color: var(--gray-600);">{{ note }}</span>{% endif %}
+              {% if note %}<br><span class="matrix-note">{{ note }}</span>{% endif %}
             </td>
             {% endfor %}
           </tr>
@@ -361,7 +252,7 @@
       </table>
 
       {# Legenda #}
-      <div style="margin-top: 5px; font-size: 6pt; color: var(--gray-600); display: flex; gap: 10px;">
+      <div class="matrix-legend">
         <span><span class="state-pill pill-none">—</span> Nessuna attività</span>
         <span><span class="state-pill pill-normal">●</span> Normale</span>
         <span><span class="state-pill pill-active">▲</span> Attivo</span>
@@ -371,15 +262,15 @@
 
     {# ── STATUS COMPUTE PER PAESE #}
     {% if nl.compute_status %}
-    <div class="section" style="margin-top: 8px;">
+    <div class="section">
       <div class="section-title">
         Stato Cloud & Data Center
         <span class="section-title-en">Cloud & Data Center Status</span>
       </div>
-      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+      <div class="compute-strip">
         {% for country in countries %}
         {% set state = nl.compute_status.get(country, 'none') %}
-        <div style="display: flex; align-items: center; gap: 3px; font-size: 7pt;">
+        <div class="compute-chip">
           <span class="state-pill pill-{{ state }}">{{ state|upper }}</span>
           <span>{{ country }}</span>
         </div>
@@ -391,9 +282,9 @@
   </div>{# /page-content #}
 
   <footer class="page-footer">
-    <span class="footer-brand">apulia.ai</span>
-    <span>{{ nl.reporting_period }}</span>
-    <span>apulia.ai · Intelligence strategica sull'AI in Europa e Italia</span>
+    <span class="footer-brand">apulia<span class="accent">.ai</span></span>
+    <span>{{ nl.reporting_period }} · {{ nl.tagline }}</span>
+    <span class="footer-page">parte 2 / 2</span>
   </footer>
 </div>
 

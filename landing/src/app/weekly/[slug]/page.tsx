@@ -177,11 +177,11 @@ export default async function EditionPage({ params }: { params: Params }) {
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-16">
         <nav
           aria-label="Breadcrumb"
-          className="mb-8 text-sm text-[#94A3B8]"
+          className="mb-8 text-sm text-[#475569]"
         >
           <Link
             href="/"
-            className="hover:text-[#F0F4FF] transition-colors"
+            className="hover:text-[#0F172A] transition-colors"
           >
             Home
           </Link>
@@ -190,28 +190,28 @@ export default async function EditionPage({ params }: { params: Params }) {
           </span>
           <Link
             href="/weekly"
-            className="hover:text-[#F0F4FF] transition-colors"
+            className="hover:text-[#0F172A] transition-colors"
           >
             Archivio Weekly
           </Link>
           <span className="mx-2" aria-hidden="true">
             /
           </span>
-          <span className="text-[#F0F4FF]">
+          <span className="text-[#0F172A]">
             Edizione #{issue.issue_number}
           </span>
         </nav>
 
-        <header className="mb-10 pb-8 border-b border-[#1E3A5F]">
-          <div className="text-xs uppercase tracking-wider text-[#94A3B8] mb-3">
+        <header className="mb-10 pb-8 border-b border-[#E2E8F0]">
+          <div className="text-xs uppercase tracking-wider text-[#475569] mb-3">
             AI Europa Weekly · Edizione #{issue.issue_number} ·{' '}
             <time dateTime={issueDate}>{formatItalianDate(issueDate)}</time>
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#F0F4FF] leading-tight mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#0F172A] leading-tight mb-4">
             {issue.title}
           </h1>
           {issue.dek && (
-            <p className="text-lg text-[#94A3B8] leading-relaxed">
+            <p className="text-lg text-[#475569] leading-relaxed">
               {issue.dek}
             </p>
           )}
@@ -221,7 +221,7 @@ export default async function EditionPage({ params }: { params: Params }) {
                 href={issue.pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#F0F4FF] bg-[#0F1A2E] border border-[#1E3A5F] rounded-full hover:border-[#2563EB] transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#0F172A] bg-[#F8FAFC] border border-[#E2E8F0] rounded-full hover:border-[#2563EB] transition-colors"
               >
                 <svg
                   width="16"
@@ -258,11 +258,11 @@ export default async function EditionPage({ params }: { params: Params }) {
           />
         </article>
 
-        <aside className="mt-16 p-8 md:p-10 bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl text-center">
-          <h2 className="text-2xl md:text-3xl font-black mb-3 text-[#F0F4FF]">
+        <aside className="mt-16 p-8 md:p-10 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl text-center">
+          <h2 className="text-2xl md:text-3xl font-black mb-3 text-[#0F172A]">
             Ricevi la prossima edizione
           </h2>
-          <p className="text-[#94A3B8] mb-6 max-w-xl mx-auto">
+          <p className="text-[#475569] mb-6 max-w-xl mx-auto">
             Gratuita, ogni domenica pomeriggio. Pronta nella tua inbox per il
             lunedì mattina.
           </p>
@@ -277,7 +277,7 @@ export default async function EditionPage({ params }: { params: Params }) {
         <div className="mt-12 text-center">
           <Link
             href="/weekly"
-            className="inline-flex items-center gap-2 text-sm text-[#94A3B8] hover:text-[#F0F4FF] transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-[#475569] hover:text-[#0F172A] transition-colors"
           >
             <svg
               width="16"

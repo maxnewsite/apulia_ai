@@ -23,6 +23,7 @@ class Subscriber:
     email: str
     preferred_language: str  # 'it' | 'en'
     products: list[str]      # ['weekly'], ['monthly'], ['weekly', 'monthly']
+    unsubscribe_token: str
 
 
 def _client() -> Client:
@@ -37,7 +38,7 @@ def _fetch_subscribers(supabase: Client, product_type: str) -> list[Subscriber]:
     """Recupera iscritti attivi per un dato tipo di prodotto."""
     rows = (
         supabase.table("subscribers")
-        .select("id,email,preferred_language,products")
+        .select("id,email,preferred_language,products,unsubscribe_token")
         .eq("status", "active")
         .execute()
         .data
@@ -53,6 +54,7 @@ def _fetch_subscribers(supabase: Client, product_type: str) -> list[Subscriber]:
                     email=r.get("email") or "",
                     preferred_language=r.get("preferred_language") or "it",
                     products=products,
+                    unsubscribe_token=r.get("unsubscribe_token") or "",
                 )
             )
     return out
@@ -65,31 +67,39 @@ def _parse_from_email(raw: str) -> tuple[str, str]:
     return raw.strip(), ""
 
 
-def _build_email_body(lang: str, reporting_period: str, issue_type: str) -> str:
+def _app_url() -> str:
+    return (os.environ.get("APP_URL") or os.environ.get("NEXT_PUBLIC_APP_URL") or "https://apulia.ai").rstrip("/")
+
+
+def _build_email_body(
+    lang: str,
+    reporting_period: str,
+    issue_type: str,
+    issue_slug: str,
+    unsubscribe_token: str,
+) -> str:
+    base = _app_url()
+    unsub_url = f"{base}/api/unsubscribe?token={unsubscribe_token}" if unsubscribe_token else f"{base}/unsubscribe"
+
     if lang == "en":
         product_name = "AI Europa Weekly" if issue_type == "weekly" else "Strategic Monthly Brief"
         return (
             f'<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; '
-            f'color: #0a1628; line-height: 1.7;">'
+            f'color: #0a1628; line-height: 1.7; font-size: 16px;">'
             f"<p>Your <strong>{product_name}</strong> for <em>{reporting_period}</em> is attached as a PDF.</p>"
-            f'<p>Browse past issues and the archive at '
-            f'<a href="https://apulia.ai" style="color: #1e40af;">apulia.ai</a>.</p>'
-            f'<p style="color: #64748b; margin-top: 24px; font-size: 13px;">'
+            f'<p style="color: #64748b; margin-top: 24px; font-size: 14px;">'
             f'You received this because you subscribed to apulia.ai. '
-            f'<a href="https://apulia.ai/unsubscribe" style="color: #64748b;">Unsubscribe</a>.</p>'
+            f'<a href="{unsub_url}" style="color: #64748b;">Unsubscribe</a>.</p>'
             f"</div>"
         )
-    # Default: italiano
     product_name = "AI Europa Weekly" if issue_type == "weekly" else "Briefing Strategico Mensile"
     return (
         f'<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; '
-        f'color: #0a1628; line-height: 1.7;">'
+        f'color: #0a1628; line-height: 1.7; font-size: 16px;">'
         f"<p>La tua <strong>{product_name}</strong> per il periodo <em>{reporting_period}</em> è allegata in PDF.</p>"
-        f'<p>Consulta le edizioni precedenti su '
-        f'<a href="https://apulia.ai" style="color: #1e40af;">apulia.ai</a>.</p>'
-        f'<p style="color: #64748b; margin-top: 24px; font-size: 13px;">'
+        f'<p style="color: #64748b; margin-top: 24px; font-size: 14px;">'
         f'Hai ricevuto questa email perché sei iscritto ad apulia.ai. '
-        f'<a href="https://apulia.ai/unsubscribe" style="color: #64748b;">Cancella iscrizione</a>.</p>'
+        f'<a href="{unsub_url}" style="color: #64748b;">Cancella iscrizione</a>.</p>'
         f"</div>"
     )
 
@@ -100,12 +110,17 @@ def _send_email_zeptomail(
     html_body: str,
     pdf_path: Path,
 ) -> bool:
-    token = os.environ.get("ZEPTO_API_KEY", "").strip()
-    from_email = os.environ.get("ZEPTO_FROM_EMAIL", "noreply@apulia.ai").strip()
+    token = (os.environ.get("ZEPTO_API_TOKEN") or os.environ.get("ZEPTO_API_KEY") or "").strip()
+    from_email = (
+        os.environ.get("ZEPTO_FROM_EMAIL_ISSUES")
+        or os.environ.get("ZEPTO_FROM_EMAIL")
+        or "newsletter@apulia.ai"
+    ).strip()
     from_name = os.environ.get("ZEPTO_FROM_NAME", "apulia.ai").strip()
+    host = (os.environ.get("ZEPTO_API_HOST") or "api.zeptomail.com").strip()
 
     if not token:
-        print(f"  [email] saltato {to}: ZEPTO_API_KEY non impostato")
+        print(f"  [email] saltato {to}: ZEPTO_API_TOKEN non impostato")
         return False
 
     pdf_b64 = base64.b64encode(pdf_path.read_bytes()).decode()
@@ -121,7 +136,7 @@ def _send_email_zeptomail(
     }
     try:
         r = httpx.post(
-            "https://api.zeptomail.com/v1.1/email",
+            f"https://{host}/v1.1/email",
             headers={
                 "Authorization": token,
                 "Content-Type": "application/json",
@@ -140,13 +155,16 @@ def _send_email_zeptomail(
 
 
 def _log_send(supabase: Client, issue_id: str, subscriber_id: str, ok: bool) -> None:
-    """Registra l'invio nella tabella email_sends."""
+    """Registra l'invio nella tabella email_sends (idempotente su issue_id+subscriber_id)."""
     try:
-        supabase.table("email_sends").insert({
-            "issue_id": issue_id,
-            "subscriber_id": subscriber_id,
-            "status": "sent" if ok else "bounced",
-        }).execute()
+        supabase.table("email_sends").upsert(
+            {
+                "issue_id": issue_id,
+                "subscriber_id": subscriber_id,
+                "status": "sent" if ok else "failed",
+            },
+            on_conflict="issue_id,subscriber_id",
+        ).execute()
     except Exception as e:
         print(f"  [log] impossibile registrare invio: {e}")
 
@@ -156,6 +174,7 @@ def deliver(
     issue_id: str,
     issue_type: str,
     reporting_period: str,
+    issue_slug: str = "",
 ) -> dict:
     """Invia il brief a tutti gli iscritti attivi. Restituisce conteggi."""
     supabase = _client()
@@ -178,7 +197,9 @@ def deliver(
 
         lang = s.preferred_language
         subject = subject_en if lang == "en" else subject_it
-        html_body = _build_email_body(lang, reporting_period, issue_type)
+        html_body = _build_email_body(
+            lang, reporting_period, issue_type, issue_slug, s.unsubscribe_token
+        )
 
         ok = _send_email_zeptomail(s.email, subject, html_body, pdf_path)
         _log_send(supabase, issue_id, s.sub_id, ok)

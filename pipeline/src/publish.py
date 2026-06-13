@@ -97,6 +97,7 @@ def publish(nl: Newsletter, html_path: Path, pdf_path: Path) -> PublishedIssue:
         "dek_en": dek_en,
         "html_content": html_content,
         "pdf_url": pdf_url,
+        "lang": "it",
         "status": "published",
         "published_at": datetime.now(timezone.utc).isoformat(),
     }

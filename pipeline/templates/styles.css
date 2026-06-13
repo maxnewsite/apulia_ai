@@ -1,272 +1,527 @@
-/* apulia.ai — Newsletter CSS — Print-first, A4 */
+/* ═══════════════════════════════════════════════════════════
+   apulia.ai — Newsletter Design System — Print-first, A4
+   Brand: navy #050A14 · blue #2563EB · amber #F59E0B
+   ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+/* Self-hosted variable fonts — no network needed at render time */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('fonts/space-grotesk-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('fonts/space-grotesk-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy:    #0a1628;
-  --blue:    #1e40af;
-  --blue-lt: #3b82f6;
-  --green:   #059669;
-  --amber:   #d97706;
-  --red:     #dc2626;
-  --gray-50: #f8fafc;
-  --gray-100:#f1f5f9;
-  --gray-200:#e2e8f0;
-  --gray-400:#94a3b8;
-  --gray-600:#475569;
-  --gray-700:#334155;
-  --gold:    #c9a84c;
-  --page-w:  210mm;
-  --page-h:  297mm;
-  --margin:  14mm;
+  /* Brand */
+  --navy:      #0A1628;
+  --navy-deep: #050A14;
+  --blue:      #2563EB;
+  --blue-lt:   #3B82F6;
+  --blue-bg:   #EFF4FE;
+  --blue-line: #C7D8F9;
+  --amber:     #F59E0B;
+  --amber-dk:  #B45309;
+  --amber-bg:  #FEF3C7;
+  --green:     #059669;
+  --green-dk:  #065F46;
+  --green-bg:  #D1FAE5;
+
+  /* Neutrals */
+  --gray-50:  #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-300: #CBD5E1;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+
+  /* Layout */
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --margin: 12mm;
+
+  /* Type */
+  --display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --body:    'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
-@page {
-  size: A4;
-  margin: 0;
-}
+@page { size: A4; margin: 9mm 0 14mm 0; }
 
 body {
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  font-size: 8.5pt;
+  font-family: var(--body);
+  font-size: 8.6pt;
   color: var(--navy);
   background: #fff;
-  line-height: 1.45;
+  line-height: 1.42;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  font-feature-settings: 'cv05', 'cv11';
 }
 
-/* ── PAGE ── */
+/* ── PAGE (logical section: starts on a new sheet, may span several) ── */
 .page {
   width: var(--page-w);
-  min-height: var(--page-h);
-  padding: var(--margin);
+  padding: 0 var(--margin);
   page-break-after: always;
   position: relative;
-  overflow: hidden;
 }
 .page:last-child { page-break-after: avoid; }
 
-/* ── HEADER ── */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 2.5px solid var(--navy);
-  padding-bottom: 7px;
-  margin-bottom: 10px;
+/* Brand hairline at the start of each logical section */
+.page-rule {
+  height: 2.2mm;
+  margin: 0 calc(-1 * var(--margin)) 4mm;
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--navy) 35%, var(--blue) 78%, var(--blue-lt) 100%);
 }
-.brand { display: flex; flex-direction: column; gap: 1px; }
-.brand-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 15pt;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: -0.3px;
-}
-.brand-tagline {
-  font-size: 7pt;
-  color: var(--gray-600);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-.issue-meta {
-  text-align: right;
-  font-size: 7pt;
-  color: var(--gray-600);
-  line-height: 1.5;
-}
-.issue-meta strong { color: var(--navy); font-weight: 600; }
 
-/* ── FOOTER ── */
-.page-footer {
-  position: absolute;
-  bottom: var(--margin);
-  left: var(--margin);
-  right: var(--margin);
+.page-content { padding-bottom: 4mm; }
+
+/* Screen preview niceties (ignored in print) */
+@media screen {
+  body { background: var(--gray-100); }
+  .page {
+    background: #fff;
+    margin: 10mm auto;
+    padding-top: 9mm;
+    padding-bottom: 14mm;
+    box-shadow: 0 2px 18px rgba(10, 22, 40, 0.12);
+  }
+  .page-rule { margin-top: -9mm; }
+}
+
+/* Keep logical units intact across sheet breaks */
+.section-title { break-after: avoid; page-break-after: avoid; }
+.bullet-item,
+.country-block,
+.spotlight-box,
+.matrix-table tr,
+.compute-chip { break-inside: avoid; page-break-inside: avoid; }
+.chapter-divider { break-after: avoid; page-break-after: avoid; }
+
+/* ── MASTHEAD (page 1) ── */
+.masthead {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--gray-200);
-  padding-top: 5px;
-  font-size: 6.5pt;
-  color: var(--gray-400);
-}
-.footer-brand { font-weight: 600; color: var(--navy); }
-.footer-url { color: var(--blue); }
-
-/* ── SECTIONS ── */
-.section {
-  margin-bottom: 11px;
-}
-.section-title {
-  font-size: 7pt;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--blue);
-  border-bottom: 1px solid var(--blue);
-  padding-bottom: 2px;
   margin-bottom: 6px;
+}
+.masthead-logo { height: 14.5mm; width: auto; display: block; margin-left: -2mm; }
+.issue-meta {
+  text-align: right;
+  font-size: 7pt;
+  color: var(--gray-500);
+  line-height: 1.55;
+}
+.issue-meta strong {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #fff;
+  background: var(--navy);
+  padding: 2px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.masthead-title-row {
+  border-top: 2.5px solid var(--navy);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 5px 0 5px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 }
+.masthead-title {
+  font-family: var(--display);
+  font-size: 16.5pt;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--navy);
+}
+.masthead-title .accent { color: var(--blue); }
+.masthead-tagline {
+  font-size: 7pt;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+/* ── COMPACT HEADER (pages 2-3) ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2.5px solid var(--navy);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.header-brand { display: flex; align-items: center; gap: 9px; }
+.header-logo { height: 9.5mm; width: auto; display: block; }
+.header-divider { width: 1px; height: 8mm; background: var(--gray-200); }
+.brand-name {
+  font-family: var(--display);
+  font-size: 12.5pt;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.2px;
+  line-height: 1.15;
+}
+.brand-name .accent { color: var(--blue); }
+.brand-tagline {
+  font-size: 6.5pt;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1px;
+}
+
+/* ── FOOTER (rendered by Chromium footerTemplate in PDF; visible in HTML preview only) ── */
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--gray-200);
+  margin-top: 6mm;
+  padding-top: 5px;
+  font-size: 6.5pt;
+  color: var(--gray-400);
+}
+@media print { .page-footer { display: none; } }
+.footer-brand {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 7.5pt;
+  color: var(--navy);
+}
+.footer-brand .accent { color: var(--blue); }
+.footer-page {
+  font-weight: 600;
+  color: var(--gray-500);
+  background: var(--gray-100);
+  padding: 1px 7px;
+  border-radius: 99px;
+}
+
+/* ── SECTIONS ── */
+.section { margin-bottom: 10px; }
+
+/* ── CHAPTER DIVIDER ── */
+.chapter-divider {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--navy) 55%, #15306B 100%);
+  border-radius: 4px;
+  padding: 5px 11px;
+  margin: 13px 0 11px;
+}
+.chapter-title {
+  font-family: var(--display);
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+.chapter-title-en {
+  font-size: 6.5pt;
+  font-weight: 600;
+  color: #8FA8D6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  font-family: var(--display);
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  color: var(--navy);
+  border-bottom: 1.5px solid var(--gray-200);
+  padding-bottom: 3px;
+  margin-bottom: 7px;
+  position: relative;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--blue);
+  margin-right: 6px;
+  transform: translateY(-0.5px);
+  box-shadow: 9px -5px 0 -2.2px var(--blue-lt);
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px; left: 0;
+  width: 34px; height: 1.5px;
+  background: var(--blue);
+}
 .section-title-en {
-  font-size: 6pt;
-  font-weight: 400;
+  font-family: var(--body);
+  font-size: 6.5pt;
+  font-weight: 500;
   color: var(--gray-400);
   text-transform: none;
-  letter-spacing: 0;
+  letter-spacing: 0.2px;
   font-style: italic;
+  margin-left: auto;
 }
 
 /* ── BULLETS ── */
 .bullet-list { list-style: none; }
 .bullet-item {
   display: flex;
-  gap: 5px;
+  gap: 6px;
   margin-bottom: 4px;
-  line-height: 1.4;
+  line-height: 1.42;
 }
 .bullet-marker {
-  color: var(--blue-lt);
-  font-size: 9pt;
+  color: var(--blue);
+  font-size: 8pt;
+  font-weight: 700;
   flex-shrink: 0;
-  margin-top: -1px;
+  margin-top: 0.5px;
 }
 .bullet-text { flex: 1; }
 .bullet-sources {
-  font-size: 6.5pt;
+  font-size: 6.3pt;
+  font-weight: 500;
   color: var(--gray-400);
+  margin-left: 4px;
   white-space: nowrap;
-  flex-shrink: 0;
-  align-self: flex-start;
-  margin-top: 1px;
 }
-.bullet-sources a { color: var(--gray-400); text-decoration: none; }
-.bullet-sources a:hover { color: var(--blue); }
+.bullet-sources::before { content: '— '; color: var(--gray-300); }
+.bullet-sources a { color: var(--blue); text-decoration: none; }
+.bullet-sources a:hover { text-decoration: underline; }
 
 /* ── COUNTRY GRID ── */
 .country-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
+  gap: 10px 16px;
 }
-.country-block {}
+.country-block {
+  border-left: 2px solid var(--gray-200);
+  padding-left: 8px;
+}
 .country-name {
-  font-size: 7pt;
-  font-weight: 700;
-  color: var(--navy);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 3px;
-  padding-bottom: 2px;
-  border-bottom: 0.5px solid var(--gray-200);
-}
-
-/* ── SPOTLIGHT ── */
-.spotlight-box {
-  background: var(--gray-50);
-  border-left: 3px solid var(--gold);
-  padding: 7px 9px;
-  margin-bottom: 2px;
-}
-.spotlight-title-it {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 10pt;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.3;
-}
-.spotlight-title-en {
-  font-size: 7pt;
-  color: var(--gray-600);
-  font-style: italic;
-  margin-bottom: 6px;
-}
-
-/* ── CAPABILITY MATRIX ── */
-.matrix-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 7pt;
-}
-.matrix-table th {
-  background: var(--navy);
-  color: #fff;
-  font-size: 6.5pt;
-  font-weight: 600;
-  padding: 3px 4px;
-  text-align: center;
-  border: 1px solid var(--navy);
-  white-space: nowrap;
-}
-.matrix-table th.row-header { text-align: left; min-width: 22mm; }
-.matrix-table td {
-  padding: 3px 4px;
-  border: 1px solid var(--gray-200);
-  text-align: center;
-  vertical-align: middle;
-  font-size: 6pt;
-}
-.matrix-table tr:nth-child(even) td { background: var(--gray-50); }
-
-/* Matrix cell states */
-.state-none   { background: #fff !important; color: var(--gray-400); }
-.state-normal { background: #dbeafe !important; color: #1d4ed8; font-weight: 500; }
-.state-active { background: #d1fae5 !important; color: #065f46; font-weight: 600; }
-.state-surge  { background: #fef3c7 !important; color: #92400e; font-weight: 700; }
-
-.state-pill {
-  display: inline-block;
-  padding: 1px 4px;
-  border-radius: 3px;
-  font-size: 6pt;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-.pill-none   { background: var(--gray-100); color: var(--gray-400); }
-.pill-normal { background: #dbeafe; color: #1d4ed8; }
-.pill-active { background: #d1fae5; color: #065f46; }
-.pill-surge  { background: #fef3c7; color: #92400e; }
-
-/* ── ENGLISH SUMMARY ── */
-.en-summary-box {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 4px;
-  padding: 8px 10px;
-}
-.en-summary-header {
-  font-size: 6.5pt;
+  font-family: var(--display);
+  font-size: 7.8pt;
   font-weight: 700;
   color: var(--blue);
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  margin-bottom: 5px;
-  padding-bottom: 3px;
-  border-bottom: 1px solid #bfdbfe;
-}
-.en-note {
-  font-size: 6pt;
-  color: var(--gray-400);
-  font-style: italic;
   margin-bottom: 4px;
 }
 
-/* ── TWO-COLUMN LAYOUT ── */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+/* ── SPOTLIGHT (hero) ── */
+.spotlight-box {
+  background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 55%, #122448 100%);
+  border-radius: 6px;
+  padding: 12px 14px 11px;
+  margin-bottom: 2px;
+  color: #E6EDFB;
+  position: relative;
+  overflow: hidden;
 }
-.col {}
+.spotlight-box::after {
+  content: '';
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 8px; height: 8px;
+  background: var(--blue-lt);
+  box-shadow: -13px 11px 0 -1px var(--blue), 11px 13px 0 -2.5px var(--amber);
+  opacity: 0.9;
+}
+.spotlight-kicker {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+.spotlight-title-it {
+  font-family: var(--display);
+  font-size: 14pt;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.22;
+  letter-spacing: -0.2px;
+  max-width: 92%;
+}
+.spotlight-title-en {
+  font-size: 7.5pt;
+  color: #93A8CC;
+  font-style: italic;
+  margin: 3px 0 7px;
+}
+.spotlight-box .bullet-marker { color: var(--amber); }
+.spotlight-box .bullet-text { color: #DCE6F7; }
+.spotlight-box .bullet-sources { color: #6B82A8; }
+.spotlight-box .bullet-sources::before { color: #3A4E70; }
+.spotlight-box .bullet-sources a { color: #7FA3E8; }
 
-/* ── REGULATORY BADGE ── */
+/* ── CAPABILITY MATRIX ── */
+.matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 7pt;
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.matrix-table th {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 6.6pt;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 4px 5px;
+  text-align: center;
+  white-space: nowrap;
+}
+.matrix-table th.row-header { text-align: left; min-width: 22mm; padding-left: 8px; }
+.matrix-table td {
+  padding: 4px 5px;
+  border-top: 1px solid var(--gray-200);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 6pt;
+  line-height: 1.35;
+}
+.matrix-table td.country-cell {
+  text-align: left;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 7.2pt;
+  padding-left: 8px;
+  color: var(--navy);
+}
+.matrix-table tr:nth-child(even) td { background: var(--gray-50); }
+
+/* Matrix cell states */
+.state-none   { background: #fff !important; color: var(--gray-300); }
+.state-normal { background: var(--blue-bg) !important; color: #1D4ED8; font-weight: 500; }
+.state-active { background: var(--green-bg) !important; color: var(--green-dk); font-weight: 600; }
+.state-surge  { background: var(--amber-bg) !important; color: #92400E; font-weight: 700; }
+
+.state-pill {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 99px;
+  font-size: 6pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.pill-none   { background: var(--gray-100); color: var(--gray-400); }
+.pill-normal { background: var(--blue-bg); color: #1D4ED8; }
+.pill-active { background: var(--green-bg); color: var(--green-dk); }
+.pill-surge  { background: var(--amber-bg); color: #92400E; }
+
+.matrix-legend {
+  margin-top: 6px;
+  font-size: 6.3pt;
+  color: var(--gray-500);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.matrix-note { font-size: 5.8pt; color: var(--gray-500); }
+
+/* ── COMPUTE STATUS STRIP ── */
+.compute-strip { display: flex; flex-wrap: wrap; gap: 5px 10px; }
+.compute-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 7pt;
+  font-weight: 500;
+  border: 1px solid var(--gray-200);
+  border-radius: 99px;
+  padding: 2px 8px 2px 3px;
+  background: #fff;
+}
+
+/* ── ENGLISH SUMMARY ── */
+.en-summary-box {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-line);
+  border-left: 3px solid var(--blue);
+  border-radius: 5px;
+  padding: 9px 11px;
+}
+.en-summary-header {
+  font-family: var(--display);
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline;
+}
+.en-note {
+  display: inline;
+  font-size: 6.3pt;
+  color: var(--gray-500);
+  font-style: italic;
+  margin-left: 6px;
+}
+.en-summary-box .bullet-list { margin-top: 5px; }
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--gray-200);
+  margin: 9px 0;
+}
+
+/* ── LEGACY / MISC (monthly template) ── */
+.brand { display: flex; flex-direction: column; gap: 1px; }
+.footer-url { color: var(--blue); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .reg-badge {
   display: inline-block;
   font-size: 5.5pt;
@@ -275,36 +530,15 @@ body {
   padding: 1px 4px;
   border-radius: 2px;
   margin-right: 3px;
-  background: #e0e7ff;
-  color: #3730a3;
+  background: #E0E7FF;
+  color: #3730A3;
   letter-spacing: 0.3px;
 }
-
-/* ── INLINE SOURCE LINKS ── */
-sup.cite {
-  font-size: 5.5pt;
-  color: var(--blue-lt);
-  font-weight: 600;
-}
-
-/* ── FUNDING ROW ── */
+sup.cite { font-size: 5.5pt; color: var(--blue-lt); font-weight: 600; }
 .funding-item { margin-bottom: 3px; }
-
-/* ── PAGE CONTENT AREA ── */
-.page-content {
-  padding-bottom: 18px; /* space for footer */
-}
-
-/* ── DIVIDER ── */
-.divider {
-  border: none;
-  border-top: 0.5px solid var(--gray-200);
-  margin: 8px 0;
-}
 
 /* PRINT overrides */
 @media print {
-  body { font-size: 8.5pt; }
   .page { page-break-after: always; }
   a { color: inherit; text-decoration: none; }
 }

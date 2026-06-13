@@ -406,6 +406,8 @@ Stati ammessi (restituisci esattamente uno):
 
 Sii conservativo. "surge" deve essere raro — riservalo a mosse >€200M, annunci sovrani di scala o notizie paradigmatiche. Se gli snippet non sono pertinenti alla cella, restituisci "none".
 
+La "note" deve essere SEMPRE in italiano (anche se gli snippet sono in inglese): sintetica, telegrafica, max 12 parole. Es: "round da 1,2 mld per robotica fisica", "supercomputer da 89M, espansione Cineca".
+
 Formato output: array JSON di oggetti, uno per cella, nell'ordine ricevuto:
 {{"id": <int>, "state": "<none|normal|active|surge>", "note": "<max 12 parole o vuoto>"}}
 Restituisci SOLO l'array JSON. Niente prosa. Niente markdown fence."""

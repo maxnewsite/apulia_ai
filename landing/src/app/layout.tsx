@@ -100,7 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <SchemaOrg />
       </head>
-      <body className="bg-[#050A14] text-[#F0F4FF] antialiased">
+      <body className="bg-[#FFFFFF] text-[#0F172A] antialiased">
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

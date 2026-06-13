@@ -154,31 +154,31 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
     <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-16">
 
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-[#94A3B8]">
-        <Link href="/" className="hover:text-[#F0F4FF] transition-colors">Home</Link>
+      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-[#475569]">
+        <Link href="/" className="hover:text-[#0F172A] transition-colors">Home</Link>
         <span className="mx-2" aria-hidden="true">/</span>
         {isSubPage ? (
           <>
-            <Link href="/chi-siamo" className="hover:text-[#F0F4FF] transition-colors">
+            <Link href="/chi-siamo" className="hover:text-[#0F172A] transition-colors">
               {c.breadcrumb}
             </Link>
             <span className="mx-2" aria-hidden="true">/</span>
-            <span className="text-[#F0F4FF]">Massimiliano Masi</span>
+            <span className="text-[#0F172A]">Massimiliano Masi</span>
           </>
         ) : (
-          <span className="text-[#F0F4FF]">{c.breadcrumb}</span>
+          <span className="text-[#0F172A]">{c.breadcrumb}</span>
         )}
       </nav>
 
       {/* Page header */}
-      <header className="mb-16 pb-10 border-b border-[#1E3A5F]">
+      <header className="mb-16 pb-10 border-b border-[#E2E8F0]">
         <div className="text-xs uppercase tracking-[0.18em] text-[#2563EB] font-bold mb-3">
           {c.badge}
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#F0F4FF] leading-tight mb-6">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#0F172A] leading-tight mb-6">
           {c.h1}
         </h1>
-        <p className="text-xl text-[#94A3B8] max-w-2xl leading-relaxed">{c.intro}</p>
+        <p className="text-xl text-[#475569] max-w-2xl leading-relaxed">{c.intro}</p>
       </header>
 
       {/* Founder section */}
@@ -190,7 +190,7 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
             <div className="sticky top-28 space-y-4">
 
               {/* Profile photo */}
-              <div className="overflow-hidden rounded-2xl border border-[#1E3A5F]">
+              <div className="overflow-hidden rounded-2xl border border-[#E2E8F0]">
                 <img
                   src="https://spiridione.com/images/image1.jpeg"
                   alt="Massimiliano Masi"
@@ -200,16 +200,16 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
               </div>
 
               {/* Card */}
-              <div className="p-6 bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl">
+              <div className="p-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl">
                 <div className="text-xs uppercase tracking-widest text-[#2563EB] font-bold mb-4">
                   {c.founderLabel}
                 </div>
-                <h2 id="founder-heading" className="text-2xl font-black text-[#F0F4FF] mb-1">
+                <h2 id="founder-heading" className="text-2xl font-black text-[#0F172A] mb-1">
                   Massimiliano Masi
                 </h2>
-                <p className="text-sm text-[#94A3B8] mb-6 leading-relaxed">{c.founderTitle}</p>
+                <p className="text-sm text-[#475569] mb-6 leading-relaxed">{c.founderTitle}</p>
 
-                <ul className="space-y-3 text-sm text-[#94A3B8]">
+                <ul className="space-y-3 text-sm text-[#475569]">
                   {c.credentials.map((cred) => (
                     <li key={cred} className="flex items-start gap-2.5">
                       <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#2563EB] flex-shrink-0" />
@@ -218,7 +218,7 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
                   ))}
                 </ul>
 
-                <div className="mt-6 pt-5 border-t border-[#1E3A5F] flex items-center justify-between">
+                <div className="mt-6 pt-5 border-t border-[#E2E8F0] flex items-center justify-between">
                   <a
                     href="https://spiridione.com"
                     target="_blank"
@@ -245,15 +245,15 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
               </div>
 
               {/* NUS badge */}
-              <div className="p-4 bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl flex items-center gap-4">
+              <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl flex items-center gap-4">
                 <img
                   src="/nus_business_school.png"
                   alt="NUS Business School"
                   className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
                 />
                 <div>
-                  <p className="text-xs font-bold text-[#F0F4FF] leading-snug">{c.nusLabel}</p>
-                  <p className="text-xs text-[#94A3B8] mt-1">{c.nusSub}</p>
+                  <p className="text-xs font-bold text-[#0F172A] leading-snug">{c.nusLabel}</p>
+                  <p className="text-xs text-[#475569] mt-1">{c.nusSub}</p>
                 </div>
               </div>
 
@@ -261,10 +261,10 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
           </div>
 
           {/* Bio */}
-          <div className="md:col-span-2 space-y-8 text-[#94A3B8] leading-relaxed">
+          <div className="md:col-span-2 space-y-8 text-[#475569] leading-relaxed">
             {c.sections.map((section) => (
               <div key={section.title}>
-                <h3 className="text-lg font-bold text-[#F0F4FF] mb-3">{section.title}</h3>
+                <h3 className="text-lg font-bold text-[#0F172A] mb-3">{section.title}</h3>
                 {section.body.map((para, i) => (
                   <p key={i} className={i > 0 ? 'mt-4' : ''}>{para}</p>
                 ))}
@@ -275,12 +275,12 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
       </section>
 
       {/* Editorial network */}
-      <section className="mb-16 p-8 md:p-10 rounded-2xl border border-[#1E3A5F] bg-[#0F1A2E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <section className="mb-16 p-8 md:p-10 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div>
           <div className="text-xs uppercase tracking-widest text-[#F59E0B] font-bold mb-2">
             {c.networkTitle}
           </div>
-          <p className="text-[#94A3B8] leading-relaxed max-w-xl">{c.networkBody}</p>
+          <p className="text-[#475569] leading-relaxed max-w-xl">{c.networkBody}</p>
         </div>
         <a
           href="https://kalym.me"
@@ -297,17 +297,17 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
 
       {/* Competences */}
       <section aria-labelledby="competence-heading" className="mb-16">
-        <h2 id="competence-heading" className="text-2xl font-black text-[#F0F4FF] mb-8">
+        <h2 id="competence-heading" className="text-2xl font-black text-[#0F172A] mb-8">
           {c.competenceTitle}
         </h2>
         <div className="grid sm:grid-cols-3 gap-4">
           {c.competences.map((area) => (
             <div
               key={area.title}
-              className="p-6 bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl hover:border-[#2563EB]/40 transition-colors"
+              className="p-6 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl hover:border-[#2563EB]/40 transition-colors"
             >
-              <h3 className="text-base font-bold text-[#F0F4FF] mb-3">{area.title}</h3>
-              <p className="text-sm text-[#94A3B8] leading-relaxed">{area.body}</p>
+              <h3 className="text-base font-bold text-[#0F172A] mb-3">{area.title}</h3>
+              <p className="text-sm text-[#475569] leading-relaxed">{area.body}</p>
             </div>
           ))}
         </div>
@@ -332,9 +332,9 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
       </section>
 
       {/* Subscribe CTA */}
-      <aside className="p-8 md:p-10 bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl text-center">
-        <h2 className="text-2xl md:text-3xl font-black mb-3 text-[#F0F4FF]">{c.ctaTitle}</h2>
-        <p className="text-[#94A3B8] mb-6 max-w-xl mx-auto">{c.ctaBody}</p>
+      <aside className="p-8 md:p-10 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl text-center">
+        <h2 className="text-2xl md:text-3xl font-black mb-3 text-[#0F172A]">{c.ctaTitle}</h2>
+        <p className="text-[#475569] mb-6 max-w-xl mx-auto">{c.ctaBody}</p>
         <Link
           href="/#subscribe"
           className="inline-block px-8 py-3 bg-[#2563EB] text-white font-semibold rounded-full hover:bg-[#1d4ed8] transition-colors shadow-lg shadow-[#2563EB]/20"

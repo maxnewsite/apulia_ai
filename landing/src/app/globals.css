@@ -5,13 +5,13 @@
 @tailwind utilities;
 
 :root {
-  --bg: #050A14;
+  --bg: #FFFFFF;
   --primary: #2563EB;
   --secondary: #F59E0B;
-  --text-primary: #F0F4FF;
-  --text-muted: #94A3B8;
-  --card: #0F1A2E;
-  --border: #1E3A5F;
+  --text-primary: #0F172A;
+  --text-muted: #475569;
+  --card: #F8FAFC;
+  --border: #E2E8F0;
 }
 
 * {
@@ -22,6 +22,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Larger base for readability — every Tailwind text-* scales with this. */
+  font-size: 18px;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 17px;
+  }
 }
 
 body {
@@ -30,11 +38,12 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 ::selection {
   background-color: rgba(37, 99, 235, 0.35);
-  color: #F0F4FF;
+  color: #0F172A;
 }
 
 /* Scrollbar */

@@ -355,3 +355,17 @@ def save_newsletter(nl: Newsletter, out_dir: Path) -> Path:
         encoding="utf-8",
     )
     return path
+
+
+def load_newsletter_meta(json_path: Path) -> Newsletter:
+    """Reconstruct a Newsletter with only the metadata fields needed by
+    publish() and deliver(). Content sections stay at their default empty
+    values — they're already baked into the HTML file we ship."""
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    return Newsletter(
+        title=data["title"],
+        tagline=data.get("tagline", ""),
+        cadence=data.get("cadence", "weekly"),
+        issue_date=data["issue_date"],
+        reporting_period=data.get("reporting_period", ""),
+    )

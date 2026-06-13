@@ -1,5 +1,6 @@
-import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { supabaseAdmin } from '@/lib/supabase-admin'
+import { appUrl, confirmationEmailHtml, sendEmail } from '@/lib/zepto'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -9,15 +10,6 @@ interface SubscribePayload {
   email: string
   products: ProductChoice
   preferred_language: 'it' | 'en'
-}
-
-function getSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url || !key) {
-    throw new Error('Missing Supabase environment variables')
-  }
-  return createClient(url, key)
 }
 
 export async function POST(request: NextRequest) {
@@ -45,62 +37,121 @@ export async function POST(request: NextRequest) {
     ? products!
     : 'weekly'
 
-  const lang = preferred_language === 'en' ? 'en' : 'it'
+  const lang: 'it' | 'en' = preferred_language === 'en' ? 'en' : 'it'
 
-  let productsArray: string[]
-  if (selectedProducts === 'both') {
-    productsArray = ['weekly', 'monthly']
-  } else {
-    productsArray = [selectedProducts]
-  }
+  const productsArray =
+    selectedProducts === 'both' ? ['weekly', 'monthly'] : [selectedProducts]
 
-  let supabase: ReturnType<typeof getSupabase>
-  try {
-    supabase = getSupabase()
-  } catch {
-    console.error('Supabase configuration error')
-    return NextResponse.json(
-      {
-        success: false,
-        message: 'Errore di configurazione del server. Riprova più tardi.',
-      },
-      { status: 500 }
-    )
-  }
+  const cleanEmail = email.trim().toLowerCase()
 
-  const { error } = await supabase.from('subscribers').insert({
-    email: email.trim().toLowerCase(),
-    preferred_language: lang,
-    products: productsArray,
-    status: 'pending',
-    source: 'landing',
-  })
+  // Insert (or short-circuit if existing). We return the generated confirm_token
+  // so we can send the confirmation email below.
+  const { data, error } = await supabaseAdmin
+    .from('subscribers')
+    .insert({
+      email: cleanEmail,
+      preferred_language: lang,
+      products: productsArray,
+      status: 'pending',
+      source: 'landing',
+    })
+    .select('id,email,status,confirm_token')
+    .single()
+
+  let confirmToken: string | undefined
+  let alreadyConfirmed = false
 
   if (error) {
-    // Unique violation — already subscribed
     if (error.code === '23505') {
+      // Unique violation — already subscribed. Look up existing record.
+      const { data: existing } = await supabaseAdmin
+        .from('subscribers')
+        .select('status,confirm_token')
+        .eq('email', cleanEmail)
+        .single()
+
+      if (existing?.status === 'active') {
+        alreadyConfirmed = true
+      } else if (existing?.confirm_token) {
+        // Pending or unsubscribed: re-send the confirmation email.
+        confirmToken = existing.confirm_token
+        // Reset to 'pending' in case it was 'unsubscribed' and they're opting back in.
+        await supabaseAdmin
+          .from('subscribers')
+          .update({
+            status: 'pending',
+            preferred_language: lang,
+            products: productsArray,
+            unsubscribed_at: null,
+          })
+          .eq('email', cleanEmail)
+      }
+    } else {
+      console.error('Supabase insert error:', error)
       return NextResponse.json(
         {
           success: false,
           message:
             lang === 'it'
-              ? 'Questa email è già iscritta. Controlla la tua inbox.'
-              : 'This email is already subscribed. Check your inbox.',
+              ? "Errore durante l'iscrizione. Riprova tra qualche secondo."
+              : 'Subscription error. Please try again in a few seconds.',
         },
-        { status: 409 }
+        { status: 500 }
       )
     }
+  } else {
+    confirmToken = data?.confirm_token
+  }
 
-    console.error('Supabase insert error:', error)
+  if (alreadyConfirmed) {
     return NextResponse.json(
       {
         success: false,
         message:
           lang === 'it'
-            ? 'Errore durante l\'iscrizione. Riprova tra qualche secondo.'
-            : 'Subscription error. Please try again in a few seconds.',
+            ? 'Questa email è già iscritta e confermata.'
+            : 'This email is already subscribed and confirmed.',
+      },
+      { status: 409 }
+    )
+  }
+
+  if (!confirmToken) {
+    console.error('No confirm_token resolved for subscriber:', cleanEmail)
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          lang === 'it'
+            ? 'Errore durante la generazione del token di conferma. Riprova.'
+            : 'Could not generate confirmation token. Please try again.',
       },
       { status: 500 }
+    )
+  }
+
+  const confirmUrl = `${appUrl()}/api/confirm?token=${confirmToken}`
+  const { subject, html } = confirmationEmailHtml(lang, confirmUrl)
+
+  const send = await sendEmail({
+    to: cleanEmail,
+    subject,
+    html,
+    fromEmail: process.env.ZEPTO_FROM_EMAIL_CONFIRM,
+  })
+
+  if (!send.ok) {
+    console.error('Zepto send failed:', send.status, send.error)
+    // Don't expose Zepto details to the user; subscription row exists, they can retry.
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          lang === 'it'
+            ? "Iscrizione registrata, ma non siamo riusciti a inviare l'email di conferma. Riproveremo a breve."
+            : "You're registered, but we couldn't send the confirmation email yet. We'll retry shortly.",
+      },
+      { status: 502 }
     )
   }
 
@@ -109,8 +160,8 @@ export async function POST(request: NextRequest) {
       success: true,
       message:
         lang === 'it'
-          ? "Controlla la tua email per confermare l'iscrizione"
-          : 'Check your email to confirm your subscription',
+          ? 'Controlla la tua email per confermare l\'iscrizione.'
+          : 'Check your email to confirm your subscription.',
     },
     { status: 201 }
   )

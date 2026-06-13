@@ -49,17 +49,17 @@ export default function SourceTicker() {
 
   return (
     <section
-      className="relative py-16 border-y border-[#1E3A5F]/40 bg-[#050A14] overflow-hidden"
+      className="relative py-16 border-y border-[#E2E8F0]/40 bg-[#FFFFFF] overflow-hidden"
       aria-labelledby="sources-heading"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
         <h2
           id="sources-heading"
-          className="text-xs font-bold tracking-[0.18em] uppercase text-[#94A3B8] mb-3"
+          className="text-xs font-bold tracking-[0.18em] uppercase text-[#475569] mb-3"
         >
           {copy.title}
         </h2>
-        <p className="text-sm md:text-base text-[#F0F4FF]/70 max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-[#0F172A]/70 max-w-2xl mx-auto">
           {copy.subtitle}
         </p>
       </div>
@@ -72,12 +72,12 @@ export default function SourceTicker() {
       >
         {/* Left fade */}
         <div
-          className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[#050A14] to-transparent"
+          className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[#FFFFFF] to-transparent"
           aria-hidden="true"
         />
         {/* Right fade */}
         <div
-          className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[#050A14] to-transparent"
+          className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[#FFFFFF] to-transparent"
           aria-hidden="true"
         />
 
@@ -91,8 +91,8 @@ export default function SourceTicker() {
                 className={[
                   'inline-flex items-center text-base md:text-lg font-semibold tracking-tight transition-colors duration-200',
                   source.tier === 'tier1'
-                    ? 'text-[#F0F4FF] hover:text-[#2563EB]'
-                    : 'text-[#94A3B8] hover:text-[#F0F4FF]',
+                    ? 'text-[#0F172A] hover:text-[#2563EB]'
+                    : 'text-[#475569] hover:text-[#0F172A]',
                 ].join(' ')}
                 aria-label={`${source.name} — fonte esterna`}
               >

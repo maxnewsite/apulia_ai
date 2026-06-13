@@ -1,14 +1,31 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-export default function UnsubscribePage() {
+function UnsubscribeInner() {
+  const searchParams = useSearchParams()
+  const queryStatus = searchParams.get('status')
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<Status>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [status, setStatus] = useState<Status>(
+    queryStatus === 'ok' || queryStatus === 'already' ? 'success' : 'idle'
+  )
+  const [errorMessage, setErrorMessage] = useState(
+    queryStatus === 'invalid'
+      ? 'Il link di disiscrizione non è valido o è già stato usato.'
+      : queryStatus === 'error'
+        ? 'Errore durante la disiscrizione. Riprova.'
+        : ''
+  )
+
+  useEffect(() => {
+    if (queryStatus === 'ok' || queryStatus === 'already') {
+      setStatus('success')
+    }
+  }, [queryStatus])
 
   const isValidEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
@@ -50,12 +67,12 @@ export default function UnsubscribePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050A14] text-[#F0F4FF] flex flex-col">
-      <header className="border-b border-[#1E3A5F]">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#0F172A] flex flex-col">
+      <header className="border-b border-[#E2E8F0]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
           <Link
             href="/"
-            className="text-xl font-black text-[#F0F4FF] hover:text-[#2563EB] transition-colors"
+            className="text-xl font-black text-[#0F172A] hover:text-[#2563EB] transition-colors"
           >
             apulia.ai
           </Link>
@@ -66,12 +83,12 @@ export default function UnsubscribePage() {
         <div className="w-full max-w-md">
           {status === 'success' ? (
             <div
-              className="bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl p-10 text-center"
+              className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-10 text-center"
               role="status"
               aria-live="polite"
             >
               <div
-                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1E3A5F] mb-6 mx-auto"
+                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#E2E8F0] mb-6 mx-auto"
                 aria-hidden="true"
               >
                 <svg
@@ -90,10 +107,10 @@ export default function UnsubscribePage() {
                   />
                 </svg>
               </div>
-              <h1 className="text-2xl font-black text-[#F0F4FF] mb-3">
+              <h1 className="text-2xl font-black text-[#0F172A] mb-3">
                 Disiscrizione completata
               </h1>
-              <p className="text-[#94A3B8] mb-8">
+              <p className="text-[#475569] mb-8">
                 Il tuo indirizzo email è stato rimosso dalla nostra lista. Non
                 riceverai più comunicazioni da apulia.ai. Se cambi idea, puoi
                 iscriverti nuovamente dalla home page.
@@ -106,11 +123,11 @@ export default function UnsubscribePage() {
               </Link>
             </div>
           ) : (
-            <div className="bg-[#0F1A2E] border border-[#1E3A5F] rounded-2xl p-10">
-              <h1 className="text-2xl font-black text-[#F0F4FF] mb-2">
+            <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-10">
+              <h1 className="text-2xl font-black text-[#0F172A] mb-2">
                 Cancella iscrizione
               </h1>
-              <p className="text-[#94A3B8] text-sm mb-8">
+              <p className="text-[#475569] text-sm mb-8">
                 Inserisci il tuo indirizzo email per rimuoverti dalla newsletter
                 apulia.ai. Ci dispiace vederti andare.
               </p>
@@ -119,7 +136,7 @@ export default function UnsubscribePage() {
                 <div className="mb-5">
                   <label
                     htmlFor="unsubscribe-email"
-                    className="block text-sm font-medium text-[#F0F4FF] mb-2"
+                    className="block text-sm font-medium text-[#0F172A] mb-2"
                   >
                     Indirizzo email
                   </label>
@@ -138,7 +155,7 @@ export default function UnsubscribePage() {
                       }
                     }}
                     placeholder="la.tua@email.it"
-                    className="w-full px-4 py-3 bg-[#050A14] border border-[#1E3A5F] rounded-xl text-[#F0F4FF] placeholder-[#94A3B8] text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 bg-[#FFFFFF] border border-[#E2E8F0] rounded-xl text-[#0F172A] placeholder-[#475569] text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-colors"
                     aria-describedby={
                       errorMessage ? 'unsubscribe-error' : undefined
                     }
@@ -159,7 +176,7 @@ export default function UnsubscribePage() {
                 <button
                   type="submit"
                   disabled={status === 'loading' || !email.trim()}
-                  className="w-full py-3 px-6 bg-[#2563EB] text-white font-semibold rounded-xl text-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 focus:ring-offset-[#0F1A2E] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full py-3 px-6 bg-[#2563EB] text-white font-semibold rounded-xl text-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 focus:ring-offset-[#F8FAFC] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-live="polite"
                 >
                   {status === 'loading' ? (
@@ -192,7 +209,7 @@ export default function UnsubscribePage() {
                 </button>
               </form>
 
-              <p className="mt-6 text-center text-xs text-[#94A3B8]">
+              <p className="mt-6 text-center text-xs text-[#475569]">
                 Preferisci farlo via email?{' '}
                 <a
                   href="mailto:privacy@apulia.ai?subject=Disiscrizione%20newsletter"
@@ -207,7 +224,7 @@ export default function UnsubscribePage() {
           <p className="mt-6 text-center">
             <Link
               href="/"
-              className="text-sm text-[#94A3B8] hover:text-[#F0F4FF] transition-colors"
+              className="text-sm text-[#475569] hover:text-[#0F172A] transition-colors"
             >
               &larr; Torna alla home
             </Link>
@@ -215,13 +232,13 @@ export default function UnsubscribePage() {
         </div>
       </main>
 
-      <footer className="border-t border-[#1E3A5F]">
+      <footer className="border-t border-[#E2E8F0]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-center">
-          <span className="text-[#94A3B8] text-xs">
+          <span className="text-[#475569] text-xs">
             &copy; 2026 apulia.ai —{' '}
             <Link
               href="/privacy"
-              className="hover:text-[#F0F4FF] transition-colors underline"
+              className="hover:text-[#0F172A] transition-colors underline"
             >
               Privacy Policy
             </Link>
@@ -229,5 +246,13 @@ export default function UnsubscribePage() {
         </div>
       </footer>
     </div>
+  )
+}
+
+export default function UnsubscribePage() {
+  return (
+    <Suspense fallback={null}>
+      <UnsubscribeInner />
+    </Suspense>
   )
 }

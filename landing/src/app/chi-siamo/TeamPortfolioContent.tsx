@@ -12,7 +12,7 @@ const LinkedInIcon = () => (
 
 const PlaceholderAvatar = () => (
   <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-[#0A1220]">
-    <div className="w-16 h-16 rounded-full bg-[#1E3A5F] flex items-center justify-center">
+    <div className="w-16 h-16 rounded-full bg-[#E2E8F0] flex items-center justify-center">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.5" aria-hidden="true">
         <circle cx="12" cy="8" r="4" />
         <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
@@ -65,10 +65,10 @@ function MemberCard({ member }: { member: TeamMember }) {
 
   return (
     <div
-      className={`group flex flex-col bg-[#0F1A2E] border rounded-2xl overflow-hidden transition-all duration-300 ${
+      className={`group flex flex-col bg-[#F8FAFC] border rounded-2xl overflow-hidden transition-all duration-300 ${
         isPlaceholder
-          ? 'border-[#1E3A5F]/50 opacity-50'
-          : 'border-[#1E3A5F] hover:border-[#2563EB]/50 hover:shadow-lg hover:shadow-[#2563EB]/5'
+          ? 'border-[#E2E8F0]/50 opacity-50'
+          : 'border-[#E2E8F0] hover:border-[#2563EB]/50 hover:shadow-lg hover:shadow-[#2563EB]/5'
       }`}
     >
       {/* Photo */}
@@ -87,22 +87,22 @@ function MemberCard({ member }: { member: TeamMember }) {
       {/* Info */}
       <div className="p-3 sm:p-4 flex flex-col flex-1">
         <div className="flex-1 min-w-0">
-          <p className="text-[#F0F4FF] font-bold text-xs sm:text-sm leading-snug truncate">
+          <p className="text-[#0F172A] font-bold text-xs sm:text-sm leading-snug truncate">
             {member.firstName}
           </p>
-          <p className="text-[#F0F4FF] font-bold text-xs sm:text-sm leading-snug truncate">
+          <p className="text-[#0F172A] font-bold text-xs sm:text-sm leading-snug truncate">
             {member.lastName}
           </p>
           <p className="text-[#2563EB] text-[10px] sm:text-xs font-semibold mt-1.5 truncate">
             {member.title}
           </p>
-          <p className="text-[#94A3B8] text-[10px] sm:text-xs mt-0.5 truncate">
+          <p className="text-[#475569] text-[10px] sm:text-xs mt-0.5 truncate">
             {member.company}
           </p>
         </div>
 
         {/* Logos row */}
-        <div className="mt-3 pt-3 border-t border-[#1E3A5F] flex items-center gap-2.5">
+        <div className="mt-3 pt-3 border-t border-[#E2E8F0] flex items-center gap-2.5">
           <a
             href={member.linkedIn}
             target={member.linkedIn === '#' ? undefined : '_blank'}
@@ -148,21 +148,21 @@ export default function TeamPortfolioContent() {
     <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 pb-16">
 
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-[#94A3B8]">
-        <Link href="/" className="hover:text-[#F0F4FF] transition-colors">Home</Link>
+      <nav aria-label="Breadcrumb" className="mb-8 text-sm text-[#475569]">
+        <Link href="/" className="hover:text-[#0F172A] transition-colors">Home</Link>
         <span className="mx-2" aria-hidden="true">/</span>
-        <span className="text-[#F0F4FF]">{breadLabel}</span>
+        <span className="text-[#0F172A]">{breadLabel}</span>
       </nav>
 
       {/* Header */}
-      <header className="mb-16 pb-10 border-b border-[#1E3A5F]">
+      <header className="mb-16 pb-10 border-b border-[#E2E8F0]">
         <div className="text-xs uppercase tracking-[0.18em] text-[#2563EB] font-bold mb-3">
           apulia.ai
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#F0F4FF] leading-tight mb-6">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#0F172A] leading-tight mb-6">
           {heading}
         </h1>
-        <p className="text-xl text-[#94A3B8] max-w-2xl leading-relaxed">{intro}</p>
+        <p className="text-xl text-[#475569] max-w-2xl leading-relaxed">{intro}</p>
       </header>
 
       {/* 4×4 Team Grid */}

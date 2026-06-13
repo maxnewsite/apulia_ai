@@ -14,7 +14,7 @@ export default function Audience() {
     >
       {/* Background */}
       <div
-        className="absolute inset-0 bg-[#0F1A2E]/40 pointer-events-none"
+        className="absolute inset-0 bg-[#F8FAFC]/40 pointer-events-none"
         aria-hidden="true"
       />
       <div
@@ -27,11 +27,11 @@ export default function Audience() {
         <div className="text-center mb-16">
           <h2
             id="audience-heading"
-            className="text-3xl sm:text-4xl font-black text-[#F0F4FF] mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl font-black text-[#0F172A] mb-4 tracking-tight"
           >
             {sectionTitle}
           </h2>
-          <p className="max-w-2xl mx-auto text-[#94A3B8] text-lg">
+          <p className="max-w-2xl mx-auto text-[#475569] text-lg">
             {sectionSubtitle}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function Audience() {
           {personas.map((persona, i) => (
             <article
               key={i}
-              className="flex flex-col items-center text-center p-6 rounded-2xl bg-[#0F1A2E] border border-[#1E3A5F] hover:border-[#2563EB]/40 transition-all duration-300 group"
+              className="flex flex-col items-center text-center p-6 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#2563EB]/40 transition-all duration-300 group"
               aria-label={persona.role}
             >
               {/* Icon */}
@@ -53,12 +53,12 @@ export default function Audience() {
               </div>
 
               {/* Role */}
-              <h3 className="text-sm font-bold text-[#F0F4FF] mb-2 group-hover:text-white transition-colors">
+              <h3 className="text-sm font-bold text-[#0F172A] mb-2 group-hover:text-white transition-colors">
                 {persona.role}
               </h3>
 
               {/* Description */}
-              <p className="text-xs text-[#94A3B8] leading-relaxed">
+              <p className="text-xs text-[#475569] leading-relaxed">
                 {persona.description}
               </p>
             </article>

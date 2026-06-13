@@ -8,20 +8,20 @@ export default function SisterPublication() {
 
   return (
     <section
-      className="py-16 border-t border-[#1E3A5F]/40"
+      className="py-16 border-t border-[#E2E8F0]/40"
       aria-labelledby="sister-heading"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-10 rounded-2xl border border-[#1E3A5F] bg-[#0F1A2E]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-10 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC]">
 
           <div className="flex-1">
             <div className="text-xs uppercase tracking-[0.18em] text-[#F59E0B] font-bold mb-3">
               {isEn ? 'Also from the same editorial network' : 'Dalla stessa rete editoriale'}
             </div>
-            <h2 id="sister-heading" className="text-2xl md:text-3xl font-black text-[#F0F4FF] mb-3">
+            <h2 id="sister-heading" className="text-2xl md:text-3xl font-black text-[#0F172A] mb-3">
               kalym.me
             </h2>
-            <p className="text-[#94A3B8] leading-relaxed max-w-xl">
+            <p className="text-[#475569] leading-relaxed max-w-xl">
               {isEn
                 ? 'Middle East AI Intelligence: strategic analysis on artificial intelligence across the MENA region. Policy, capital flows, sovereign AI programmes and key players in the Arab world — every week.'
                 : 'La newsletter sull\'intelligenza artificiale nel Medio Oriente e area MENA. Policy, flussi di capitale, programmi di AI sovrana e protagonisti del mondo arabo — ogni settimana.'}

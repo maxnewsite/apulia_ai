@@ -54,14 +54,14 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="py-24 bg-[#050A14]"
+      className="py-24 bg-[#FFFFFF]"
       aria-labelledby="faq-heading"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2
             id="faq-heading"
-            className="text-3xl md:text-4xl font-black text-[#F0F4FF] mb-4"
+            className="text-3xl md:text-4xl font-black text-[#0F172A] mb-4"
           >
             {t.faq.sectionTitle}
             <span
@@ -69,7 +69,7 @@ export default function FAQ() {
               aria-hidden="true"
             />
           </h2>
-          <p className="text-lg text-[#94A3B8] max-w-2xl mx-auto">
+          <p className="text-lg text-[#475569] max-w-2xl mx-auto">
             {t.faq.sectionSubtitle}
           </p>
         </div>
@@ -81,8 +81,8 @@ export default function FAQ() {
               <div
                 key={index}
                 className={[
-                  'bg-[#0F1A2E] rounded-2xl border transition-colors duration-200',
-                  isOpen ? 'border-[#2563EB]' : 'border-[#1E3A5F]',
+                  'bg-[#F8FAFC] rounded-2xl border transition-colors duration-200',
+                  isOpen ? 'border-[#2563EB]' : 'border-[#E2E8F0]',
                 ].join(' ')}
               >
                 <dt>
@@ -94,7 +94,7 @@ export default function FAQ() {
                     id={`faq-question-${index}`}
                     className="w-full flex items-center justify-between px-6 py-5 text-left gap-4 group"
                   >
-                    <span className="text-base font-semibold text-[#F0F4FF] group-hover:text-white transition-colors">
+                    <span className="text-base font-semibold text-[#0F172A] group-hover:text-white transition-colors">
                       {item.q}
                     </span>
                     <span
@@ -102,7 +102,7 @@ export default function FAQ() {
                         'flex-shrink-0 rounded-full p-1 transition-colors duration-200',
                         isOpen
                           ? 'text-[#2563EB]'
-                          : 'text-[#94A3B8] group-hover:text-[#F0F4FF]',
+                          : 'text-[#475569] group-hover:text-[#0F172A]',
                       ].join(' ')}
                     >
                       {isOpen ? <MinusIcon /> : <PlusIcon />}
@@ -119,7 +119,7 @@ export default function FAQ() {
                     isOpen ? 'max-h-96' : 'max-h-0',
                   ].join(' ')}
                 >
-                  <p className="px-6 pb-5 text-[#94A3B8] text-sm leading-relaxed">
+                  <p className="px-6 pb-5 text-[#475569] text-sm leading-relaxed">
                     {item.a}
                   </p>
                 </dd>

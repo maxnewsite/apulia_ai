@@ -103,7 +103,7 @@ function ArrowIcon() {
       fill="none"
       aria-hidden="true"
       focusable="false"
-      className="text-[#1E3A5F]"
+      className="text-[#E2E8F0]"
     >
       <path
         d="M1 8h28M22 2l8 6-8 6"
@@ -124,14 +124,14 @@ export default function HowItWorks() {
   return (
     <section
       id="come-funziona"
-      className="py-24 bg-[#0F1A2E]"
+      className="py-24 bg-[#F8FAFC]"
       aria-labelledby="how-it-works-heading"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2
             id="how-it-works-heading"
-            className="text-3xl md:text-4xl font-black text-[#F0F4FF] mb-4"
+            className="text-3xl md:text-4xl font-black text-[#0F172A] mb-4"
           >
             {t.howItWorks.sectionTitle}
             <span
@@ -139,7 +139,7 @@ export default function HowItWorks() {
               aria-hidden="true"
             />
           </h2>
-          <p className="text-lg text-[#94A3B8] max-w-2xl mx-auto">
+          <p className="text-lg text-[#475569] max-w-2xl mx-auto">
             {t.howItWorks.sectionSubtitle}
           </p>
         </div>
@@ -150,7 +150,7 @@ export default function HowItWorks() {
             const isLast = index === t.howItWorks.steps.length - 1
             return (
               <li key={step.number} className="flex flex-col md:flex-row items-center md:items-stretch flex-1">
-                <div className="flex flex-col items-center flex-1 bg-[#050A14] border border-[#1E3A5F] rounded-2xl p-8 text-center group hover:border-[#2563EB] transition-colors duration-200">
+                <div className="flex flex-col items-center flex-1 bg-[#FFFFFF] border border-[#E2E8F0] rounded-2xl p-8 text-center group hover:border-[#2563EB] transition-colors duration-200">
                   <div
                     className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-5"
                     style={{
@@ -171,10 +171,10 @@ export default function HowItWorks() {
                   >
                     {step.number}
                   </span>
-                  <h3 className="text-lg font-bold text-[#F0F4FF] mb-3">
+                  <h3 className="text-lg font-bold text-[#0F172A] mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-[#94A3B8] text-sm leading-relaxed">
+                  <p className="text-[#475569] text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ export default function HowItWorks() {
                       height="32"
                       viewBox="0 0 16 32"
                       fill="none"
-                      className="text-[#1E3A5F]"
+                      className="text-[#E2E8F0]"
                     >
                       <path
                         d="M8 1v28M2 22l6 8 6-8"

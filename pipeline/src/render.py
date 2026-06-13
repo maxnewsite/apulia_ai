@@ -39,6 +39,13 @@ def render_html(
     if css_src.exists():
         shutil.copyfile(css_src, css_dst)
 
+    for asset in templates_dir.glob("*.webp"):
+        shutil.copyfile(asset, out_dir / asset.name)
+
+    fonts_src = templates_dir / "fonts"
+    if fonts_src.is_dir():
+        shutil.copytree(fonts_src, out_dir / "fonts", dirs_exist_ok=True)
+
     out = out_dir / f"weekly-{nl.issue_date}.html"
     out.write_text(html, encoding="utf-8")
     return out

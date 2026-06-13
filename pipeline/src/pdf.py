@@ -20,11 +20,21 @@ def render_pdf(html_path: Path, pdf_path: Path | None = None) -> Path:
             page = browser.new_page()
             page.goto(file_url, wait_until="networkidle")
             page.emulate_media(media="print")
+            footer = """
+<div style="width:100%; margin:0 12mm; padding-top:2mm; border-top:0.5px solid #E2E8F0;
+            font-family:'Segoe UI',Arial,sans-serif; font-size:6.5px; color:#94A3B8;
+            display:flex; justify-content:space-between; align-items:center;">
+  <span style="font-weight:700; color:#0A1628;">apulia<span style="color:#2563EB;">.ai</span></span>
+  <span>Intelligence strategica sull'AI in Europa e Italia &nbsp;&middot;&nbsp; apulia.ai</span>
+  <span style="color:#475569;">Pagina <span class="pageNumber"></span> di <span class="totalPages"></span></span>
+</div>"""
             page.pdf(
                 path=str(pdf_path),
                 format="A4",
                 print_background=True,
-                margin={"top": "0", "bottom": "0", "left": "0", "right": "0"},
+                display_header_footer=True,
+                header_template="<div></div>",
+                footer_template=footer,
                 prefer_css_page_size=True,
             )
         finally:

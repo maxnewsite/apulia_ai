@@ -90,8 +90,8 @@ export default function SubscribeForm() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-black text-[#F0F4FF] mb-3">{f.successTitle}</h2>
-          <p className="text-[#94A3B8] leading-relaxed">{f.successMessage}</p>
+          <h2 className="text-2xl font-black text-[#0F172A] mb-3">{f.successTitle}</h2>
+          <p className="text-[#475569] leading-relaxed">{f.successMessage}</p>
         </div>
       </section>
     )
@@ -116,21 +116,21 @@ export default function SubscribeForm() {
         <div className="text-center mb-10">
           <h2
             id="subscribe-heading"
-            className="text-3xl sm:text-4xl font-black text-[#F0F4FF] mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl font-black text-[#0F172A] mb-4 tracking-tight"
           >
             {f.sectionTitle}
           </h2>
-          <p className="text-[#94A3B8] text-lg">{f.sectionSubtitle}</p>
+          <p className="text-[#475569] text-lg">{f.sectionSubtitle}</p>
         </div>
 
         {/* Form card */}
-        <div className="rounded-2xl bg-[#0F1A2E] border border-[#1E3A5F] p-8 shadow-2xl shadow-black/40">
+        <div className="rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] p-8 shadow-2xl shadow-black/40">
           <form onSubmit={handleSubmit} noValidate aria-label="Newsletter subscription form">
             {/* Email field */}
             <div className="mb-5">
               <label
                 htmlFor={emailId}
-                className="block text-sm font-semibold text-[#F0F4FF] mb-2"
+                className="block text-sm font-semibold text-[#0F172A] mb-2"
               >
                 {f.emailLabel}
                 <span className="text-[#2563EB] ml-0.5" aria-hidden="true">*</span>
@@ -150,10 +150,10 @@ export default function SubscribeForm() {
                   setForm((p) => ({ ...p, email: e.target.value }))
                   if (errors.email) setErrors((p) => ({ ...p, email: undefined }))
                 }}
-                className={`w-full px-4 py-3 rounded-xl bg-[#050A14] border text-[#F0F4FF] placeholder-[#94A3B8]/50 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-1 focus-visible:ring-offset-[#0F1A2E] ${
+                className={`w-full px-4 py-3 rounded-xl bg-[#FFFFFF] border text-[#0F172A] placeholder-[#475569]/50 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-1 focus-visible:ring-offset-[#F8FAFC] ${
                   errors.email
                     ? 'border-red-500/70 focus:border-red-500'
-                    : 'border-[#1E3A5F] focus:border-[#2563EB]/60 hover:border-[#2563EB]/40'
+                    : 'border-[#E2E8F0] focus:border-[#2563EB]/60 hover:border-[#2563EB]/40'
                 }`}
               />
               {errors.email && (
@@ -174,7 +174,7 @@ export default function SubscribeForm() {
             <div className="mb-6">
               <label
                 htmlFor={productId}
-                className="block text-sm font-semibold text-[#F0F4FF] mb-2"
+                className="block text-sm font-semibold text-[#0F172A] mb-2"
               >
                 {f.productLabel}
               </label>
@@ -191,7 +191,7 @@ export default function SubscribeForm() {
                     className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-150 group ${
                       form.product === value
                         ? 'border-[#2563EB]/60 bg-[#2563EB]/10'
-                        : 'border-[#1E3A5F] hover:border-[#2563EB]/30 hover:bg-[#2563EB]/5'
+                        : 'border-[#E2E8F0] hover:border-[#2563EB]/30 hover:bg-[#2563EB]/5'
                     }`}
                   >
                     <input
@@ -205,7 +205,7 @@ export default function SubscribeForm() {
                     />
                     <span
                       className={`text-sm font-medium transition-colors ${
-                        form.product === value ? 'text-[#F0F4FF]' : 'text-[#94A3B8] group-hover:text-[#F0F4FF]'
+                        form.product === value ? 'text-[#0F172A]' : 'text-[#475569] group-hover:text-[#0F172A]'
                       }`}
                     >
                       {label}
@@ -222,7 +222,7 @@ export default function SubscribeForm() {
                 className={`flex items-start gap-3 cursor-pointer p-3 rounded-xl border transition-colors ${
                   errors.gdpr
                     ? 'border-red-500/40 bg-red-500/5'
-                    : 'border-[#1E3A5F] hover:border-[#2563EB]/30'
+                    : 'border-[#E2E8F0] hover:border-[#2563EB]/30'
                 }`}
               >
                 <input
@@ -240,7 +240,7 @@ export default function SubscribeForm() {
                   }}
                   className="w-4 h-4 mt-0.5 accent-[#2563EB] flex-shrink-0"
                 />
-                <span className="text-xs text-[#94A3B8] leading-relaxed">
+                <span className="text-xs text-[#475569] leading-relaxed">
                   {f.gdpr}
                   <a
                     href="/privacy"
@@ -284,7 +284,7 @@ export default function SubscribeForm() {
               type="submit"
               disabled={status === 'submitting'}
               aria-busy={status === 'submitting'}
-              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#2563EB] text-white font-bold text-sm hover:bg-[#1D4ED8] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-[#2563EB]/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1A2E]"
+              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#2563EB] text-white font-bold text-sm hover:bg-[#1D4ED8] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-[#2563EB]/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8FAFC]"
             >
               {status === 'submitting' ? (
                 <>

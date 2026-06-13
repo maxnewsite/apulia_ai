@@ -22,7 +22,7 @@ export default function Logo({ size = 36, showText = true }: LogoProps) {
       />
 
       {showText && (
-        <span className="text-[1.05rem] font-bold tracking-tight text-[#F0F4FF] group-hover:text-white transition-colors">
+        <span className="text-[1.05rem] font-bold tracking-tight text-[#0F172A] group-hover:text-white transition-colors">
           apulia<span className="text-[#2563EB]">.ai</span>
         </span>
       )}

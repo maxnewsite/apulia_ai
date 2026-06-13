@@ -32,6 +32,28 @@ export function extractDescription(fullHtml: string, max = 160): string {
   return text.slice(0, max).trim() + '…'
 }
 
+// Pull the first N bullet items from the issue HTML — used by the homepage
+// "latest issue" teaser to show real content instead of a mockup.
+export function extractTopBullets(fullHtml: string, count = 4): string[] {
+  if (!fullHtml) return []
+  const matches = Array.from(
+    fullHtml.matchAll(
+      /<span class="bullet-text">([\s\S]*?)(?:<span class="bullet-sources"|<\/span>)/gi,
+    ),
+  )
+  const out: string[] = []
+  for (const m of matches) {
+    const clean = m[1]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+    if (clean.length > 20) out.push(clean)
+    if (out.length >= count) break
+  }
+  return out
+}
+
 // Slug format from publish.py: "weekly-2026-05-23" or "monthly-2026-06-01"
 export function parseSlugDate(slug: string): string | null {
   const m = slug.match(/(\d{4}-\d{2}-\d{2})$/)

@@ -54,7 +54,7 @@ export default function Header() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#050A14]/95 backdrop-blur-md border-b border-[#1E3A5F]/60 shadow-lg shadow-black/20'
+          ? 'bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E2E8F0]/60 shadow-lg shadow-black/20'
           : 'bg-transparent'
       }`}
       role="banner"
@@ -73,7 +73,7 @@ export default function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm font-medium text-[#94A3B8] hover:text-[#F0F4FF] transition-colors rounded-lg hover:bg-[#1E3A5F]/30"
+                className="px-4 py-2 text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#E2E8F0]/30"
               >
                 {link.label}
               </a>
@@ -106,7 +106,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden p-2 text-[#94A3B8] hover:text-[#F0F4FF] rounded-lg hover:bg-[#1E3A5F]/30 transition-colors"
+              className="md:hidden p-2 text-[#475569] hover:text-[#0F172A] rounded-lg hover:bg-[#E2E8F0]/30 transition-colors"
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -133,7 +133,7 @@ export default function Header() {
         {menuOpen && (
           <nav
             id="mobile-menu"
-            className="md:hidden pb-4 pt-2 border-t border-[#1E3A5F]/40"
+            className="md:hidden pb-4 pt-2 border-t border-[#E2E8F0]/40"
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col gap-1">
@@ -142,7 +142,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="px-4 py-3 text-sm font-medium text-[#94A3B8] hover:text-[#F0F4FF] hover:bg-[#1E3A5F]/30 rounded-lg transition-colors"
+                  className="px-4 py-3 text-sm font-medium text-[#475569] hover:text-[#0F172A] hover:bg-[#E2E8F0]/30 rounded-lg transition-colors"
                 >
                   {link.label}
                 </a>

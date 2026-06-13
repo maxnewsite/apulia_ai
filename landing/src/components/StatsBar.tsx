@@ -7,7 +7,7 @@ export default function StatsBar() {
 
   return (
     <section
-      className="relative py-12 border-y border-[#1E3A5F]/50 bg-[#0F1A2E]/60 overflow-hidden"
+      className="relative py-12 border-y border-[#E2E8F0]/50 bg-[#F8FAFC]/60 overflow-hidden"
       aria-label="EU AI key statistics"
     >
       {/* Subtle background gradient */}
@@ -24,13 +24,13 @@ export default function StatsBar() {
               className="text-center group"
             >
               {/* Value */}
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#F0F4FF] mb-1.5 transition-colors group-hover:text-white">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0F172A] mb-1.5 transition-colors group-hover:text-white">
                 <span className="bg-gradient-to-r from-[#2563EB] to-[#60A5FA] bg-clip-text text-transparent">
                   {stat.value}
                 </span>
               </div>
               {/* Label */}
-              <p className="text-xs sm:text-sm text-[#94A3B8] leading-snug font-medium">
+              <p className="text-xs sm:text-sm text-[#475569] leading-snug font-medium">
                 {stat.label}
               </p>
             </div>

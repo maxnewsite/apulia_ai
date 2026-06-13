@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-[#050A14] text-[#F0F4FF]">
-      <header className="border-b border-[#1E3A5F]">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#0F172A]">
+      <header className="border-b border-[#E2E8F0]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
           <Link
             href="/"
-            className="text-xl font-black text-[#F0F4FF] hover:text-[#2563EB] transition-colors"
+            className="text-xl font-black text-[#0F172A] hover:text-[#2563EB] transition-colors"
           >
             apulia.ai
           </Link>
@@ -29,24 +29,24 @@ export default function PrivacyPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-4xl font-black text-[#F0F4FF] mb-3">
+        <h1 className="text-4xl font-black text-[#0F172A] mb-3">
           Privacy Policy
         </h1>
-        <p className="text-[#94A3B8] mb-12 text-sm">
+        <p className="text-[#475569] mb-12 text-sm">
           Ultimo aggiornamento: maggio 2026
         </p>
 
-        <div className="space-y-10 text-[#94A3B8] leading-relaxed">
+        <div className="space-y-10 text-[#475569] leading-relaxed">
           <section aria-labelledby="privacy-titolare">
             <h2
               id="privacy-titolare"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               1. Titolare del trattamento
             </h2>
             <p>
               Il titolare del trattamento dei dati personali è{' '}
-              <strong className="text-[#F0F4FF]">apulia.ai</strong>, contattabile
+              <strong className="text-[#0F172A]">apulia.ai</strong>, contattabile
               all&apos;indirizzo email{' '}
               <a
                 href="mailto:privacy@apulia.ai"
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-dati">
             <h2
               id="privacy-dati"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               2. Dati raccolti
             </h2>
@@ -71,24 +71,24 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong className="text-[#F0F4FF]">Indirizzo email</strong>:
+                <strong className="text-[#0F172A]">Indirizzo email</strong>:
                 necessario per l&apos;invio della newsletter.
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">
+                <strong className="text-[#0F172A]">
                   Preferenza linguistica
                 </strong>
                 : italiano o inglese, per personalizzare le comunicazioni.
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">
+                <strong className="text-[#0F172A]">
                   Tipo di iscrizione
                 </strong>
                 : newsletter gratuita settimanale (AI Europa Weekly), briefing
                 premium mensile, o entrambi.
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">
+                <strong className="text-[#0F172A]">
                   Data e ora di iscrizione
                 </strong>
                 : per documentare il consenso.
@@ -103,7 +103,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-finalita">
             <h2
               id="privacy-finalita"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               3. Finalità del trattamento
             </h2>
@@ -114,12 +114,12 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li>
                 Invio della newsletter{' '}
-                <strong className="text-[#F0F4FF]">AI Europa Weekly</strong> ogni
+                <strong className="text-[#0F172A]">AI Europa Weekly</strong> ogni
                 martedì mattina.
               </li>
               <li>
                 Invio del{' '}
-                <strong className="text-[#F0F4FF]">
+                <strong className="text-[#0F172A]">
                   Briefing Strategico Mensile
                 </strong>{' '}
                 ogni primo lunedì del mese, per gli iscritti premium.
@@ -137,13 +137,13 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-base-giuridica">
             <h2
               id="privacy-base-giuridica"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               4. Base giuridica
             </h2>
             <p>
               La base giuridica del trattamento è il{' '}
-              <strong className="text-[#F0F4FF]">
+              <strong className="text-[#0F172A]">
                 consenso esplicito dell&apos;interessato
               </strong>{' '}
               ai sensi dell&apos;art. 6, par. 1, lett. a) del Regolamento (UE)
@@ -157,7 +157,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-conservazione">
             <h2
               id="privacy-conservazione"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               5. Conservazione dei dati
             </h2>
@@ -165,7 +165,7 @@ export default function PrivacyPage() {
               I dati personali sono conservati per il tempo strettamente
               necessario al perseguimento delle finalità sopra indicate. In
               pratica, i dati vengono conservati{' '}
-              <strong className="text-[#F0F4FF]">
+              <strong className="text-[#0F172A]">
                 fino alla disiscrizione dalla newsletter
               </strong>
               . Successivamente alla disiscrizione, i dati vengono eliminati
@@ -177,18 +177,18 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-condivisione">
             <h2
               id="privacy-condivisione"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               6. Condivisione con terze parti
             </h2>
             <p>
               I dati personali{' '}
-              <strong className="text-[#F0F4FF]">
+              <strong className="text-[#0F172A]">
                 non vengono venduti, ceduti o condivisi con terze parti
               </strong>{' '}
               per finalità commerciali o promozionali. I dati sono archiviati
               su{' '}
-              <strong className="text-[#F0F4FF]">Supabase</strong>, un servizio
+              <strong className="text-[#0F172A]">Supabase</strong>, un servizio
               di database con server localizzati nell&apos;Unione Europea,
               conforme al GDPR. Supabase agisce in qualità di responsabile del
               trattamento ai sensi dell&apos;art. 28 GDPR.
@@ -198,7 +198,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-hosting">
             <h2
               id="privacy-hosting"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               7. Infrastruttura e trasferimenti internazionali
             </h2>
@@ -214,7 +214,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-diritti">
             <h2
               id="privacy-diritti"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               8. Diritti dell&apos;interessato
             </h2>
@@ -223,35 +223,35 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong className="text-[#F0F4FF]">Accesso</strong>: ottenere
+                <strong className="text-[#0F172A]">Accesso</strong>: ottenere
                 conferma del trattamento e copia dei dati personali che ti
                 riguardano (art. 15 GDPR).
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Rettifica</strong>: richiedere
+                <strong className="text-[#0F172A]">Rettifica</strong>: richiedere
                 la correzione di dati inesatti o incompleti (art. 16 GDPR).
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Cancellazione</strong>:
+                <strong className="text-[#0F172A]">Cancellazione</strong>:
                 richiedere la cancellazione dei tuoi dati personali (&ldquo;diritto
                 all&apos;oblio&rdquo;, art. 17 GDPR).
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Portabilità</strong>: ricevere
+                <strong className="text-[#0F172A]">Portabilità</strong>: ricevere
                 i dati in un formato strutturato e leggibile da dispositivo
                 automatico (art. 20 GDPR).
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Opposizione</strong>: opporti
+                <strong className="text-[#0F172A]">Opposizione</strong>: opporti
                 al trattamento per motivi legittimi (art. 21 GDPR).
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Revoca del consenso</strong>:
+                <strong className="text-[#0F172A]">Revoca del consenso</strong>:
                 revocare il consenso in qualsiasi momento, anche tramite
                 disiscrizione dalla newsletter.
               </li>
               <li>
-                <strong className="text-[#F0F4FF]">Reclamo</strong>: presentare
+                <strong className="text-[#0F172A]">Reclamo</strong>: presentare
                 reclamo all&apos;Autorità Garante per la Protezione dei Dati
                 Personali (Garante Privacy, www.gpdp.it).
               </li>
@@ -271,7 +271,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-cookie">
             <h2
               id="privacy-cookie"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               9. Cookie
             </h2>
@@ -287,7 +287,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-modifiche">
             <h2
               id="privacy-modifiche"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               10. Modifiche alla presente informativa
             </h2>
@@ -303,7 +303,7 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-contatti">
             <h2
               id="privacy-contatti"
-              className="text-xl font-bold text-[#F0F4FF] mb-4"
+              className="text-xl font-bold text-[#0F172A] mb-4"
             >
               11. Contatti
             </h2>
@@ -322,9 +322,9 @@ export default function PrivacyPage() {
         </div>
       </main>
 
-      <footer className="border-t border-[#1E3A5F] mt-16">
+      <footer className="border-t border-[#E2E8F0] mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <span className="text-[#94A3B8] text-sm">
+          <span className="text-[#475569] text-sm">
             &copy; 2026 apulia.ai — Tutti i diritti riservati.
           </span>
           <Link

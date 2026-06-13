@@ -30,9 +30,9 @@ export default function Hero() {
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
         {/* Eyebrow badge */}
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-[#1E3A5F] bg-[#0F1A2E]/80 backdrop-blur-sm">
+        <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC]/80 backdrop-blur-sm">
           <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" aria-hidden="true" />
-          <span className="text-xs font-semibold text-[#94A3B8] uppercase tracking-widest">
+          <span className="text-xs font-semibold text-[#475569] uppercase tracking-widest">
             {t.hero.tagline}
           </span>
         </div>
@@ -40,7 +40,7 @@ export default function Hero() {
         {/* Main headline */}
         <h1
           id="hero-heading"
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#F0F4FF] leading-[1.08] mb-4"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#0F172A] leading-[1.08] mb-4"
         >
           {t.hero.headline}
           <br />
@@ -50,7 +50,7 @@ export default function Hero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-[#94A3B8] leading-relaxed font-light">
+        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-[#475569] leading-relaxed font-light">
           {t.hero.subtitle}
         </p>
 
@@ -58,7 +58,7 @@ export default function Hero() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="#subscribe"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#2563EB] text-white text-base font-bold hover:bg-[#1D4ED8] active:scale-95 transition-all duration-200 shadow-lg shadow-[#2563EB]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050A14]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#2563EB] text-white text-base font-bold hover:bg-[#1D4ED8] active:scale-95 transition-all duration-200 shadow-lg shadow-[#2563EB]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
             aria-label={t.hero.cta}
           >
             <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -70,22 +70,22 @@ export default function Hero() {
 
           <a
             href="#products"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[#1E3A5F] text-[#94A3B8] text-base font-semibold hover:text-[#F0F4FF] hover:border-[#2563EB]/60 hover:bg-[#0F1A2E] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050A14]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[#E2E8F0] text-[#475569] text-base font-semibold hover:text-[#0F172A] hover:border-[#2563EB]/60 hover:bg-[#F8FAFC] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
           >
             {t.hero.ctaSubtext}
           </a>
         </div>
 
         {/* Trust note */}
-        <p className="mt-5 text-sm text-[#94A3B8]/70">
+        <p className="mt-5 text-sm text-[#475569]/70">
           {t.hero.ctaSubtext}
         </p>
 
         {/* Scroll indicator */}
         <div className="mt-16 flex justify-center" aria-hidden="true">
           <div className="flex flex-col items-center gap-1 opacity-30 animate-bounce">
-            <div className="w-px h-8 bg-gradient-to-b from-[#94A3B8] to-transparent" />
-            <svg className="w-4 h-4 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-px h-8 bg-gradient-to-b from-[#475569] to-transparent" />
+            <svg className="w-4 h-4 text-[#475569]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
