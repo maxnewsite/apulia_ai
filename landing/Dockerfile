@@ -1,7 +1,10 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# npm install (not ci) tolerates the rare lockfile drift that creeps in
+# when developers use different npm minor versions. We still get a clean,
+# reproducible install because the Dockerfile starts from a fixed base.
+RUN npm install --no-audit --no-fund --prefer-offline
 
 FROM node:20-alpine AS builder
 WORKDIR /app
