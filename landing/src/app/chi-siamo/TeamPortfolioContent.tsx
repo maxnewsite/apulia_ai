@@ -30,6 +30,9 @@ interface TeamMember {
   photo: string
   linkedIn: string
   isFounder?: boolean
+  // Where the apulia.ai-logo badge links to for this founder. Internal
+  // path (/chi-siamo/...) or external URL (https://...). Defaults to no badge.
+  founderHref?: string
 }
 
 // Public roster — only members who have explicitly approved their profile.
@@ -45,15 +48,18 @@ const TEAM: TeamMember[] = [
     photo: 'https://spiridione.com/images/image1.jpeg',
     linkedIn: 'https://www.linkedin.com/in/massimiliano-masi-4265ab',
     isFounder: true,
+    founderHref: '/chi-siamo/massimiliano-masi',
   },
   {
     id: 'alberto-de-leo',
     firstName: 'Alberto',
     lastName: 'De Leo',
-    title: 'Advisor',
+    title: 'Founder',
     company: 'apulia.ai',
     photo: '/team/alberto_de_leo.jpg',
     linkedIn: 'https://www.linkedin.com/in/albertodeleo',
+    isFounder: true,
+    founderHref: 'https://www.linkedin.com/in/albertodeleo',
   },
   {
     id: 'mario-pucciarelli',
@@ -120,20 +126,39 @@ function MemberCard({ member }: { member: TeamMember }) {
             <LinkedInIcon />
           </a>
 
-          {member.isFounder && (
-            <Link
-              href="/chi-siamo/massimiliano-masi"
-              aria-label="Profilo completo di Massimiliano Masi su apulia.ai"
-              className="flex-shrink-0 hover:opacity-75 transition-opacity"
-            >
-              <Image
-                src="/apulia_ai.webp"
-                alt="apulia.ai"
-                width={20}
-                height={20}
-                className="rounded-sm"
-              />
-            </Link>
+          {member.isFounder && member.founderHref && (
+            (() => {
+              const external = /^https?:\/\//.test(member.founderHref)
+              const label = `Profilo di ${member.firstName} ${member.lastName}`
+              const img = (
+                <Image
+                  src="/apulia_ai.webp"
+                  alt="apulia.ai"
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
+              )
+              return external ? (
+                <a
+                  href={member.founderHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex-shrink-0 hover:opacity-75 transition-opacity"
+                >
+                  {img}
+                </a>
+              ) : (
+                <Link
+                  href={member.founderHref}
+                  aria-label={label}
+                  className="flex-shrink-0 hover:opacity-75 transition-opacity"
+                >
+                  {img}
+                </Link>
+              )
+            })()
           )}
         </div>
       </div>
