@@ -1,15 +1,16 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface LogoProps {
   size?: number
   showText?: boolean
 }
 
-export default function Logo({ size = 36, showText = true }: LogoProps) {
+export default function Logo({ size = 52, showText = true }: LogoProps) {
   return (
-    <a
-      href="#"
-      className="inline-flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded-lg"
+    <Link
+      href="/"
+      className="inline-flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded-lg"
       aria-label="apulia.ai home"
     >
       <Image
@@ -17,15 +18,15 @@ export default function Logo({ size = 36, showText = true }: LogoProps) {
         alt="apulia.ai logo"
         width={size}
         height={size}
-        className="flex-shrink-0 transition-transform duration-200 group-hover:scale-105 rounded-sm"
+        className="flex-shrink-0 transition-transform duration-200 group-hover:scale-105 rounded-md"
         priority
       />
 
       {showText && (
-        <span className="text-[1.05rem] font-bold tracking-tight text-[#0F172A] group-hover:text-white transition-colors">
+        <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0F172A] group-hover:text-[#2563EB] transition-colors">
           apulia<span className="text-[#2563EB]">.ai</span>
         </span>
       )}
-    </a>
+    </Link>
   )
 }

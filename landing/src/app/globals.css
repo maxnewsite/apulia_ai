@@ -24,6 +24,8 @@ html {
   scroll-behavior: smooth;
   /* Larger base for readability — every Tailwind text-* scales with this. */
   font-size: 18px;
+  /* Don't let the fixed header cover anchor targets when navigating to #section */
+  scroll-padding-top: 6rem;
 }
 
 @media (max-width: 640px) {

@@ -32,9 +32,6 @@ interface TeamMember {
   isFounder?: boolean
 }
 
-// Public roster — only members who have explicitly approved their profile.
-// The full backup (with placeholders) lives in TeamPortfolioContent.full.tsx.bak
-// and will be restored as members confirm.
 const TEAM: TeamMember[] = [
   {
     id: 'massimiliano-masi',
@@ -46,24 +43,21 @@ const TEAM: TeamMember[] = [
     linkedIn: 'https://www.linkedin.com/in/massimiliano-masi-4265ab',
     isFounder: true,
   },
-  {
-    id: 'alberto-de-leo',
-    firstName: 'Alberto',
-    lastName: 'De Leo',
-    title: 'Advisor',
-    company: 'apulia.ai',
-    photo: '/team/alberto_de_leo.jpg',
-    linkedIn: 'https://www.linkedin.com/in/albertodeleo',
-  },
-  {
-    id: 'mario-pucciarelli',
-    firstName: 'Mario',
-    lastName: 'Pucciarelli',
-    title: 'Advisor',
-    company: 'apulia.ai',
-    photo: '/team/Mario_Pucciarelli.jpg',
-    linkedIn: 'https://www.linkedin.com/in/mapucc',
-  },
+  { id: 'antonio-capaldo',      firstName: 'Antonio',     lastName: 'Capaldo',      title: 'Titolo', company: 'Azienda', photo: '/team/antonio_capaldo.png',      linkedIn: '#' },
+  { id: 'gabriele-catellani',   firstName: 'Gabriele',    lastName: 'Catellani',    title: 'Titolo', company: 'Azienda', photo: '/team/Gabriele_Catellani.jpg',   linkedIn: '#' },
+  { id: 'chiara-de-caro',       firstName: 'Chiara',      lastName: 'De Caro',      title: 'Co-Founder & Managing Partner', company: 'AGCC', photo: '/team/Chiara_de_Caro.png', linkedIn: 'https://ae.linkedin.com/in/chiaradecaro' },
+  { id: 'alberto-de-leo',       firstName: 'Alberto',     lastName: 'De Leo',       title: 'Titolo', company: 'Azienda', photo: '/team/alberto_de_leo.jpg',       linkedIn: '#' },
+  { id: 'rosa-metra',           firstName: 'Rosa',        lastName: 'Metra',        title: 'Titolo', company: 'Azienda', photo: '/team/rosa_metra.jpg',           linkedIn: '#' },
+  { id: 'fabrizio-palmiotti',   firstName: 'Fabrizio',    lastName: 'Palmiotti',    title: 'Titolo', company: 'Azienda', photo: '/team/Fabrizio_Palmiotti.jpg',   linkedIn: '#' },
+  { id: 'alessandro-palmisano', firstName: 'Alessandro',  lastName: 'Palmisano',    title: 'Titolo', company: 'Azienda', photo: '/team/alessandro_palmisano.png', linkedIn: '#' },
+  { id: 'maximilien-piaton',    firstName: 'Maximilien',  lastName: 'Piaton',       title: 'Titolo', company: 'Azienda', photo: '/team/maximilien_piaton.jpg',    linkedIn: '#' },
+  { id: 'mario-pucciarelli',    firstName: 'Mario',       lastName: 'Pucciarelli',  title: 'Titolo', company: 'Azienda', photo: '/team/Mario_Pucciarelli.jpg',    linkedIn: '#' },
+  { id: 'giampietro-sanna',     firstName: 'Giampietro',  lastName: 'Sanna',        title: 'Titolo', company: 'Azienda', photo: '/team/giampietro_sanna.jpg',     linkedIn: '#' },
+  { id: 'mark-zaleski',         firstName: 'Mark',        lastName: 'Zaleski',      title: 'Titolo', company: 'Azienda', photo: '/team/Mark_Zalski.jpg',          linkedIn: '#' },
+  { id: 'federico-zuin',        firstName: 'Federico',    lastName: 'Zuin',         title: 'Titolo', company: 'Azienda', photo: '/team/Federico_Zuin.jpg',        linkedIn: '#' },
+  { id: 'p14', firstName: 'Nome', lastName: 'Cognome', title: 'Titolo', company: 'Azienda', photo: '', linkedIn: '#' },
+  { id: 'p15', firstName: 'Nome', lastName: 'Cognome', title: 'Titolo', company: 'Azienda', photo: '', linkedIn: '#' },
+  { id: 'p16', firstName: 'Nome', lastName: 'Cognome', title: 'Titolo', company: 'Azienda', photo: '', linkedIn: '#' },
 ]
 
 function MemberCard({ member }: { member: TeamMember }) {
@@ -171,9 +165,9 @@ export default function TeamPortfolioContent() {
         <p className="text-xl text-[#475569] max-w-2xl leading-relaxed">{intro}</p>
       </header>
 
-      {/* Team Grid — adapts to roster size */}
+      {/* 4×4 Team Grid */}
       <section aria-label={language === 'it' ? 'Il team' : 'The team'}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 lg:gap-5">
           {TEAM.map((member) => (
             <MemberCard key={member.id} member={member} />
           ))}

@@ -43,11 +43,15 @@ export default function Header() {
     setLanguage(next)
   }
 
+  // Anchor links work on the homepage; on subpages (e.g. /chi-siamo, /weekly/*)
+  // we send them to the homepage section explicitly via `/#section`.
   const navLinks = [
-    { label: t.nav.newsletter, href: '#subscribe' },
-    { label: 'Archivio', href: '/weekly' },
-    { label: t.nav.analysis, href: '#products' },
-    { label: t.nav.about, href: '/chi-siamo' },
+    { label: language === 'it' ? 'Come funziona' : 'How it works', href: '/#come-funziona' },
+    { label: language === 'it' ? 'Ultima edizione' : 'Latest issue',  href: '/#preview' },
+    { label: 'Archivio',                                              href: '/weekly' },
+    { label: t.nav.analysis,                                          href: '/#products' },
+    { label: 'FAQ',                                                   href: '/#faq' },
+    { label: t.nav.about,                                             href: '/chi-siamo' },
   ]
 
   return (
@@ -60,20 +64,20 @@ export default function Header() {
       role="banner"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Logo size={34} />
+          <Logo size={52} />
 
           {/* Desktop nav */}
           <nav
-            className="hidden md:flex items-center gap-1"
+            className="hidden lg:flex items-center gap-1"
             aria-label="Primary navigation"
           >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm font-medium text-[#475569] hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#E2E8F0]/30"
+                className="px-3 py-2 text-base font-medium text-[#475569] hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#E2E8F0]/60"
               >
                 {link.label}
               </a>
@@ -106,7 +110,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden p-2 text-[#475569] hover:text-[#0F172A] rounded-lg hover:bg-[#E2E8F0]/30 transition-colors"
+              className="lg:hidden p-2 text-[#475569] hover:text-[#0F172A] rounded-lg hover:bg-[#E2E8F0]/30 transition-colors"
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -133,7 +137,7 @@ export default function Header() {
         {menuOpen && (
           <nav
             id="mobile-menu"
-            className="md:hidden pb-4 pt-2 border-t border-[#E2E8F0]/40"
+            className="lg:hidden pb-4 pt-2 border-t border-[#E2E8F0]/40"
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col gap-1">
@@ -142,7 +146,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="px-4 py-3 text-sm font-medium text-[#475569] hover:text-[#0F172A] hover:bg-[#E2E8F0]/30 rounded-lg transition-colors"
+                  className="px-4 py-3 text-base font-medium text-[#475569] hover:text-[#0F172A] hover:bg-[#E2E8F0]/30 rounded-lg transition-colors"
                 >
                   {link.label}
                 </a>

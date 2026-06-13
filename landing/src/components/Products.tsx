@@ -96,16 +96,25 @@ export default function Products() {
             </div>
           </article>
 
-          {/* Monthly — premium */}
+          {/* Monthly — premium (coming soon) */}
           <article
-            className="relative flex flex-col rounded-2xl bg-[#F8FAFC] border border-[#F59E0B]/30 p-8 hover:border-[#F59E0B]/60 transition-all duration-300 group glow-border"
-            aria-label={`${monthly.name} — ${monthly.badge}`}
+            className="relative flex flex-col rounded-2xl bg-[#F8FAFC] border border-[#F59E0B]/30 p-8 transition-all duration-300 group glow-border opacity-95"
+            aria-label={`${monthly.name} — ${monthly.badge} — prossimamente disponibile`}
           >
             {/* Recommended glow top accent */}
             <div
               className="absolute top-0 inset-x-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-[#F59E0B]/0 via-[#F59E0B] to-[#F59E0B]/0"
               aria-hidden="true"
             />
+
+            {/* Coming-soon ribbon */}
+            <div
+              className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F172A] text-white text-xs font-bold uppercase tracking-wider shadow-md"
+              aria-hidden="true"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B] animate-pulse" />
+              Coming soon
+            </div>
 
             {/* Badge */}
             <div className="mb-5 flex items-center justify-between">
@@ -144,18 +153,20 @@ export default function Products() {
               ))}
             </ul>
 
-            {/* Price + CTA */}
+            {/* Price + disabled CTA */}
             <div className="mt-auto">
               <div className="flex items-baseline gap-1 mb-1">
                 <span className="text-2xl font-black text-[#0F172A]">{monthly.price}</span>
               </div>
               <p className="text-xs text-[#F59E0B]/70 mb-4 font-medium">{monthly.priceNote}</p>
-              <a
-                href="#subscribe"
-                className="block w-full text-center px-6 py-3 rounded-xl bg-[#F59E0B]/10 text-[#F59E0B] font-semibold text-sm border border-[#F59E0B]/30 hover:bg-[#F59E0B]/20 hover:border-[#F59E0B]/60 active:scale-[0.98] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F59E0B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8FAFC]"
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="block w-full text-center px-6 py-3 rounded-xl bg-[#F8FAFC] text-[#475569] font-semibold text-sm border border-[#E2E8F0] cursor-not-allowed"
               >
-                {monthly.cta}
-              </a>
+                Presto disponibile
+              </button>
             </div>
           </article>
         </div>
