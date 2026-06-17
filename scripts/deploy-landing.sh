@@ -17,7 +17,16 @@ say() { printf "\n\033[1;36m▸ %s\033[0m\n" "$*"; }
 ok()  { printf "  \033[32m✓\033[0m %s\n" "$*"; }
 
 say "Build landing image"
-gcloud builds submit landing --tag "${IMG}" --project "${PROJECT_ID}" --quiet
+# Fetch the anon key from Secret Manager so Next.js can inline NEXT_PUBLIC_*
+# vars during `npm run build`. Without these build args, the server bundle
+# ships with `process.env.NEXT_PUBLIC_SUPABASE_URL === undefined` baked in,
+# and runtime --set-env-vars below has no effect on inlined references.
+ANON_KEY="$(gcloud secrets versions access latest \
+  --secret=supabase-anon-key --project="${PROJECT_ID}")"
+gcloud builds submit landing \
+  --config landing/cloudbuild.yaml \
+  --substitutions=_IMG="${IMG}",_NEXT_PUBLIC_SUPABASE_URL="${SUPABASE_URL}",_NEXT_PUBLIC_SUPABASE_ANON_KEY="${ANON_KEY}" \
+  --project "${PROJECT_ID}" --quiet
 ok "Pushed: ${IMG}"
 
 say "Deploy revision to ${SERVICE}"
@@ -31,6 +40,7 @@ gcloud run deploy "${SERVICE}" \
   --concurrency 80 \
   --memory 512Mi --cpu 1 \
   --set-env-vars "NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}" \
+  --set-env-vars "SUPABASE_URL=${SUPABASE_URL}" \
   --set-env-vars "NEXT_PUBLIC_APP_URL=${APP_URL_PUBLIC}" \
   --set-env-vars "ZEPTO_API_HOST=api.zeptomail.com" \
   --set-env-vars "ZEPTO_FROM_EMAIL_CONFIRM=noreply@apulia.ai" \

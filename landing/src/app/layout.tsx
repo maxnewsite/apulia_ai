@@ -91,6 +91,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it" className="scroll-smooth">
       <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-548VL75B2C" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-548VL75B2C');`,
+          }}
+        />
         <link rel="canonical" href="https://apulia.ai" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

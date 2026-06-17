@@ -7,11 +7,15 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 let _client: SupabaseClient | null = null
 
 function build(): SupabaseClient {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  // Prefer server-only SUPABASE_URL — NEXT_PUBLIC_* gets inlined by Next at
+  // build time, so if the Docker build runs without that var present, the
+  // server bundle ships with `undefined` baked in and runtime --set-env-vars
+  // can't fix it. SUPABASE_URL has no NEXT_PUBLIC_ prefix → real runtime lookup.
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) {
     throw new Error(
-      'Supabase admin not configured: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set.',
+      'Supabase admin not configured: SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY must be set.',
     )
   }
   return createClient(url, key, { auth: { persistSession: false } })
