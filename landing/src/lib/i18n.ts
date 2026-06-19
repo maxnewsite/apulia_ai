@@ -64,6 +64,24 @@ export const translations = {
         price: 'A breve disponibile',
         priceNote: 'Lista d\'attesa aperta',
       },
+      apulia: {
+        badge: 'Su misura',
+        name: 'AI Applicata',
+        frequency: 'Programma per la tua azienda',
+        description:
+          'Sistemi di AI che leggono il tuo mercato, si collegano ai tuoi dati e indicano al tuo team cosa fare. Decisioni concrete, non dashboard.',
+        features: [
+          'Intelligence di settore industrializzata',
+          'Collegata ai tuoi sistemi operativi',
+          'Mappatura di dati e processi interni',
+          'Workflow automatizzati per l\'azione',
+          'Raccomandazioni firmabili dalla leadership',
+          'Prezzo legato al risultato',
+        ],
+        cta: 'Parliamone',
+        price: 'Su richiesta',
+        priceNote: 'Programma pilota in lancio',
+      },
     },
     // Subscribe form
     form: {
@@ -301,6 +319,24 @@ export const translations = {
         price: 'Coming soon',
         priceNote: 'Waitlist open',
       },
+      apulia: {
+        badge: 'Custom',
+        name: 'Applied AI',
+        frequency: 'Tailored to your business',
+        description:
+          'AI systems that read your market, connect to your data and tell your team what to do. Concrete decisions, not dashboards.',
+        features: [
+          'Industrialised sector intelligence',
+          'Connected to your operational systems',
+          'Internal data and process mapping',
+          'Automated workflows for action',
+          'Leadership-grade recommendations',
+          'Pricing tied to outcomes',
+        ],
+        cta: 'Let\'s talk',
+        price: 'On request',
+        priceNote: 'Pilot programme launching',
+      },
     },
     // Subscribe form
     form: {
@@ -508,6 +544,16 @@ export type TranslationKeys = {
       price: string
     }
     monthly: {
+      badge: string
+      name: string
+      frequency: string
+      description: string
+      features: readonly string[]
+      cta: string
+      price: string
+      priceNote: string
+    }
+    apulia: {
       badge: string
       name: string
       frequency: string

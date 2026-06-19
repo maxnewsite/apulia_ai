@@ -7,7 +7,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative flex items-center justify-center overflow-hidden pt-28 pb-20 sm:pt-32 sm:pb-24"
       aria-labelledby="hero-heading"
     >
       {/* Background glow effects */}
@@ -28,7 +28,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Eyebrow badge */}
         <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC]/80 backdrop-blur-sm">
           <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" aria-hidden="true" />
@@ -54,11 +54,11 @@ export default function Hero() {
           {t.hero.subtitle}
         </p>
 
-        {/* CTA buttons */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* CTA */}
+        <div className="mt-10 flex justify-center">
           <a
             href="#subscribe"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#2563EB] text-white text-base font-bold hover:bg-[#1D4ED8] active:scale-95 transition-all duration-200 shadow-lg shadow-[#2563EB]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#2563EB] text-white text-base font-bold hover:bg-[#1D4ED8] active:scale-95 transition-all duration-200 shadow-lg shadow-[#2563EB]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
             aria-label={t.hero.cta}
           >
             <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -67,29 +67,10 @@ export default function Hero() {
             </svg>
             {t.hero.cta}
           </a>
-
-          <a
-            href="#products"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[#E2E8F0] text-[#475569] text-base font-semibold hover:text-[#0F172A] hover:border-[#2563EB]/60 hover:bg-[#F8FAFC] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFFFF]"
-          >
-            {t.hero.ctaSubtext}
-          </a>
         </div>
 
         {/* Trust note */}
-        <p className="mt-5 text-sm text-[#475569]/70">
-          {t.hero.ctaSubtext}
-        </p>
-
-        {/* Scroll indicator */}
-        <div className="mt-16 flex justify-center" aria-hidden="true">
-          <div className="flex flex-col items-center gap-1 opacity-30 animate-bounce">
-            <div className="w-px h-8 bg-gradient-to-b from-[#475569] to-transparent" />
-            <svg className="w-4 h-4 text-[#475569]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
+        <p className="mt-4 text-sm text-[#475569]/70">{t.hero.ctaSubtext}</p>
       </div>
     </section>
   )
