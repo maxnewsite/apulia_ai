@@ -40,8 +40,10 @@ def _upload_pdf(supabase: Client, local: Path, remote: str) -> str:
         file=data,
         file_options={"content-type": "application/pdf", "upsert": "true"},
     )
-    # Genera URL pubblico firmato (7 giorni) — il bucket è privato
-    result = supabase.storage.from_("apulia-archive").create_signed_url(remote, 60 * 60 * 24 * 7)
+    # Genera URL firmato di lunga durata (10 anni) — il bucket è privato ma la URL
+    # viene salvata in newsletter_issues.pdf_url e servita così com'è dal sito:
+    # con una scadenza breve i link dell'archivio si romperebbero.
+    result = supabase.storage.from_("apulia-archive").create_signed_url(remote, 60 * 60 * 24 * 365 * 10)
     return result.get("signedURL") or result.get("signedUrl") or ""
 
 

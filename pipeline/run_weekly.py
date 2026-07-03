@@ -118,19 +118,25 @@ def main() -> int:
         except Exception as e:
             print(f"[warn] rendering PDF fallito: {e}")
 
-    # 3. Persisti dedup
-    if cited:
-        added = seen_store.add(cited)
-        seen_store.save()
-        print(f"[dedupe] aggiunti {added} nuovi fingerprint (totale: {len(seen_store.fingerprints())})")
+    exit_code = 0
+
+    # 3. Guardia contenuti minimi — mai pubblicare/consegnare un'edizione vuota
+    #    (es. classificazione fallita -> tutti gli articoli skippati)
+    has_content = bool(nl.key_developments) and nl.article_count > 0
+    if not has_content:
+        print("[guard] edizione senza contenuti (sviluppi chiave vuoti) — publish e deliver bloccati",
+              file=sys.stderr)
 
     # 4. Pubblica — automatica se credenziali presenti, salvo --no-publish o --dry-run
     has_supabase = bool(os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
-    should_publish = (
+    publish_intended = (
         not args.dry_run
         and not args.no_publish
         and (args.publish or has_supabase)
     )
+    should_publish = has_content and publish_intended
+    if publish_intended and not has_content:
+        exit_code = 1
     published_issue = None
     if should_publish:
         if not pdf_path:
@@ -141,10 +147,26 @@ def main() -> int:
                 published_issue = publish(nl, html_path, pdf_path)
             except Exception as e:
                 print(f"[publish] FALLITO: {e}")
+                exit_code = 1
 
-    # 5. Consegna — automatica dopo publish riuscito, salvo --no-deliver o --dry-run
+    # 5. Persisti dedup — solo dopo publish riuscito (o run locale senza publish),
+    #    mai in --dry-run/--no-publish: un publish fallito o un test non deve
+    #    marcare gli articoli come già pubblicati.
+    should_persist_seen = bool(cited) and not args.dry_run and (
+        (should_publish and published_issue is not None)
+        or (not publish_intended and not args.no_publish)
+    )
+    if should_persist_seen:
+        added = seen_store.add(cited)
+        seen_store.save()
+        print(f"[dedupe] aggiunti {added} nuovi fingerprint (totale: {len(seen_store.fingerprints())})")
+    elif cited:
+        print("[dedupe] fingerprint NON persistiti (dry-run, no-publish o publish fallito)")
+
+    # 6. Consegna — automatica dopo publish riuscito, salvo --no-deliver o --dry-run
     should_deliver = (
-        not args.dry_run
+        has_content
+        and not args.dry_run
         and not args.no_deliver
         and (should_publish or args.deliver)
     )
@@ -163,6 +185,7 @@ def main() -> int:
                 )
             except Exception as e:
                 print(f"[deliver] FALLITO: {e}")
+                exit_code = 1
 
     print("\nCompletato. Apri nel browser:")
     print(f"  file:///{html_path.as_posix()}")
@@ -171,7 +194,7 @@ def main() -> int:
         import webbrowser
         webbrowser.open(html_path.as_uri())
 
-    return 0
+    return exit_code
 
 
 def _run_from_existing(args) -> int:

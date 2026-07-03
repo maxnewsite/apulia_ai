@@ -169,6 +169,23 @@ def _log_send(supabase: Client, issue_id: str, subscriber_id: str, ok: bool) -> 
         print(f"  [log] impossibile registrare invio: {e}")
 
 
+def _already_sent_ids(supabase: Client, issue_id: str) -> set[str]:
+    """Subscriber che hanno già ricevuto questa edizione (rende deliver idempotente)."""
+    try:
+        rows = (
+            supabase.table("email_sends")
+            .select("subscriber_id")
+            .eq("issue_id", issue_id)
+            .eq("status", "sent")
+            .execute()
+            .data
+        ) or []
+        return {r["subscriber_id"] for r in rows}
+    except Exception as e:
+        print(f"  [deliver] impossibile leggere email_sends ({e}) — nessun invio saltato")
+        return set()
+
+
 def deliver(
     pdf_path: Path,
     issue_id: str,
@@ -179,6 +196,9 @@ def deliver(
     """Invia il brief a tutti gli iscritti attivi. Restituisce conteggi."""
     supabase = _client()
     subs = _fetch_subscribers(supabase, issue_type)
+    already_sent = _already_sent_ids(supabase, issue_id)
+    if already_sent:
+        print(f"[deliver] {len(already_sent)} iscritti hanno già ricevuto questa edizione — saltati")
     print(f"[deliver] {len(subs)} iscritti per '{issue_type}'")
 
     counts = {"sent": 0, "failed": 0, "skipped": 0}
@@ -191,7 +211,7 @@ def deliver(
         subject_en = f"Monthly Strategic Brief — {reporting_period}"
 
     for s in subs:
-        if not s.email:
+        if not s.email or s.sub_id in already_sent:
             counts["skipped"] += 1
             continue
 
