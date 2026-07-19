@@ -1,0 +1,20 @@
+# Cloud Build config for the landing image. Invoked by
+# scripts/deploy-landing.sh, which supplies all three substitutions.
+# NEXT_PUBLIC_* must be passed as build args so Next.js inlines them
+# at `npm run build` time (see the note in deploy-landing.sh).
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=${_IMG}
+      - --build-arg=NEXT_PUBLIC_SUPABASE_URL=${_NEXT_PUBLIC_SUPABASE_URL}
+      - --build-arg=NEXT_PUBLIC_SUPABASE_ANON_KEY=${_NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - .
+images:
+  - ${_IMG}
+options:
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _IMG: ''
+  _NEXT_PUBLIC_SUPABASE_URL: ''
+  _NEXT_PUBLIC_SUPABASE_ANON_KEY: ''
