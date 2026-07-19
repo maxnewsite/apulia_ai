@@ -62,6 +62,15 @@ const TEAM: TeamMember[] = [
     founderHref: 'https://www.linkedin.com/in/albertodeleo',
   },
   {
+    id: 'rosa-metra',
+    firstName: 'Rosa',
+    lastName: 'Metra',
+    title: 'AI Academy',
+    company: 'apulia.ai',
+    photo: '/team/rosa_metra.jpg',
+    linkedIn: 'https://www.linkedin.com/in/rosametra',
+  },
+  {
     id: 'mario-pucciarelli',
     firstName: 'Mario',
     lastName: 'Pucciarelli',
@@ -69,6 +78,24 @@ const TEAM: TeamMember[] = [
     company: 'apulia.ai',
     photo: '/team/Mario_Pucciarelli.jpg',
     linkedIn: 'https://www.linkedin.com/in/mapucc',
+  },
+  {
+    id: 'mark-zaleski',
+    firstName: 'Mark',
+    lastName: 'Zaleski',
+    title: 'Advisor',
+    company: 'apulia.ai',
+    photo: '/team/Mark_Zalski.jpg',
+    linkedIn: 'https://www.linkedin.com/in/markzaleski',
+  },
+  {
+    id: 'fabrizio-palmiotti',
+    firstName: 'Fabrizio',
+    lastName: 'Palmiotti',
+    title: 'Advisor',
+    company: 'apulia.ai',
+    photo: '/team/Fabrizio_Palmiotti.jpg',
+    linkedIn: 'https://www.linkedin.com/in/fabrizio-palmiotti-577997a4',
   },
 ]
 
