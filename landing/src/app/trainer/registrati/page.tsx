@@ -9,6 +9,17 @@ const FIELD =
   'w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]'
 const LABEL = 'block text-sm font-semibold mb-2'
 
+/** Etichette leggibili per i messaggi di validazione. */
+const FIELD_LABELS: Record<string, string> = {
+  full_name: 'Nome e cognome',
+  email: 'Email',
+  password: 'Password',
+  linkedin_url: 'Profilo LinkedIn',
+  motivation: 'Perché vuoi diventare trainer',
+  cv: 'Curriculum vitae',
+  consent_privacy: 'Consenso privacy',
+}
+
 export default function TrainerSignupPage() {
   const router = useRouter()
   const [busy, setBusy] = useState(false)
@@ -17,11 +28,33 @@ export default function TrainerSignupPage() {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
-    setBusy(true)
 
     const form = event.currentTarget
+
+    // Il form è `noValidate`: la validazione nativa mostrerebbe solo un
+    // fumetto che sparisce da solo e passa inosservato se il campo è fuori
+    // schermo — da fuori sembrerebbe che il pulsante non faccia nulla.
+    // Qui il motivo viene scritto in chiaro e il campo riportato in vista.
+    if (!form.checkValidity()) {
+      const invalid = form.querySelector<HTMLInputElement | HTMLTextAreaElement>(':invalid')
+      if (invalid) {
+        setError(`${FIELD_LABELS[invalid.name] ?? 'Un campo'}: ${invalid.validationMessage}`)
+        invalid.scrollIntoView({ block: 'center', behavior: 'smooth' })
+        invalid.focus({ preventScroll: true })
+      }
+      return
+    }
+
+    setBusy(true)
     const data = new FormData(form)
     data.set('consent_privacy', String(data.get('consent_privacy') === 'on'))
+
+    // Un LinkedIn scritto senza schema è la norma, non un errore: lo
+    // completiamo invece di rifiutare la candidatura.
+    const linkedin = String(data.get('linkedin_url') ?? '').trim()
+    if (linkedin && !/^https?:\/\//i.test(linkedin)) {
+      data.set('linkedin_url', `https://${linkedin}`)
+    }
 
     try {
       const res = await fetch('/api/trainer/registrazione', { method: 'POST', body: data })
@@ -56,7 +89,7 @@ export default function TrainerSignupPage() {
         di aprire l&apos;accesso ai moduli formativi.
       </p>
 
-      <form onSubmit={onSubmit} className="space-y-6">
+      <form onSubmit={onSubmit} noValidate className="space-y-6">
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className={LABEL} htmlFor="full_name">Nome e cognome *</label>
@@ -94,7 +127,16 @@ export default function TrainerSignupPage() {
 
           <div className="sm:col-span-2">
             <label className={LABEL} htmlFor="linkedin_url">Profilo LinkedIn</label>
-            <input id="linkedin_url" name="linkedin_url" type="url" className={FIELD} placeholder="https://linkedin.com/in/…" />
+            {/* type="text" e non "url": scrivere il profilo senza https:// è
+                la norma, e lo schema lo aggiungiamo noi prima dell'invio. */}
+            <input
+              id="linkedin_url"
+              name="linkedin_url"
+              type="text"
+              inputMode="url"
+              className={FIELD}
+              placeholder="linkedin.com/in/…"
+            />
           </div>
 
           <div className="sm:col-span-2">
