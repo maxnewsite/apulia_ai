@@ -45,13 +45,15 @@ export default function Header() {
 
   // Anchor links work on the homepage; on subpages (e.g. /chi-siamo, /weekly/*)
   // we send them to the homepage section explicitly via `/#section`.
-  const navLinks = [
+  const navLinks: { label: string; href: string; accent?: boolean }[] = [
     { label: language === 'it' ? 'Come funziona' : 'How it works', href: '/#come-funziona' },
     { label: language === 'it' ? 'Ultima edizione' : 'Latest issue',  href: '/#preview' },
     { label: 'Archivio',                                              href: '/weekly' },
     { label: t.nav.analysis,                                          href: '/#products' },
     { label: 'FAQ',                                                   href: '/#faq' },
     { label: t.nav.about,                                             href: '/chi-siamo' },
+    // Area riservata: destinazione a sé, non un'ancora di questa pagina.
+    { label: 'AI Trainer',                                            href: '/trainer', accent: true },
   ]
 
   return (
@@ -70,14 +72,18 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav
-            className="hidden lg:flex items-center gap-1"
+            className="hidden xl:flex items-center gap-1"
             aria-label="Primary navigation"
           >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-base font-medium text-[#475569] hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#E2E8F0]/60"
+                className={
+                  link.accent
+                    ? 'ml-1 px-3 py-2 text-base font-semibold text-[#2563EB] border border-[#2563EB]/30 rounded-lg hover:bg-[#2563EB]/10 transition-colors'
+                    : 'px-3 py-2 text-base font-medium text-[#475569] hover:text-[#0F172A] transition-colors rounded-lg hover:bg-[#E2E8F0]/60'
+                }
               >
                 {link.label}
               </a>
@@ -110,7 +116,7 @@ export default function Header() {
 
             {/* Mobile menu toggle */}
             <button
-              className="lg:hidden p-2 text-[#475569] hover:text-[#0F172A] rounded-lg hover:bg-[#E2E8F0]/30 transition-colors"
+              className="xl:hidden p-2 text-[#475569] hover:text-[#0F172A] rounded-lg hover:bg-[#E2E8F0]/30 transition-colors"
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -137,7 +143,7 @@ export default function Header() {
         {menuOpen && (
           <nav
             id="mobile-menu"
-            className="lg:hidden pb-4 pt-2 border-t border-[#E2E8F0]/40"
+            className="xl:hidden pb-4 pt-2 border-t border-[#E2E8F0]/40"
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col gap-1">
@@ -146,7 +152,11 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="px-4 py-3 text-base font-medium text-[#475569] hover:text-[#0F172A] hover:bg-[#E2E8F0]/30 rounded-lg transition-colors"
+                  className={
+                    link.accent
+                      ? 'px-4 py-3 text-base font-semibold text-[#2563EB] hover:bg-[#2563EB]/10 rounded-lg transition-colors'
+                      : 'px-4 py-3 text-base font-medium text-[#475569] hover:text-[#0F172A] hover:bg-[#E2E8F0]/30 rounded-lg transition-colors'
+                  }
                 >
                   {link.label}
                 </a>
