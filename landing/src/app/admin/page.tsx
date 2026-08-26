@@ -107,6 +107,12 @@ export default function AdminDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+          <a
+            href="/admin/trainer"
+            className="text-xs font-semibold text-[#F59E0B] hover:text-white transition"
+          >
+            Trainer Academy →
+          </a>
           <button
             onClick={load}
             disabled={loading}
