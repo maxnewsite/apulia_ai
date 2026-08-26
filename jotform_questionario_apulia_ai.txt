@@ -1,0 +1,134 @@
+BRIEF PER COSTRUIRE IL QUESTIONARIO JOTFORM — APULIA.AI
+=========================================================
+
+OBIETTIVO DELLA RICERCA
+-----------------------
+Sondare i primi potenziali clienti di apulia.ai per capire:
+1. Dove e come la newsletter mensile gratuita può essere realmente utile al loro lavoro.
+2. Come comunicarla e diffonderla nel modo più efficace.
+3. Quali sono i bisogni concreti che giustificherebbero il passaggio al servizio a pagamento di "intelligence mensile" su misura.
+4. Quanto è alto l'interesse per un'eventuale advisory 1:1 sull'adozione di agenti AI nei processi aziendali.
+
+Il questionario deve essere brevissimo, semplice, leggibile da imprenditori e manager NON tecnici (meccanica di precisione, distribuzione alimentare, manifattura, servizi, ecc.). Vietato il gergo "AI / LLM / agentic". Usare linguaggio business: "automatizzare", "risparmiare tempo", "decidere meglio", "tenermi aggiornato".
+
+DOMANDE CHIAVE DA CUI PARTIRE (di Alberto De Leo, da tradurre in domande del questionario)
+- Perché dovrei comprare questo servizio? Cosa fa che io non posso (far) fare, cosa mi pesa fare, cosa non riesco ad automatizzare?
+- Mi serve qualcuno che verifichi in modo dinamico quali fonti informative sono utili per me, mi segnali fonti nuove o fonti che sono migliorate proprio sui temi che a me interessano?
+- Se pago il servizio, qual è il ROI? Come lo calcolo? Su quali KPI vedo l'impatto?
+- Io faccio un mestiere "lontano" dall'informatica: perché dovrebbe interessarmi un servizio sull'AI?
+
+STRUTTURA DEL FORM
+------------------
+Titolo del form: "Apulia.AI — 3 minuti per aiutarci a costruire un servizio utile alla tua azienda"
+
+Sottotitolo / descrizione iniziale:
+"Stiamo costruendo Apulia.AI, un servizio pensato per imprenditori e manager che vogliono capire come l'intelligenza artificiale può davvero aiutare la loro azienda — senza diventare esperti di tecnologia. Ci servono 3 minuti del tuo tempo per capire cosa ti serve davvero. Le risposte sono riservate e useremo solo aggregati."
+
+CAMPI ANAGRAFICI (3 campi obbligatori, in cima):
+1. Nome (testo breve, obbligatorio)
+2. Cognome (testo breve, obbligatorio)
+3. Email (campo email, obbligatorio)
+
+DOMANDE DEL QUESTIONARIO (10 domande)
+-------------------------------------
+
+DOMANDA 1 — Settore e ruolo (per segmentare le risposte)
+Tipo: due menu a tendina affiancati (o due domande brevi)
+Testo: "In che settore opera la tua azienda e qual è il tuo ruolo?"
+- Settore (menu a tendina): Manifattura / Meccanica di precisione / Distribuzione e logistica / Alimentare / Agricoltura / Servizi professionali / Commercio e retail / Edilizia / Sanità / Pubblica amministrazione / ICT / Altro
+- Ruolo (menu a tendina): Imprenditore / titolare / CEO / Direttore generale / Direttore operativo / Responsabile commerciale o marketing / Responsabile IT o digitale / Responsabile amministrativo o finanziario / Consulente / Altro
+
+DOMANDA 2 — Dimensione azienda (per capire il segmento)
+Tipo: single choice
+Testo: "Quante persone lavorano nella tua azienda?"
+Opzioni: 1-9 / 10-49 / 50-249 / 250-999 / 1000+
+
+DOMANDA 3 — Tempo speso a "stare aggiornati" (problema reale)
+Tipo: single choice
+Testo: "Quanto tempo a settimana dedichi a informarti su novità che potrebbero impattare il tuo business (nuovi competitor, normative, tecnologie, fornitori, trend di mercato)?"
+Opzioni: Meno di 1 ora / 1-3 ore / 3-5 ore / Più di 5 ore / Vorrei farlo ma non ho tempo
+
+DOMANDA 4 — Dove cerca informazioni oggi (per capire l'attuale "stack" informativo del cliente)
+Tipo: multiple choice (selezione multipla)
+Testo: "Oggi come ti tieni informato su novità rilevanti per la tua azienda? (puoi selezionare più risposte)"
+Opzioni: Newsletter di settore / LinkedIn / Riviste e siti di settore / Eventi e fiere / Consulenti esterni / Associazioni di categoria / Passaparola con colleghi e clienti / Quasi nulla, vado a intuito / Altro
+
+DOMANDA 5 — Cosa ti pesa di più (il dolore concreto da risolvere)
+Tipo: multiple choice (massimo 3 risposte)
+Testo: "Quando si parla di "stare al passo" con tecnologia, mercato e innovazione, cosa ti pesa di più? (seleziona fino a 3)"
+Opzioni:
+- Non so quali fonti siano affidabili
+- Le informazioni che leggo sono troppo generiche, non parlano del mio settore
+- Mi sfuggono novità importanti perché non ho tempo di cercarle
+- Faccio fatica a capire cosa è davvero applicabile alla mia azienda
+- Non so da dove iniziare con l'AI
+- Ho paura di investire in tecnologie sbagliate
+- Non ho qualcuno di fiducia con cui confrontarmi
+- Nessuno di questi, sono coperto
+
+DOMANDA 6 — Interesse per una newsletter mensile gratuita su misura (validazione del wedge)
+Tipo: scala 1-5 (Likert)
+Testo: "Quanto saresti interessato a ricevere ogni mese una newsletter gratuita che ti seleziona le novità (tecnologiche, di mercato, normative, di fornitori) davvero rilevanti per il tuo settore e il tuo ruolo?"
+Scala: 1 = per niente interessato — 5 = molto interessato
+
+DOMANDA 7 — Cosa dovrebbe contenere la newsletter per essere davvero utile (per orientare il prodotto)
+Tipo: multiple choice (massimo 4 risposte)
+Testo: "Cosa vorresti trovare in questa newsletter perché ti sia davvero utile? (seleziona fino a 4)"
+Opzioni:
+- Casi concreti di aziende simili alla mia
+- Segnalazione di nuove fonti o strumenti utili al mio settore
+- Aggiornamenti normativi che mi riguardano
+- Trend di mercato e movimenti dei competitor
+- Esempi pratici di automazione e AI applicata
+- Indicazioni su fornitori e tecnologie da valutare
+- Brevi guide "in 5 minuti" su come applicare una novità
+- Opportunità di finanziamenti e bandi
+- Altro
+
+DOMANDA 8 — Servizio "intelligence mensile" personalizzata a pagamento (test della willingness to pay)
+Tipo: single choice
+Testo: "Immagina un servizio che ogni mese ti consegna un report personalizzato sulla tua azienda: ti dice cosa è cambiato nel tuo mercato, quali nuove fonti o strumenti sono utili proprio a te, e cosa potresti automatizzare per primo. Quanto saresti disposto a investirci al mese?"
+Opzioni:
+- Non sono interessato
+- Sotto i 100 € al mese
+- 100-300 € al mese
+- 300-800 € al mese
+- 800-2.000 € al mese
+- Oltre 2.000 € al mese se l'impatto è chiaro
+
+DOMANDA 9 — Come misurerebbe il ROI (la domanda chiave di Alberto, posta direttamente al cliente)
+Tipo: testo lungo (textarea, non obbligatorio ma fortemente consigliato)
+Testo: "Se pagassi un servizio del genere, come capiresti che ti sta davvero portando valore? Quali risultati concreti o KPI vorresti vedere migliorare (es. tempo risparmiato, decisioni più rapide, nuove opportunità trovate, costi ridotti, ecc.)?"
+Placeholder: "Scrivi liberamente, anche poche righe vanno benissimo."
+
+DOMANDA 10 — Advisory 1:1 sull'adozione di AI nei processi (test del servizio premium)
+Tipo: single choice + campo testo opzionale
+Testo: "Saresti interessato a una consulenza 1:1 (advisory) che parta dai tuoi processi e ti aiuti, passo passo, a introdurre l'AI dove ha davvero senso per la tua azienda?"
+Opzioni:
+- Sì, mi interessa molto: vorrei essere ricontattato
+- Forse, dipende dai costi e dai risultati attesi
+- No, prima voglio capire meglio la newsletter
+- No, non è una priorità ora
+
+Sotto la domanda, campo testo opzionale:
+"Se vuoi, scrivici in una frase qual è il primo processo della tua azienda che ti piacerebbe rendere più efficiente o automatizzare."
+
+PAGINA FINALE (thank you page)
+------------------------------
+Titolo: "Grazie!"
+Testo:
+"Le tue risposte ci aiutano davvero a costruire qualcosa di utile, non l'ennesimo prodotto generico sull'AI.
+Riceverai a breve la prima newsletter mensile di Apulia.AI, pensata per imprenditori e manager che vogliono capire — senza fronzoli — dove la tecnologia può fare la differenza nel proprio mestiere.
+Se vuoi parlarci direttamente: max@kalym.me"
+
+NOTE OPERATIVE PER CHI COSTRUISCE IL FORM SU JOTFORM
+----------------------------------------------------
+- Lingua del form: Italiano.
+- Numerare le domande per chiarezza.
+- Mantenere il form a pagina singola se possibile, oppure massimo 2 step (anagrafica + questionario).
+- Privacy: aggiungere un piccolo checkbox finale obbligatorio: "Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato da Apulia.AI."
+- Disattivare i campi non strettamente necessari per non scoraggiare la compilazione.
+- Email di notifica delle risposte a: max@kalym.me
+- Stile visivo: pulito, professionale, colori sobri. Niente emoji nel form.
+- Tempo dichiarato di compilazione: 3 minuti.
+- Salvare il form con titolo interno: "Apulia.AI — Discovery Clienti v1".
