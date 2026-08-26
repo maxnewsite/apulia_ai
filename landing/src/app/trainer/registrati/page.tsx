@@ -90,6 +90,14 @@ export default function TrainerSignupPage() {
       </p>
 
       <form onSubmit={onSubmit} noValidate className="space-y-6">
+        {/* Honeypot: fuori schermo, non raggiungibile da tastiera, ignorato
+            dai lettori di schermo. Un bot che compila tutto lo riempie e si
+            smaschera; una persona non lo vede nemmeno. */}
+        <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+          <label htmlFor="company_ref">Non compilare questo campo</label>
+          <input id="company_ref" name="company_ref" type="text" tabIndex={-1} autoComplete="off" />
+        </div>
+
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className={LABEL} htmlFor="full_name">Nome e cognome *</label>

@@ -29,7 +29,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
   const profile = await getTrainerProfile(id)
   if (!profile) return NextResponse.json({ error: 'Trainer non trovato.' }, { status: 404 })
 
-  const [curriculum, examRes, grantsRes, attemptsRes, activityRes] = await Promise.all([
+  const [curriculum, examRes, grantsRes, attemptsRes, activityRes, auditRes] = await Promise.all([
     getCurriculum(id),
     supabaseAdmin
       .from('trainer_exam_submissions')
@@ -51,6 +51,12 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
       .from('trainer_module_activity')
       .select('module_id,aperture,materiali_distinti,prima_apertura,ultima_apertura')
       .eq('trainer_id', id),
+    supabaseAdmin
+      .from('trainer_admin_actions')
+      .select('id,actor,action,details,created_at')
+      .eq('trainer_id', id)
+      .order('created_at', { ascending: false })
+      .limit(50),
   ])
 
   if (activityRes.error)
@@ -90,6 +96,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
     grants: grantsRes.data ?? [],
     attempts: attemptsRes.data ?? [],
     activity: activityRes.data ?? [],
+    audit: auditRes.data ?? [],
   })
 }
 
@@ -119,6 +126,19 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   const notes = (body.notes ?? '').trim() || null
   const now = new Date().toISOString()
 
+  /** Registro in append delle azioni: reviewed_by sul profilo viene sovrascritto. */
+  const audit = async (action: string, details: Record<string, unknown> = {}) => {
+    const { error } = await supabaseAdmin.from('trainer_admin_actions').insert({
+      trainer_id: id,
+      trainer_email: profile.email,
+      actor: reviewer,
+      action,
+      details: { ...details, notes },
+    })
+    // Il registro non deve impedire l'azione: se manca la tabella si logga.
+    if (error) console.error('audit trail non disponibile:', error.message)
+  }
+
   const setStatus = async (status: string) => {
     const { error } = await supabaseAdmin
       .from('trainer_profiles')
@@ -130,7 +150,17 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   try {
     switch (body.action) {
       case 'approve': {
+        // Nessuna approvazione senza indirizzo verificato: altrimenti si
+        // ammette qualcuno che potrebbe essersi candidato con l'email
+        // di un'altra persona.
+        if (!profile.email_confirmed_at) {
+          return NextResponse.json(
+            { error: 'Il candidato non ha ancora confermato il proprio indirizzo email.' },
+            { status: 409 },
+          )
+        }
         await setStatus('approved')
+        await audit('approve')
         const { subject, html } = applicationApprovedEmail(profile.full_name)
         const sent = await sendEmail({ to: profile.email, subject, html })
         if (!sent.ok) console.error('approval email failed:', sent.status, sent.error)
@@ -139,6 +169,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
 
       case 'reject': {
         await setStatus('rejected')
+        await audit('reject')
         const { subject, html } = applicationRejectedEmail(profile.full_name, notes)
         const sent = await sendEmail({ to: profile.email, subject, html })
         if (!sent.ok) console.error('rejection email failed:', sent.status, sent.error)
@@ -147,11 +178,51 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
 
       case 'suspend':
         await setStatus('suspended')
+        await audit('suspend')
         return NextResponse.json({ ok: true, status: 'suspended' })
 
       case 'reactivate':
         await setStatus('approved')
+        await audit('reactivate')
         return NextResponse.json({ ok: true, status: 'approved' })
+
+      // Cancellazione completa: diritto all'oblio. Irreversibile.
+      case 'delete_data': {
+        const removals: string[] = []
+
+        if (profile.cv_path) {
+          const { error } = await supabaseAdmin.storage.from('trainer-cv').remove([profile.cv_path])
+          if (error) console.error('rimozione CV fallita:', error.message)
+          else removals.push('cv')
+        }
+
+        // Allegati d'esame: stanno in un bucket diverso e non cadono con
+        // la riga di database, vanno rimossi esplicitamente.
+        const { data: subs } = await supabaseAdmin
+          .from('trainer_exam_submissions')
+          .select('files')
+          .eq('trainer_id', id)
+
+        const paths = (subs ?? [])
+          .flatMap(s => (Array.isArray(s.files) ? (s.files as { path?: string }[]) : []))
+          .map(f => f?.path)
+          .filter((p): p is string => typeof p === 'string')
+
+        if (paths.length > 0) {
+          const { error } = await supabaseAdmin.storage.from('trainer-submissions').remove(paths)
+          if (error) console.error('rimozione allegati fallita:', error.message)
+          else removals.push(`${paths.length} allegati`)
+        }
+
+        // L'audit va scritto PRIMA della cancellazione: dopo, il profilo
+        // non esiste più e la riga perderebbe il riferimento.
+        await audit('delete_data', { removed: removals })
+
+        const { error: delError } = await supabaseAdmin.auth.admin.deleteUser(id)
+        if (delError) throw new Error(delError.message)
+
+        return NextResponse.json({ ok: true, deleted: true, removed: removals })
+      }
 
       case 'grant_attempts': {
         if (!body.quiz_id)
@@ -178,6 +249,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
           { onConflict: 'trainer_id,quiz_id' },
         )
         if (error) throw new Error(error.message)
+        await audit('grant_attempts', { quiz_id: body.quiz_id, extra })
         return NextResponse.json({ ok: true, extra_attempts: (current?.extra_attempts ?? 0) + extra })
       }
 
@@ -199,6 +271,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
           .eq('id', body.submission_id)
           .eq('trainer_id', id)
         if (error) throw new Error(error.message)
+        await audit('review_exam', { decision, submission_id: body.submission_id })
 
         if (decision !== 'under_review') {
           const { subject, html } = examResultEmail(

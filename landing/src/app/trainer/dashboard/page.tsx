@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import ConfirmEmailBanner from '@/components/trainer/ConfirmEmailBanner'
 import { getCurriculum, REQUIRED_MODULES } from '@/lib/trainer'
 import { getSessionProfile } from '@/lib/trainer-session'
 
@@ -39,6 +40,7 @@ export default async function TrainerDashboardPage() {
   if (profile.status === 'pending') {
     return (
       <div className="max-w-3xl mx-auto px-5 py-14">
+        {!profile.email_confirmed_at && <ConfirmEmailBanner email={profile.email} />}
         <PendingCard name={profile.full_name.split(' ')[0]} />
       </div>
     )

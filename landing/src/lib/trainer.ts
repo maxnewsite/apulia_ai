@@ -24,6 +24,7 @@ export interface TrainerProfile {
   cv_path: string | null
   status: TrainerStatus
   review_notes: string | null
+  email_confirmed_at: string | null
   created_at: string
 }
 
@@ -90,7 +91,7 @@ export async function getTrainerProfile(userId: string): Promise<TrainerProfile 
   const { data, error } = await supabaseAdmin
     .from('trainer_profiles')
     .select(
-      'id,email,full_name,phone,city,linkedin_url,bio,motivation,cv_path,status,review_notes,created_at',
+      'id,email,full_name,phone,city,linkedin_url,bio,motivation,cv_path,status,review_notes,email_confirmed_at,created_at',
     )
     .eq('id', userId)
     .maybeSingle()

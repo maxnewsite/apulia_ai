@@ -34,6 +34,10 @@ da `apulia.ai/trainer` dentro l'app `landing` già in produzione su Cloud Run.
 | PDF e slide | bucket privato `trainer-materials`, signed URL da 120 secondi generata dopo il controllo di autorizzazione |
 | Video dei moduli | link esterni (YouTube/Vimeo non in elenco), campo `external_url` |
 | CV e consegne d'esame | bucket privati `trainer-cv` e `trainer-submissions` |
+| Rate limit registrazione | 5 per IP all'ora e 3 per email al giorno, contatore in tabella (`trainer_rate_check`) e non in memoria: su Cloud Run le istanze sono più di una |
+| Verifica email | token nostro su ZeptoMail; l'approvazione è **bloccata** finché l'indirizzo non è confermato |
+| Audit | ogni azione del revisore in `trainer_admin_actions`, in append, con l'email del candidato conservata anche dopo la cancellazione |
+| Cancellazione GDPR | azione in console: rimuove CV, allegati d'esame e utente Auth, con cascata su profilo, tentativi e consegne |
 
 ### File principali
 
@@ -42,6 +46,7 @@ supabase/
   schema_trainer.sql          tabelle, RLS, vista di avanzamento, bucket
   seed_trainer.sql            10 moduli + quiz + esame
   schema_trainer_activity.sql tracciamento aperture dei materiali
+  schema_trainer_security.sql rate limit, verifica email, audit trail
   seed_trainer_quizzes.sql    70 domande derivate dai deck dei moduli
   seed_trainer_quizzes_9_10.sql  domande 9 e 10 di ogni quiz di modulo
   verify_trainer.sql          report di verifica post-installazione
@@ -72,6 +77,7 @@ Nella SQL Editor del progetto Supabase `amkixorrowqbgohzopvi`, in quest'ordine:
 supabase/schema.sql              (già applicato)
 supabase/schema_trainer.sql
 supabase/schema_trainer_activity.sql
+supabase/schema_trainer_security.sql
 supabase/seed_trainer.sql
 supabase/seed_trainer_quizzes.sql
 supabase/seed_trainer_quizzes_9_10.sql

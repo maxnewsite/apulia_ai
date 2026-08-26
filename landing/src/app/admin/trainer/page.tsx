@@ -57,6 +57,7 @@ interface Detail {
     motivation: string | null
     status: string
     review_notes: string | null
+    email_confirmed_at: string | null
     created_at: string
   }
   cv_url: string | null
@@ -73,6 +74,15 @@ interface Detail {
   submissions: Submission[]
   attempts: Attempt[]
   activity: ModuleActivity[]
+  audit: AuditEntry[]
+}
+
+interface AuditEntry {
+  id: string
+  actor: string
+  action: string
+  details: { notes?: string | null; [k: string]: unknown }
+  created_at: string
 }
 
 interface ModuleActivity {
@@ -135,6 +145,7 @@ export default function AdminTrainersPage() {
   const [rows, setRows] = useState<TrainerRow[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
   const [modulesTotal, setModulesTotal] = useState(0)
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
   const [filter, setFilter] = useState<'all' | TrainerRow['status']>('pending')
   const [selected, setSelected] = useState<string | null>(null)
   const [detail, setDetail] = useState<Detail | null>(null)
@@ -190,6 +201,14 @@ export default function AdminTrainersPage() {
       setError(json.error ?? 'Operazione non riuscita.')
       return
     }
+
+    // Dopo la cancellazione il dossier non esiste più: ricaricarlo darebbe
+    // un 404 e un messaggio d'errore fuorviante su un'operazione riuscita.
+    if (payload.action === 'delete_data') {
+      await loadList()
+      return
+    }
+
     await Promise.all([loadList(), loadDetail(selected)])
   }
 
@@ -317,6 +336,17 @@ export default function AdminTrainersPage() {
               {detail.profile.email}
               {detail.profile.phone && ` · ${detail.profile.phone}`}
               {detail.profile.city && ` · ${detail.profile.city}`}
+            </p>
+            <p className="text-sm mt-1">
+              {detail.profile.email_confirmed_at ? (
+                <span className="text-emerald-700">
+                  ✓ Email verificata il {formatDate(detail.profile.email_confirmed_at)}
+                </span>
+              ) : (
+                <span className="text-amber-700">
+                  ⚠ Email non ancora verificata — l’approvazione resta bloccata
+                </span>
+              )}
             </p>
             <div className="flex flex-wrap gap-3 mt-3 text-sm">
               {detail.cv_url && (
@@ -581,7 +611,65 @@ export default function AdminTrainersPage() {
                 </button>
               )}
             </div>
+
+            {/* Cancellazione: irreversibile, quindi in due passaggi e in
+                fondo, lontano dai pulsanti che si usano tutti i giorni. */}
+            <div className="mt-8 pt-6 border-t border-[#E2E8F0]">
+              {confirmDelete === detail.profile.id ? (
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-sm text-red-700">
+                    Cancellare definitivamente profilo, CV, tentativi e consegne di{' '}
+                    <strong>{detail.profile.full_name}</strong>?
+                  </span>
+                  <button
+                    onClick={async () => {
+                      await act({ action: 'delete_data' })
+                      setConfirmDelete(null)
+                      setSelected(null)
+                      setDetail(null)
+                    }}
+                    disabled={busy}
+                    className="text-sm font-semibold bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 disabled:opacity-50"
+                  >
+                    Sì, cancella tutto
+                  </button>
+                  <button
+                    onClick={() => setConfirmDelete(null)}
+                    className="text-sm font-semibold border border-[#E2E8F0] px-4 py-2 rounded-full"
+                  >
+                    Annulla
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmDelete(detail.profile.id)}
+                  className="text-xs font-semibold text-red-700 hover:underline"
+                >
+                  Cancella tutti i dati di questo candidato (GDPR)
+                </button>
+              )}
+            </div>
           </div>
+
+          {detail.audit?.length > 0 && (
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#475569] mb-3">
+                Registro delle azioni
+              </h3>
+              <ul className="text-sm space-y-1.5">
+                {detail.audit.map(a => (
+                  <li key={a.id} className="flex flex-wrap gap-2 text-[#475569]">
+                    <span className="font-mono text-xs">
+                      {new Date(a.created_at).toLocaleString('it-IT')}
+                    </span>
+                    <span className="font-semibold text-[#0F172A]">{a.action}</span>
+                    <span>di {a.actor}</span>
+                    {a.details?.notes && <span className="italic">«{a.details.notes}»</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
       )}
     </div>

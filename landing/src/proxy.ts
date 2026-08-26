@@ -11,10 +11,12 @@ const TRAINER_PUBLIC_PAGES = new Set([
   // La sessione di recupero nasce nel browser dal link email: quando la
   // pagina viene aperta il server non ha ancora alcun cookie.
   '/trainer/nuova-password',
+  '/trainer/conferma',
 ])
 
 // API dell'area trainer invocabili senza sessione (la registrazione crea l'utente).
-const TRAINER_PUBLIC_APIS = new Set(['/api/trainer/registrazione'])
+// La conferma email si apre dalla casella di posta, non da una sessione.
+const TRAINER_PUBLIC_APIS = new Set(['/api/trainer/registrazione', '/api/trainer/conferma'])
 
 const SECRET = process.env.ADMIN_JWT_SECRET ?? 'apulia-ai-fallback-secret-change-in-prod'
 

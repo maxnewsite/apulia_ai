@@ -19,15 +19,30 @@ function shell(title: string, body: string, cta?: { label: string; url: string }
 </div>`
 }
 
-/** Ricevuta della candidatura, subito dopo la registrazione. */
-export function applicationReceivedEmail(fullName: string) {
+/**
+ * Ricevuta della candidatura e, insieme, verifica dell'indirizzo: la
+ * candidatura non viene approvata finché il link non è stato aperto.
+ */
+export function applicationReceivedEmail(fullName: string, confirmUrl: string) {
   return {
-    subject: 'Candidatura trainer apulia.ai ricevuta',
+    subject: 'Conferma il tuo indirizzo — candidatura trainer apulia.ai',
     html: shell(
       `Ciao ${fullName}, abbiamo ricevuto la tua candidatura`,
       `<p>La tua richiesta di accesso alla piattaforma di e-learning per trainer <strong>apulia.ai</strong> è stata registrata insieme al CV che hai caricato.</p>
-       <p>Un revisore verificherà i materiali e ti scriveremo appena la candidatura sarà valutata. Fino ad allora l'area formativa resta chiusa.</p>`,
-      { label: 'Vai alla tua area', url: `${appUrl()}/trainer/dashboard` },
+       <p>Manca un passaggio: confermare che questo indirizzo è davvero tuo. Finché non lo fai, la candidatura non può essere approvata.</p>`,
+      { label: 'Conferma il mio indirizzo', url: confirmUrl },
+    ),
+  }
+}
+
+/** Reinvio del link di conferma, su richiesta del candidato. */
+export function emailConfirmationEmail(fullName: string, confirmUrl: string) {
+  return {
+    subject: 'Conferma il tuo indirizzo — apulia.ai',
+    html: shell(
+      `Ciao ${fullName}`,
+      `<p>Ecco un nuovo link per confermare il tuo indirizzo email e sbloccare la valutazione della tua candidatura.</p>`,
+      { label: 'Conferma il mio indirizzo', url: confirmUrl },
     ),
   }
 }
