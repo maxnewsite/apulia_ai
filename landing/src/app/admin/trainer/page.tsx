@@ -72,6 +72,15 @@ interface Detail {
   }
   submissions: Submission[]
   attempts: Attempt[]
+  activity: ModuleActivity[]
+}
+
+interface ModuleActivity {
+  module_id: string
+  aperture: number
+  materiali_distinti: number
+  prima_apertura: string | null
+  ultima_apertura: string | null
 }
 
 interface Attempt {
@@ -81,6 +90,7 @@ interface Attempt {
   status: 'in_progress' | 'submitted' | 'expired'
   score: number | null
   passed: boolean | null
+  started_at: string
   submitted_at: string | null
 }
 
@@ -109,6 +119,16 @@ function Badge({ value }: { value: string }) {
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
+/** Tempo impiegato in un tentativo, da apertura a consegna. */
+function duration(startIso: string, endIso: string | null): string | null {
+  if (!endIso) return null
+  const seconds = Math.round((new Date(endIso).getTime() - new Date(startIso).getTime()) / 1000)
+  if (seconds < 0) return null
+  if (seconds < 60) return `${seconds}s`
+  const minutes = Math.floor(seconds / 60)
+  return minutes < 60 ? `${minutes}m` : `${Math.floor(minutes / 60)}h ${minutes % 60}m`
 }
 
 export default function AdminTrainersPage() {
@@ -349,6 +369,7 @@ export default function AdminTrainersPage() {
                 const tries = detail.attempts
                   .filter(a => a.quiz_id === entry.quiz?.id)
                   .sort((a, b) => a.attempt_number - b.attempt_number)
+                const seen = detail.activity?.find(v => v.module_id === entry.module.id)
 
                 return (
                   <li
@@ -379,6 +400,12 @@ export default function AdminTrainersPage() {
                       ) : null}
                     </div>
 
+                    <div className="ml-9 mt-2 text-xs text-[#475569]">
+                      {seen
+                        ? `Materiali: ${seen.aperture} aperture su ${seen.materiali_distinti} risorse · ultima ${formatDate(seen.ultima_apertura!)}`
+                        : 'Materiali: mai aperti'}
+                    </div>
+
                     {tries.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mt-2 ml-9">
                         {tries.map(a => (
@@ -386,7 +413,10 @@ export default function AdminTrainersPage() {
                             key={a.id}
                             title={
                               a.submitted_at
-                                ? `Consegnato il ${new Date(a.submitted_at).toLocaleString('it-IT')}`
+                                ? `Consegnato il ${new Date(a.submitted_at).toLocaleString('it-IT')}` +
+                                  (duration(a.started_at, a.submitted_at)
+                                    ? ` · tempo impiegato ${duration(a.started_at, a.submitted_at)}`
+                                    : '')
                                 : 'Tentativo ancora aperto'
                             }
                             className={`text-xs font-mono border rounded-full px-2 py-0.5 ${
@@ -399,6 +429,9 @@ export default function AdminTrainersPage() {
                           >
                             #{a.attempt_number}{' '}
                             {a.status === 'in_progress' ? 'in corso' : `${a.score ?? 0}%`}
+                            {duration(a.started_at, a.submitted_at) && (
+                              <span className="opacity-70"> · {duration(a.started_at, a.submitted_at)}</span>
+                            )}
                           </span>
                         ))}
                       </div>

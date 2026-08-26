@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import AttemptReview from '@/components/trainer/AttemptReview'
 import QuestionList, {
   emptyAnswers,
   type AnswerState,
@@ -11,12 +12,19 @@ import QuestionList, {
 
 interface QuizState {
   quiz: { id: string; title: string; intro: string | null; pass_score: number }
-  attempts: { used: number; allowed: number; passed: boolean; best_score: number | null }
+  attempts: {
+    used: number
+    allowed: number
+    passed: boolean
+    best_score: number | null
+    history: { id: string; attempt_number: number; score: number | null; passed: boolean | null }[]
+  }
   open_attempt: { id: string } | null
   questions: ClientQuestion[]
 }
 
 interface Outcome {
+  attempt_id: string
   score: number
   pass_score: number
   passed: boolean
@@ -30,6 +38,7 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
   const [answers, setAnswers] = useState<AnswerState>({})
   const [attemptId, setAttemptId] = useState<string | null>(null)
   const [outcome, setOutcome] = useState<Outcome | null>(null)
+  const [reviewing, setReviewing] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
@@ -112,6 +121,7 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
   // ── Esito del tentativo appena consegnato ──────────────
   if (outcome) {
     return (
+      <>
       <div
         className={`border rounded-2xl p-8 ${
           outcome.passed ? 'border-emerald-200 bg-emerald-50' : 'border-amber-200 bg-amber-50'
@@ -147,6 +157,9 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
           </Link>
         </div>
       </div>
+
+      <AttemptReview quizId={quizId} attemptId={outcome.attempt_id} />
+      </>
     )
   }
 
@@ -216,21 +229,37 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
         </p>
       )}
 
-      {state.attempts.passed ? (
-        <p className="text-sm text-emerald-700">Hai già superato questo quiz.</p>
-      ) : left === 0 ? (
-        <p className="text-sm text-red-700">
-          Tentativi esauriti. Contatta un revisore per richiedere uno sblocco.
-        </p>
-      ) : (
-        <button
-          onClick={start}
-          disabled={busy}
-          className="bg-[#2563EB] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#1D4ED8] transition-colors disabled:opacity-50"
-        >
-          {busy ? 'Apertura…' : 'Inizia il tentativo'}
-        </button>
-      )}
+      <div className="flex flex-wrap items-center gap-4">
+        {state.attempts.passed ? (
+          <p className="text-sm text-emerald-700">Hai già superato questo quiz.</p>
+        ) : left === 0 ? (
+          <p className="text-sm text-red-700">
+            Tentativi esauriti. Contatta un revisore per richiedere uno sblocco.
+          </p>
+        ) : (
+          <button
+            onClick={start}
+            disabled={busy}
+            className="bg-[#2563EB] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#1D4ED8] transition-colors disabled:opacity-50"
+          >
+            {busy ? 'Apertura…' : 'Inizia il tentativo'}
+          </button>
+        )}
+
+        {state.attempts.history.length > 0 && (
+          <button
+            onClick={() => {
+              const last = state.attempts.history.at(-1)!
+              setReviewing(reviewing ? null : last.id)
+            }}
+            className="text-sm font-semibold text-[#2563EB] hover:underline"
+          >
+            {reviewing ? 'Nascondi la revisione' : 'Rivedi l’ultimo tentativo'}
+          </button>
+        )}
+      </div>
+
+      {reviewing && <AttemptReview quizId={quizId} attemptId={reviewing} />}
     </div>
   )
 }

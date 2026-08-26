@@ -29,7 +29,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
   const profile = await getTrainerProfile(id)
   if (!profile) return NextResponse.json({ error: 'Trainer non trovato.' }, { status: 404 })
 
-  const [curriculum, examRes, grantsRes, attemptsRes] = await Promise.all([
+  const [curriculum, examRes, grantsRes, attemptsRes, activityRes] = await Promise.all([
     getCurriculum(id),
     supabaseAdmin
       .from('trainer_exam_submissions')
@@ -44,7 +44,17 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
       .select('id,quiz_id,attempt_number,status,score,passed,started_at,submitted_at')
       .eq('trainer_id', id)
       .order('submitted_at', { ascending: true, nullsFirst: false }),
+    // Attività sui materiali. Se schema_trainer_activity.sql non è ancora
+    // stato applicato la query fallisce: si degrada a elenco vuoto invece di
+    // far fallire l'intero dossier.
+    supabaseAdmin
+      .from('trainer_module_activity')
+      .select('module_id,aperture,materiali_distinti,prima_apertura,ultima_apertura')
+      .eq('trainer_id', id),
   ])
+
+  if (activityRes.error)
+    console.error('trainer activity non disponibile:', activityRes.error.message)
 
   let cvUrl: string | null = null
   if (profile.cv_path) {
@@ -79,6 +89,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
     submissions,
     grants: grantsRes.data ?? [],
     attempts: attemptsRes.data ?? [],
+    activity: activityRes.data ?? [],
   })
 }
 

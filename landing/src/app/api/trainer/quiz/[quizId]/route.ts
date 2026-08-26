@@ -315,6 +315,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ qu
     const attemptsLeft = Math.max(0, state.allowed - (state.used + 1))
 
     return NextResponse.json({
+      attempt_id: attempt.id,
       score: result.score,
       pass_score: quiz.pass_score,
       passed,

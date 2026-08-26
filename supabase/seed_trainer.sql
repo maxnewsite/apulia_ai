@@ -32,19 +32,24 @@ on conflict (slug) do update set
   title    = excluded.title,
   summary  = excluded.summary;
 
--- Un quiz per ogni modulo: 70% per passare, 3 tentativi.
+-- Un quiz per ogni modulo: 10 domande, 80% per passare, 3 tentativi.
+-- pass_score e max_attempts sono nell'on-conflict: rieseguire questo file
+-- aggiorna anche i quiz gia' presenti, senza toccare le domande.
 insert into trainer_quizzes (kind, module_id, title, intro, pass_score, max_attempts, is_published)
 select
   'module',
   m.id,
   'Quiz — ' || m.title,
-  'Rispondi a tutte le domande. Servono almeno 70 punti su 100 per superare il modulo. Hai a disposizione 3 tentativi.',
-  70,
+  'Dieci domande. Servono almeno 80 punti su 100 per superare il modulo. Hai a disposizione 3 tentativi.',
+  80,
   3,
   false
 from trainer_modules m
 on conflict (module_id) do update set
-  title = excluded.title;
+  title        = excluded.title,
+  intro        = excluded.intro,
+  pass_score   = excluded.pass_score,
+  max_attempts = excluded.max_attempts;
 
 -- Esame finale: soglia più alta, tentativo unico, correzione ibrida
 -- (parte chiusa automatica + review manuale del video da parte dell'admin).

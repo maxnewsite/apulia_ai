@@ -12,7 +12,7 @@ const STEPS = [
   },
   {
     title: 'Formazione',
-    body: `${REQUIRED_MODULES} moduli con slide, PDF e video. Ogni modulo si chiude con un quiz: 3 tentativi, si passa al 70%.`,
+    body: `${REQUIRED_MODULES} moduli con slide, PDF e video. Ogni modulo si chiude con un quiz di 10 domande: 3 tentativi, si passa all’80%.`,
   },
   {
     title: 'Esame di qualifica',

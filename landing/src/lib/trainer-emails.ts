@@ -71,7 +71,7 @@ export function applicationApprovedEmail(fullName: string) {
     html: shell(
       `Benvenuto nella Trainer Academy, ${fullName}`,
       `<p>La tua candidatura è stata approvata: da ora hai accesso ai moduli formativi del metodo apulia.ai.</p>
-       <p>Il percorso è sequenziale: ogni modulo si conclude con un quiz che puoi sostenere al massimo <strong>3 volte</strong> e che si supera con almeno il <strong>70%</strong>. Completati tutti i moduli si apre l'esame finale.</p>`,
+       <p>Il percorso è sequenziale: ogni modulo si conclude con un quiz che puoi sostenere al massimo <strong>3 volte</strong> e che si supera con almeno l’<strong>80%</strong>. Completati tutti i moduli si apre l'esame finale.</p>`,
       { label: 'Inizia il percorso', url: `${appUrl()}/trainer/dashboard` },
     ),
   }

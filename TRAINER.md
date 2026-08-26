@@ -14,7 +14,7 @@ da `apulia.ai/trainer` dentro l'app `landing` già in produzione su Cloud Run.
 3. **Formazione** — a trainer approvato, `/trainer/dashboard` mostra i moduli
    pubblicati. L'avanzamento è **sequenziale**: il modulo N si apre solo quando
    il quiz del modulo N−1 è superato.
-4. **Quiz di modulo** — soglia 70%, massimo 3 tentativi. Esauriti i tentativi
+4. **Quiz di modulo** — 10 domande, soglia 80%, massimo 3 tentativi. Esauriti i tentativi
    il modulo si blocca finché l'admin non concede un tentativo extra.
 5. **Esame finale** — si apre quando tutti i 10 moduli sono pubblicati e
    superati. Due parti: domande (corrette in automatico, soglia 80%) e un
@@ -41,7 +41,9 @@ da `apulia.ai/trainer` dentro l'app `landing` già in produzione su Cloud Run.
 supabase/
   schema_trainer.sql          tabelle, RLS, vista di avanzamento, bucket
   seed_trainer.sql            10 moduli + quiz + esame
+  schema_trainer_activity.sql tracciamento aperture dei materiali
   seed_trainer_quizzes.sql    70 domande derivate dai deck dei moduli
+  seed_trainer_quizzes_9_10.sql  domande 9 e 10 di ogni quiz di modulo
   verify_trainer.sql          report di verifica post-installazione
 
 landing/src/
@@ -69,9 +71,16 @@ Nella SQL Editor del progetto Supabase `amkixorrowqbgohzopvi`, in quest'ordine:
 ```
 supabase/schema.sql              (già applicato)
 supabase/schema_trainer.sql
+supabase/schema_trainer_activity.sql
 supabase/seed_trainer.sql
 supabase/seed_trainer_quizzes.sql
+supabase/seed_trainer_quizzes_9_10.sql
 ```
+
+Se hai gia' applicato una versione precedente, rieseguire `seed_trainer.sql`
+aggiorna soglia e tentativi dei quiz esistenti (da 70% a 80%) senza toccare
+le domande, e `seed_trainer_quizzes_9_10.sql` porta ogni quiz da 8 a 10
+domande.
 
 Poi eseguire `supabase/verify_trainer.sql`: restituisce un report unico con il
 conteggio delle domande per quiz, i controlli di integrità, lo stato di RLS,
@@ -147,14 +156,14 @@ L'esame si pubblica allo stesso modo:
 
 | # | Slug | Materiale disponibile | Quiz |
 |---|---|---|---|
-| 1 | `pmi-pugliesi-ai` | `PMI_Pugliesi_AI_Mod_1.pptx` | 8 domande |
-| 2 | `fondamenti-ai` | `Fondamenti_AI_Mod_2.pptx` | 8 domande |
-| 3 | `selezione-modello` | `LLM_AI_Mod_3.pptx` | 8 domande |
+| 1 | `pmi-pugliesi-ai` | `PMI_Pugliesi_AI_Mod_1.pptx` | 10 domande |
+| 2 | `fondamenti-ai` | `Fondamenti_AI_Mod_2.pptx` | 10 domande |
+| 3 | `selezione-modello` | `LLM_AI_Mod_3.pptx` | 10 domande |
 | 4 | `modulo-4` | **mancante** | — |
-| 5 | `ai-act` | `AI_ACT_Mod_5.pptx` | 8 domande |
-| 6 | `agent-marketing-lead` | `AI_Agent_Marketing_Lead_Mod_6.pptx` | 8 domande |
-| 7 | `roi-use-case` | `ROI_Use_Case_AI_Mod_7.pptx` | 8 domande |
-| 8 | `change-management` | `Change_Mgmt_AI_Mod_8.pptx` | 8 domande |
+| 5 | `ai-act` | `AI_ACT_Mod_5.pptx` | 10 domande |
+| 6 | `agent-marketing-lead` | `AI_Agent_Marketing_Lead_Mod_6.pptx` | 10 domande |
+| 7 | `roi-use-case` | `ROI_Use_Case_AI_Mod_7.pptx` | 10 domande |
+| 8 | `change-management` | `Change_Mgmt_AI_Mod_8.pptx` | 10 domande |
 | 9 | `modulo-9` | **mancante** | — |
 | 10 | `modulo-10` | **mancante** | — |
 | — | esame finale | — | 12 chiuse + 2 aperte |
@@ -174,6 +183,12 @@ soglia è "tutti e dieci pubblicati e superati" (`REQUIRED_MODULES` in
   zero. È esplicitato nella schermata del quiz.
 - **Domande aperte**: escluse dal punteggio automatico, sia a numeratore sia a
   denominatore, e girate al revisore. Compaiono solo nell'esame finale.
+- **Revisione dopo la consegna**: finche' restano tentativi e il quiz non e'
+  superato, il trainer vede SOLO quali domande ha sbagliato. Risposte corrette
+  e spiegazioni si aprono a quiz superato o a tentativi esauriti. Con tre
+  tentativi sulle stesse domande, rivelare subito le soluzioni renderebbe il
+  punteggio privo di significato. Per l'esame finale la revisione resta
+  chiusa: la prova e' ancora in valutazione.
 - **Punteggio**: percentuale sulla sola parte a risposta chiusa, arrotondata a
   due decimali.
 - **Esame finale**: `passed` resta sempre `false` a livello di tentativo — la

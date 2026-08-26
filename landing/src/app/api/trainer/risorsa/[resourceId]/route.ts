@@ -39,6 +39,15 @@ export async function GET(
   if (!entry.unlocked)
     return NextResponse.json({ error: 'Devi prima superare i moduli precedenti.' }, { status: 403 })
 
+  // Registra l'apertura: è ciò su cui il revisore giudica l'impegno reale.
+  // Fire-and-forget: un errore di log non deve impedire l'accesso al materiale.
+  const { error: viewError } = await supabaseAdmin.from('trainer_resource_views').insert({
+    trainer_id: profile.id,
+    resource_id: resource.id,
+    module_id: resource.module_id,
+  })
+  if (viewError) console.error('resource view log failed:', viewError.message)
+
   if (resource.kind === 'video' || resource.kind === 'link') {
     return NextResponse.redirect(resource.external_url!)
   }
