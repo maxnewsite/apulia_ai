@@ -1,5 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { COOKIE_NAME } from '@/lib/auth'
+import { refreshTrainerSession } from '@/lib/supabase-ssr'
+
+// Pagine dell'area trainer raggiungibili senza sessione.
+const TRAINER_PUBLIC_PAGES = new Set([
+  '/trainer',
+  '/trainer/login',
+  '/trainer/registrati',
+  '/trainer/recupera-password',
+  // La sessione di recupero nasce nel browser dal link email: quando la
+  // pagina viene aperta il server non ha ancora alcun cookie.
+  '/trainer/nuova-password',
+])
+
+// API dell'area trainer invocabili senza sessione (la registrazione crea l'utente).
+const TRAINER_PUBLIC_APIS = new Set(['/api/trainer/registrazione'])
 
 const SECRET = process.env.ADMIN_JWT_SECRET ?? 'apulia-ai-fallback-secret-change-in-prod'
 
@@ -61,9 +76,38 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
+  if (pathname.startsWith('/trainer') || pathname.startsWith('/api/trainer')) {
+    const isPublic = pathname.startsWith('/api/')
+      ? TRAINER_PUBLIC_APIS.has(pathname)
+      : TRAINER_PUBLIC_PAGES.has(pathname)
+
+    // Il refresh va eseguito sempre — anche sulle rotte pubbliche — altrimenti
+    // il token rinnovato non viene riscritto nei cookie e la sessione scade.
+    const { response, userId } = await refreshTrainerSession(request)
+
+    if (!userId && !isPublic) {
+      if (pathname.startsWith('/api/')) {
+        return NextResponse.json({ error: 'Sessione non valida. Accedi di nuovo.' }, { status: 401 })
+      }
+      const redirect = NextResponse.redirect(
+        new URL(`/trainer/login?next=${encodeURIComponent(pathname)}`, request.url),
+      )
+      // Porta con sé i cookie ripuliti dal client Supabase.
+      response.cookies.getAll().forEach(c => redirect.cookies.set(c))
+      return redirect
+    }
+
+    return response
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: [
+    '/admin/:path*',
+    '/api/admin/:path*',
+    '/trainer/:path*',
+    '/api/trainer/:path*',
+  ],
 }

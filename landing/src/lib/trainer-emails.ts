@@ -1,0 +1,97 @@
+// Email transazionali dell'area trainer. Stessa impronta grafica delle email
+// newsletter (src/lib/zepto.ts), testo solo in italiano.
+
+import { appUrl } from '@/lib/zepto'
+
+function shell(title: string, body: string, cta?: { label: string; url: string }): string {
+  return `<div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #0a1628; line-height: 1.65;">
+  <h2 style="color: #0F172A; margin: 0 0 16px;">${title}</h2>
+  ${body}
+  ${
+    cta
+      ? `<p style="margin: 28px 0;">
+    <a href="${cta.url}" style="background: #2563EB; color: #fff; padding: 12px 22px; border-radius: 999px; text-decoration: none; font-weight: 600; display: inline-block;">${cta.label}</a>
+  </p>
+  <p style="color: #64748b; font-size: 13px;">Se il pulsante non funziona, copia e incolla questo link:<br><a href="${cta.url}" style="color: #1e40af; word-break: break-all;">${cta.url}</a></p>`
+      : ''
+  }
+  <p style="color: #94a3b8; font-size: 12px; margin-top: 32px;">apulia.ai — Trainer Academy</p>
+</div>`
+}
+
+/** Ricevuta della candidatura, subito dopo la registrazione. */
+export function applicationReceivedEmail(fullName: string) {
+  return {
+    subject: 'Candidatura trainer apulia.ai ricevuta',
+    html: shell(
+      `Ciao ${fullName}, abbiamo ricevuto la tua candidatura`,
+      `<p>La tua richiesta di accesso alla piattaforma di e-learning per trainer <strong>apulia.ai</strong> è stata registrata insieme al CV che hai caricato.</p>
+       <p>Un revisore verificherà i materiali e ti scriveremo appena la candidatura sarà valutata. Fino ad allora l'area formativa resta chiusa.</p>`,
+      { label: 'Vai alla tua area', url: `${appUrl()}/trainer/dashboard` },
+    ),
+  }
+}
+
+/** Candidatura approvata: i moduli diventano accessibili. */
+export function applicationApprovedEmail(fullName: string) {
+  return {
+    subject: 'La tua candidatura come trainer apulia.ai è stata approvata',
+    html: shell(
+      `Benvenuto nella Trainer Academy, ${fullName}`,
+      `<p>La tua candidatura è stata approvata: da ora hai accesso ai moduli formativi del metodo apulia.ai.</p>
+       <p>Il percorso è sequenziale: ogni modulo si conclude con un quiz che puoi sostenere al massimo <strong>3 volte</strong> e che si supera con almeno il <strong>70%</strong>. Completati tutti i moduli si apre l'esame finale.</p>`,
+      { label: 'Inizia il percorso', url: `${appUrl()}/trainer/dashboard` },
+    ),
+  }
+}
+
+/** Candidatura respinta, con la motivazione scritta dall'admin. */
+export function applicationRejectedEmail(fullName: string, reason: string | null) {
+  return {
+    subject: 'Esito della tua candidatura come trainer apulia.ai',
+    html: shell(
+      `Ciao ${fullName}`,
+      `<p>Abbiamo esaminato la tua candidatura alla Trainer Academy di apulia.ai e per ora non possiamo accoglierla.</p>
+       ${reason ? `<p><strong>Nota del revisore:</strong> ${reason}</p>` : ''}
+       <p>Se il tuo profilo cambia — nuove esperienze, certificazioni, progetti — puoi ricandidarti scrivendoci.</p>`,
+    ),
+  }
+}
+
+/** Consegna dell'esame finale ricevuta, in attesa di valutazione. */
+export function examSubmittedEmail(fullName: string) {
+  return {
+    subject: 'Esame finale apulia.ai ricevuto',
+    html: shell(
+      `Consegna registrata, ${fullName}`,
+      `<p>Abbiamo ricevuto il tuo esame finale: la parte a risposta chiusa è stata corretta automaticamente, mentre il video e i materiali allegati passano alla valutazione di un revisore.</p>
+       <p>Ti scriveremo con l'esito appena la revisione sarà completata.</p>`,
+      { label: 'Vedi lo stato', url: `${appUrl()}/trainer/esame` },
+    ),
+  }
+}
+
+/** Esito finale della qualifica. */
+export function examResultEmail(fullName: string, qualified: boolean, notes: string | null) {
+  if (qualified) {
+    return {
+      subject: 'Sei qualificato come trainer apulia.ai',
+      html: shell(
+        `Complimenti ${fullName}`,
+        `<p>Hai superato l'esame finale: sei ufficialmente <strong>trainer qualificato del metodo apulia.ai</strong>.</p>
+         ${notes ? `<p><strong>Nota del revisore:</strong> ${notes}</p>` : ''}
+         <p>Ti contatteremo per i prossimi passi operativi.</p>`,
+        { label: 'Vai alla tua area', url: `${appUrl()}/trainer/dashboard` },
+      ),
+    }
+  }
+  return {
+    subject: 'Esito esame finale apulia.ai',
+    html: shell(
+      `Ciao ${fullName}`,
+      `<p>L'esame finale non è stato superato.</p>
+       ${notes ? `<p><strong>Nota del revisore:</strong> ${notes}</p>` : ''}
+       <p>Scrivici se vuoi capire come rimetterti in gioco: possiamo riaprire l'esame caso per caso.</p>`,
+    ),
+  }
+}
