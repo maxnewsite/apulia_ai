@@ -32,6 +32,38 @@ export function applicationReceivedEmail(fullName: string) {
   }
 }
 
+/**
+ * Avviso al revisore: senza questa email una candidatura resta invisibile
+ * finché qualcuno non apre la console di propria iniziativa.
+ */
+export function adminNewApplicationEmail(candidate: {
+  full_name: string
+  email: string
+  city: string | null
+  phone: string | null
+  motivation: string
+}) {
+  const row = (k: string, v: string) =>
+    `<tr><td style="padding:4px 12px 4px 0; color:#64748b; vertical-align:top;">${k}</td><td style="padding:4px 0;">${v}</td></tr>`
+
+  return {
+    subject: `Nuova candidatura trainer: ${candidate.full_name}`,
+    html: shell(
+      'Nuova candidatura da valutare',
+      `<table style="font-size:15px; border-collapse:collapse; margin-bottom:20px;">
+        ${row('Nome', candidate.full_name)}
+        ${row('Email', candidate.email)}
+        ${row('Città', candidate.city || '—')}
+        ${row('Telefono', candidate.phone || '—')}
+      </table>
+      <p style="color:#64748b; margin-bottom:6px;"><strong>Motivazione</strong></p>
+      <p style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">${candidate.motivation}</p>
+      <p>Il CV è allegato alla candidatura: si apre dalla console con un link firmato.</p>`,
+      { label: 'Apri la console', url: `${appUrl()}/admin/trainer` },
+    ),
+  }
+}
+
 /** Candidatura approvata: i moduli diventano accessibili. */
 export function applicationApprovedEmail(fullName: string) {
   return {

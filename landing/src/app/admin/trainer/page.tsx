@@ -71,6 +71,17 @@ interface Detail {
     }>
   }
   submissions: Submission[]
+  attempts: Attempt[]
+}
+
+interface Attempt {
+  id: string
+  quiz_id: string
+  attempt_number: number
+  status: 'in_progress' | 'submitted' | 'expired'
+  score: number | null
+  passed: boolean | null
+  submitted_at: string | null
 }
 
 const STATUS_STYLE: Record<string, string> = {
@@ -81,6 +92,7 @@ const STATUS_STYLE: Record<string, string> = {
   submitted: 'bg-blue-50 text-blue-700 border-blue-200',
   under_review: 'bg-blue-50 text-blue-700 border-blue-200',
   qualified: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  superato: 'bg-emerald-50 text-emerald-700 border-emerald-200',
 }
 
 function Badge({ value }: { value: string }) {
@@ -102,6 +114,7 @@ function formatDate(iso: string) {
 export default function AdminTrainersPage() {
   const [rows, setRows] = useState<TrainerRow[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
+  const [modulesTotal, setModulesTotal] = useState(0)
   const [filter, setFilter] = useState<'all' | TrainerRow['status']>('pending')
   const [selected, setSelected] = useState<string | null>(null)
   const [detail, setDetail] = useState<Detail | null>(null)
@@ -118,6 +131,7 @@ export default function AdminTrainersPage() {
     const json = await res.json()
     setRows(json.trainers)
     setStats(json.stats)
+    setModulesTotal(json.modules_total ?? 0)
   }, [])
 
   const loadDetail = useCallback(async (id: string) => {
@@ -238,7 +252,21 @@ export default function AdminTrainersPage() {
                 <td className="px-4 py-3 text-[#475569] hidden sm:table-cell">
                   {formatDate(row.created_at)}
                 </td>
-                <td className="px-4 py-3 font-mono">{row.modules_passed}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="h-1.5 w-16 bg-[#F1F5F9] rounded-full overflow-hidden shrink-0">
+                      <div
+                        className="h-full bg-[#2563EB]"
+                        style={{
+                          width: `${modulesTotal ? (row.modules_passed / modulesTotal) * 100 : 0}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="font-mono text-xs whitespace-nowrap">
+                      {row.modules_passed}/{modulesTotal}
+                    </span>
+                  </div>
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-1.5">
                     <Badge value={row.status} />
@@ -317,32 +345,67 @@ export default function AdminTrainersPage() {
               Avanzamento — {detail.curriculum.completedModules}/{detail.curriculum.totalModules}
             </h3>
             <ul className="space-y-2">
-              {detail.curriculum.entries.map(entry => (
-                <li
-                  key={entry.module.id}
-                  className="flex items-center gap-3 text-sm border border-[#E2E8F0] rounded-xl px-4 py-2.5"
-                >
-                  <span className="font-mono text-xs text-[#2563EB] w-6">
-                    {String(entry.module.position).padStart(2, '0')}
-                  </span>
-                  <span className="flex-1 min-w-0 truncate">{entry.module.title}</span>
-                  <span className="text-[#475569] text-xs whitespace-nowrap">
-                    {entry.progress.attempts_used}/{entry.progress.attempts_allowed} tent.
-                    {entry.progress.best_score !== null && ` · ${entry.progress.best_score}%`}
-                  </span>
-                  {entry.progress.passed ? (
-                    <Badge value="qualified" />
-                  ) : entry.blocked && entry.quiz ? (
-                    <button
-                      onClick={() => act({ action: 'grant_attempts', quiz_id: entry.quiz!.id, extra_attempts: 1 })}
-                      disabled={busy}
-                      className="text-xs font-semibold text-[#2563EB] hover:underline whitespace-nowrap"
-                    >
-                      +1 tentativo
-                    </button>
-                  ) : null}
-                </li>
-              ))}
+              {detail.curriculum.entries.map(entry => {
+                const tries = detail.attempts
+                  .filter(a => a.quiz_id === entry.quiz?.id)
+                  .sort((a, b) => a.attempt_number - b.attempt_number)
+
+                return (
+                  <li
+                    key={entry.module.id}
+                    className="border border-[#E2E8F0] rounded-xl px-4 py-2.5 text-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-xs text-[#2563EB] w-6">
+                        {String(entry.module.position).padStart(2, '0')}
+                      </span>
+                      <span className="flex-1 min-w-0 truncate">{entry.module.title}</span>
+                      <span className="text-[#475569] text-xs whitespace-nowrap">
+                        {entry.progress.attempts_used}/{entry.progress.attempts_allowed} tent.
+                        {entry.progress.best_score !== null && ` · max ${entry.progress.best_score}%`}
+                      </span>
+                      {entry.progress.passed ? (
+                        <Badge value="superato" />
+                      ) : entry.blocked && entry.quiz ? (
+                        <button
+                          onClick={() =>
+                            act({ action: 'grant_attempts', quiz_id: entry.quiz!.id, extra_attempts: 1 })
+                          }
+                          disabled={busy}
+                          className="text-xs font-semibold text-[#2563EB] hover:underline whitespace-nowrap"
+                        >
+                          +1 tentativo
+                        </button>
+                      ) : null}
+                    </div>
+
+                    {tries.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2 ml-9">
+                        {tries.map(a => (
+                          <span
+                            key={a.id}
+                            title={
+                              a.submitted_at
+                                ? `Consegnato il ${new Date(a.submitted_at).toLocaleString('it-IT')}`
+                                : 'Tentativo ancora aperto'
+                            }
+                            className={`text-xs font-mono border rounded-full px-2 py-0.5 ${
+                              a.passed
+                                ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                                : a.status === 'in_progress'
+                                  ? 'border-[#E2E8F0] bg-[#F8FAFC] text-[#475569]'
+                                  : 'border-red-200 bg-red-50 text-red-700'
+                            }`}
+                          >
+                            #{a.attempt_number}{' '}
+                            {a.status === 'in_progress' ? 'in corso' : `${a.score ?? 0}%`}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           </div>
 

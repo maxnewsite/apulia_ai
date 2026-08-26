@@ -5,7 +5,7 @@ export const runtime = 'nodejs'
 
 /** Elenco candidature trainer + contatori. Protetto dal proxy admin. */
 export async function GET() {
-  const [profilesRes, progressRes, examsRes] = await Promise.all([
+  const [profilesRes, progressRes, examsRes, modulesRes] = await Promise.all([
     supabaseAdmin
       .from('trainer_profiles')
       .select('id,email,full_name,city,phone,linkedin_url,status,created_at,reviewed_at,reviewed_by')
@@ -15,6 +15,11 @@ export async function GET() {
       .from('trainer_exam_submissions')
       .select('trainer_id,status,created_at')
       .order('created_at', { ascending: false }),
+    // Denominatore dell'avanzamento: solo i moduli effettivamente pubblicati.
+    supabaseAdmin
+      .from('trainer_modules')
+      .select('id', { count: 'exact', head: true })
+      .eq('is_published', true),
   ])
 
   if (profilesRes.error) {
@@ -41,6 +46,7 @@ export async function GET() {
 
   return NextResponse.json({
     trainers,
+    modules_total: modulesRes.count ?? 0,
     stats: {
       total: trainers.length,
       pending: trainers.filter(t => t.status === 'pending').length,

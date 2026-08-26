@@ -29,7 +29,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
   const profile = await getTrainerProfile(id)
   if (!profile) return NextResponse.json({ error: 'Trainer non trovato.' }, { status: 404 })
 
-  const [curriculum, examRes, grantsRes] = await Promise.all([
+  const [curriculum, examRes, grantsRes, attemptsRes] = await Promise.all([
     getCurriculum(id),
     supabaseAdmin
       .from('trainer_exam_submissions')
@@ -37,6 +37,13 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
       .eq('trainer_id', id)
       .order('created_at', { ascending: false }),
     supabaseAdmin.from('trainer_attempt_grants').select('quiz_id,extra_attempts,reason').eq('trainer_id', id),
+    // Storico completo dei tentativi: il riepilogo per modulo dice solo il
+    // miglior punteggio, qui si vede come ci è arrivato.
+    supabaseAdmin
+      .from('trainer_quiz_attempts')
+      .select('id,quiz_id,attempt_number,status,score,passed,started_at,submitted_at')
+      .eq('trainer_id', id)
+      .order('submitted_at', { ascending: true, nullsFirst: false }),
   ])
 
   let cvUrl: string | null = null
@@ -71,6 +78,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
     curriculum,
     submissions,
     grants: grantsRes.data ?? [],
+    attempts: attemptsRes.data ?? [],
   })
 }
 

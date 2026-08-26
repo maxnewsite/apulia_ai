@@ -7,7 +7,8 @@ da `apulia.ai/trainer` dentro l'app `landing` già in produzione su Cloud Run.
 
 1. **Candidatura** — `/trainer/registrati`: dati anagrafici, motivazione, CV e
    consenso privacy. Crea un utente Supabase Auth e una riga
-   `trainer_profiles` in stato `pending`.
+   `trainer_profiles` in stato `pending`. Partono due email: la ricevuta al
+   candidato e l'avviso al revisore, all'indirizzo in `ADMIN_EMAIL`.
 2. **Verifica** — l'admin apre il dossier in `/admin/trainer`, legge il CV
    (link firmato) e approva o respinge. In entrambi i casi parte un'email.
 3. **Formazione** — a trainer approvato, `/trainer/dashboard` mostra i moduli
@@ -180,7 +181,12 @@ soglia è "tutti e dieci pubblicati e superati" (`REQUIRED_MODULES` in
 
 ## Operazioni ricorrenti dell'admin
 
-Tutto da `/admin/trainer`:
+Si arriva da `/admin` (link «Trainer Academy →» nella barra in alto) oppure
+direttamente a `/admin/trainer`. La console mostra i contatori, il filtro per
+stato, la tabella con l'avanzamento moduli di ciascun candidato e, aprendo un
+dossier, CV, motivazione, storico dei tentativi quiz e consegna d'esame.
+
+Azioni disponibili:
 
 - **Approvare o respingere** una candidatura, con nota inclusa nell'email.
 - **Sospendere** un accesso già concesso.

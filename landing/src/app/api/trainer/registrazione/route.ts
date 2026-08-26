@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { sendEmail } from '@/lib/zepto'
-import { applicationReceivedEmail } from '@/lib/trainer-emails'
+import { adminNewApplicationEmail, applicationReceivedEmail } from '@/lib/trainer-emails'
 
 export const runtime = 'nodejs'
 
@@ -118,10 +118,32 @@ export async function POST(request: NextRequest) {
     return bad('Non è stato possibile registrare la candidatura. Riprova.', 500)
   }
 
-  // 4. Ricevuta via email. Un fallimento qui non invalida la candidatura.
-  const { subject, html } = applicationReceivedEmail(fullName)
-  const sent = await sendEmail({ to: email, subject, html })
-  if (!sent.ok) console.error('trainer receipt email failed:', sent.status, sent.error)
+  // 4. Ricevuta al candidato e avviso al revisore. Nessuno dei due invii
+  // invalida la candidatura, che a questo punto è già registrata: gli errori
+  // finiscono nei log e basta.
+  const receipt = applicationReceivedEmail(fullName)
+  const reviewer = process.env.ADMIN_EMAIL?.trim()
+
+  const [toCandidate, toReviewer] = await Promise.all([
+    sendEmail({ to: email, subject: receipt.subject, html: receipt.html }),
+    reviewer
+      ? sendEmail({
+          to: reviewer,
+          ...adminNewApplicationEmail({
+            full_name: fullName,
+            email,
+            city: city || null,
+            phone: phone || null,
+            motivation,
+          }),
+        })
+      : Promise.resolve({ ok: false, status: 0, error: 'ADMIN_EMAIL non impostata' }),
+  ])
+
+  if (!toCandidate.ok)
+    console.error('trainer receipt email failed:', toCandidate.status, toCandidate.error)
+  if (!toReviewer.ok)
+    console.error('admin notification email failed:', toReviewer.status, toReviewer.error)
 
   return NextResponse.json({ ok: true }, { status: 201 })
 }
