@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import AttemptReview from '@/components/trainer/AttemptReview'
+import QuizCountdown from '@/components/trainer/QuizCountdown'
 import QuestionList, {
   emptyAnswers,
   type AnswerState,
@@ -11,7 +12,13 @@ import QuestionList, {
 } from '@/components/trainer/QuestionList'
 
 interface QuizState {
-  quiz: { id: string; title: string; intro: string | null; pass_score: number }
+  quiz: {
+    id: string
+    title: string
+    intro: string | null
+    pass_score: number
+    time_limit_minutes: number | null
+  }
   attempts: {
     used: number
     allowed: number
@@ -19,7 +26,7 @@ interface QuizState {
     best_score: number | null
     history: { id: string; attempt_number: number; score: number | null; passed: boolean | null }[]
   }
-  open_attempt: { id: string } | null
+  open_attempt: { id: string; started_at: string } | null
   questions: ClientQuestion[]
 }
 
@@ -37,6 +44,7 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
   const [state, setState] = useState<QuizState | null>(null)
   const [answers, setAnswers] = useState<AnswerState>({})
   const [attemptId, setAttemptId] = useState<string | null>(null)
+  const [startedAt, setStartedAt] = useState<string | null>(null)
   const [outcome, setOutcome] = useState<Outcome | null>(null)
   const [reviewing, setReviewing] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -51,6 +59,7 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
     }
     setState(json)
     setAttemptId(json.open_attempt?.id ?? null)
+    setStartedAt(json.open_attempt?.started_at ?? null)
     if (json.questions?.length) setAnswers(emptyAnswers(json.questions))
   }, [quizId])
 
@@ -74,6 +83,7 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
       return
     }
     setAttemptId(json.attempt_id)
+    setStartedAt(json.started_at ?? null)
     setAnswers(emptyAnswers(json.questions ?? []))
     setState(prev => (prev ? { ...prev, questions: json.questions ?? [] } : prev))
   }
@@ -171,6 +181,9 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
 
     return (
       <>
+        {state.quiz.time_limit_minutes && startedAt && (
+          <QuizCountdown startedAt={startedAt} minutes={state.quiz.time_limit_minutes} />
+        )}
         <QuestionList questions={state.questions} answers={answers} onChange={setAnswers} disabled={busy} />
 
         {error && (
@@ -209,6 +222,12 @@ export default function QuizRunner({ quizId, moduleSlug }: { quizId: string; mod
           <dt className="text-[#475569]">Soglia</dt>
           <dd className="font-bold">{state.quiz.pass_score}%</dd>
         </div>
+        {state.quiz.time_limit_minutes && (
+          <div>
+            <dt className="text-[#475569]">Tempo</dt>
+            <dd className="font-bold">{state.quiz.time_limit_minutes} min</dd>
+          </div>
+        )}
         <div>
           <dt className="text-[#475569]">Tentativi usati</dt>
           <dd className="font-bold">

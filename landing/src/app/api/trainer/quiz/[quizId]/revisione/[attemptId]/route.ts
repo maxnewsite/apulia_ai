@@ -77,11 +77,16 @@ export async function GET(
   // risposte corrette di una prova ancora in valutazione.
   const fullDisclosure = quiz.kind === 'exam' ? false : everPassed || attemptsLeft === 0
 
-  const [{ data: questions }, { data: answers }] = await Promise.all([
+  // Le domande del tentativo, non quelle del quiz: con un pool più ampio
+  // le due cose non coincidono, e mostrare domande mai poste sarebbe sia
+  // confuso sia una fuga di contenuto verso i tentativi successivi.
+  const [{ data: composed }, { data: answers }] = await Promise.all([
     supabaseAdmin
-      .from('trainer_questions')
-      .select('id,position,kind,prompt,explanation,points,trainer_question_options(id,position,label,is_correct)')
-      .eq('quiz_id', quizId)
+      .from('trainer_attempt_questions')
+      .select(
+        'position,option_order,trainer_questions(id,kind,prompt,explanation,points,trainer_question_options(id,label,is_correct))',
+      )
+      .eq('attempt_id', attemptId)
       .order('position'),
     supabaseAdmin
       .from('trainer_quiz_answers')
@@ -89,28 +94,42 @@ export async function GET(
       .eq('attempt_id', attemptId),
   ])
 
-  type OptionRow = { id: string; position: number; label: string; is_correct: boolean }
-  type QuestionRow = {
-    id: string
+  type OptionRow = { id: string; label: string; is_correct: boolean }
+  type ComposedRow = {
     position: number
-    kind: QuestionKind
-    prompt: string
-    explanation: string | null
-    points: number
-    trainer_question_options: OptionRow[]
+    option_order: string[]
+    trainer_questions: {
+      id: string
+      kind: QuestionKind
+      prompt: string
+      explanation: string | null
+      points: number
+      trainer_question_options: OptionRow[]
+    }
   }
 
   const answerByQuestion = new Map(
     (answers ?? []).map(a => [a.question_id as string, a]),
   )
 
-  const review = ((questions ?? []) as unknown as QuestionRow[]).map(q => {
+  const review = ((composed ?? []) as unknown as ComposedRow[]).map(row => {
+    const q = row.trainer_questions
     const given = answerByQuestion.get(q.id)
     const selected = (given?.selected_option_ids as string[]) ?? []
 
+    // Stesso ordine visto durante il tentativo: altrimenti la revisione
+    // non corrisponde a ciò che il candidato ricorda di aver letto.
+    const order = row.option_order ?? []
+    const options =
+      order.length === q.trainer_question_options.length
+        ? order
+            .map(id => q.trainer_question_options.find(o => o.id === id))
+            .filter((o): o is OptionRow => !!o)
+        : q.trainer_question_options
+
     return {
       id: q.id,
-      position: q.position,
+      position: row.position,
       kind: q.kind,
       prompt: q.prompt,
       is_correct: given?.is_correct ?? null,
@@ -118,14 +137,12 @@ export async function GET(
       selected_option_ids: selected,
       // Spiegazione e risposte corrette solo a revisione aperta.
       explanation: fullDisclosure ? q.explanation : null,
-      options: q.trainer_question_options
-        .sort((a, b) => a.position - b.position)
-        .map(o => ({
-          id: o.id,
-          label: o.label,
-          selected: selected.includes(o.id),
-          is_correct: fullDisclosure ? o.is_correct : null,
-        })),
+      options: options.map(o => ({
+        id: o.id,
+        label: o.label,
+        selected: selected.includes(o.id),
+        is_correct: fullDisclosure ? o.is_correct : null,
+      })),
     }
   })
 

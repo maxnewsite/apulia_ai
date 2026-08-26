@@ -107,7 +107,7 @@ export async function getTrainerProfile(userId: string): Promise<TrainerProfile 
 // Curriculum e avanzamento
 // ────────────────────────────────────────────────────────────
 
-interface AttemptRow {
+export interface AttemptRow {
   quiz_id: string
   status: string
   score: number | null
@@ -138,11 +138,24 @@ export async function getCurriculum(trainerId: string): Promise<Curriculum> {
       .eq('trainer_id', trainerId),
   ])
 
-  const modules = (modulesRes.data ?? []) as TrainerModule[]
-  const quizzes = (quizzesRes.data ?? []) as (QuizMeta & { module_id: string | null })[]
-  const attempts = (attemptsRes.data ?? []) as AttemptRow[]
-  const grants = (grantsRes.data ?? []) as { quiz_id: string; extra_attempts: number }[]
+  return buildCurriculum(
+    (modulesRes.data ?? []) as TrainerModule[],
+    (quizzesRes.data ?? []) as (QuizMeta & { module_id: string | null })[],
+    (attemptsRes.data ?? []) as AttemptRow[],
+    (grantsRes.data ?? []) as { quiz_id: string; extra_attempts: number }[],
+  )
+}
 
+/**
+ * Regole di avanzamento, isolate dall'accesso ai dati: sblocco sequenziale,
+ * conteggio dei tentativi e apertura dell'esame. Pura e quindi testabile.
+ */
+export function buildCurriculum(
+  modules: TrainerModule[],
+  quizzes: (QuizMeta & { module_id: string | null })[],
+  attempts: AttemptRow[],
+  grants: { quiz_id: string; extra_attempts: number }[],
+): Curriculum {
   const quizByModule = new Map(quizzes.filter(q => q.module_id).map(q => [q.module_id!, q]))
   const extraByQuiz = new Map(grants.map(g => [g.quiz_id, g.extra_attempts]))
 

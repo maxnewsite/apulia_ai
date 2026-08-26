@@ -39,50 +39,74 @@ async function loadQuiz(quizId: string): Promise<QuizRow | null> {
   return (data as QuizRow) ?? null
 }
 
-/** Domande con le risposte corrette — solo per la correzione server-side. */
-async function loadGradable(quizId: string): Promise<GradableQuestion[]> {
-  const { data } = await supabaseAdmin
-    .from('trainer_questions')
-    .select('id,kind,points,position,trainer_question_options(id,is_correct)')
-    .eq('quiz_id', quizId)
-    .order('position')
-
-  return ((data ?? []) as unknown as Array<{
-    id: string
-    kind: QuestionKind
-    points: number
-    trainer_question_options: { id: string; is_correct: boolean }[]
-  }>).map(q => ({
-    id: q.id,
-    kind: q.kind,
-    points: Number(q.points),
-    correctOptionIds: q.trainer_question_options.filter(o => o.is_correct).map(o => o.id),
-  }))
-}
-
-/** Domande ripulite per il browser: nessun is_correct, nessuna spiegazione. */
-async function loadForClient(quizId: string) {
-  const { data } = await supabaseAdmin
-    .from('trainer_questions')
-    .select('id,kind,prompt,points,position,trainer_question_options(id,label,position)')
-    .eq('quiz_id', quizId)
-    .order('position')
-
-  return ((data ?? []) as unknown as Array<{
+/**
+ * Composizione di un tentativo: quali domande sono state estratte e in che
+ * ordine vanno mostrate le opzioni. Le domande NON si rileggono dal quiz:
+ * si leggono da qui, altrimenti un pool più ampio del quiz restituirebbe
+ * domande che il candidato non ha mai visto.
+ */
+interface ComposedRow {
+  position: number
+  option_order: string[]
+  trainer_questions: {
     id: string
     kind: QuestionKind
     prompt: string
     points: number
-    trainer_question_options: { id: string; label: string; position: number }[]
-  }>).map(q => ({
-    id: q.id,
-    kind: q.kind,
-    prompt: q.prompt,
-    points: Number(q.points),
-    options: q.trainer_question_options
-      .sort((a, b) => a.position - b.position)
-      .map(o => ({ id: o.id, label: o.label })),
+    trainer_question_options: { id: string; label: string; is_correct: boolean }[]
+  }
+}
+
+async function loadComposition(attemptId: string): Promise<ComposedRow[]> {
+  const { data, error } = await supabaseAdmin
+    .from('trainer_attempt_questions')
+    .select(
+      'position,option_order,trainer_questions(id,kind,prompt,points,trainer_question_options(id,label,is_correct))',
+    )
+    .eq('attempt_id', attemptId)
+    .order('position')
+
+  if (error) {
+    console.error('composizione tentativo non leggibile:', error.message)
+    return []
+  }
+  return (data ?? []) as unknown as ComposedRow[]
+}
+
+/** Domande con le risposte corrette — solo per la correzione server-side. */
+function toGradable(rows: ComposedRow[]): GradableQuestion[] {
+  return rows.map(r => ({
+    id: r.trainer_questions.id,
+    kind: r.trainer_questions.kind,
+    points: Number(r.trainer_questions.points),
+    correctOptionIds: r.trainer_questions.trainer_question_options
+      .filter(o => o.is_correct)
+      .map(o => o.id),
   }))
+}
+
+/** Domande ripulite per il browser: nessun is_correct, nessuna spiegazione. */
+function toClient(rows: ComposedRow[]) {
+  return rows.map(r => {
+    const options = r.trainer_questions.trainer_question_options
+    const order = r.option_order ?? []
+    // L'ordine fissato all'avvio ha la precedenza; se manca (quiz composti
+    // prima di questa modifica) si ripiega sull'ordine naturale.
+    const sorted =
+      order.length === options.length
+        ? order
+            .map(id => options.find(o => o.id === id))
+            .filter((o): o is (typeof options)[number] => !!o)
+        : options
+
+    return {
+      id: r.trainer_questions.id,
+      kind: r.trainer_questions.kind,
+      prompt: r.trainer_questions.prompt,
+      points: Number(r.trainer_questions.points),
+      options: sorted.map(o => ({ id: o.id, label: o.label })),
+    }
+  })
 }
 
 async function attemptsState(quizId: string, trainerId: string, maxAttempts: number) {
@@ -176,7 +200,7 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ qu
     open_attempt: state.open
       ? { id: state.open.id, started_at: state.open.started_at }
       : null,
-    questions: state.open ? await loadForClient(quiz.id) : [],
+    questions: state.open ? toClient(await loadComposition(state.open.id)) : [],
   })
 }
 
@@ -210,7 +234,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ qu
       return NextResponse.json({
         attempt_id: state.open.id,
         started_at: state.open.started_at,
-        questions: await loadForClient(quiz.id),
+        questions: toClient(await loadComposition(state.open.id)),
       })
     }
     if (state.passed)
@@ -241,8 +265,25 @@ export async function POST(request: NextRequest, context: { params: Promise<{ qu
       return NextResponse.json({ error: 'Avvio del tentativo non riuscito.' }, { status: 500 })
     }
 
+    // Estrazione delle domande e ordine delle opzioni, congelati adesso.
+    const { error: composeError } = await supabaseAdmin.rpc('trainer_compose_attempt', {
+      p_attempt_id: data.id,
+    })
+    if (composeError) {
+      console.error('composizione tentativo fallita:', composeError.message)
+      await supabaseAdmin.from('trainer_quiz_attempts').delete().eq('id', data.id)
+      return NextResponse.json(
+        { error: 'Avvio del tentativo non riuscito.' },
+        { status: 500 },
+      )
+    }
+
     return NextResponse.json(
-      { attempt_id: data.id, started_at: data.started_at, questions: await loadForClient(quiz.id) },
+      {
+        attempt_id: data.id,
+        started_at: data.started_at,
+        questions: toClient(await loadComposition(data.id)),
+      },
       { status: 201 },
     )
   }
@@ -278,7 +319,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ qu
         }))
       : []
 
-    const questions = await loadGradable(quiz.id)
+    const questions = toGradable(await loadComposition(attempt.id))
     if (questions.length === 0)
       return NextResponse.json({ error: 'Questo quiz non ha ancora domande.' }, { status: 409 })
 

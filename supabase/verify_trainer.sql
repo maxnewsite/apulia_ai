@@ -3,7 +3,8 @@
 -- report: ogni riga dice cosa è stato controllato e il valore trovato.
 --
 -- Valori attesi su un'installazione corretta:
---   • 10 domande per ciascuno dei 7 moduli con contenuti
+--   • 20 domande nel pool di ciascuno dei 7 moduli con contenuti
+--     (il quiz ne estrae 10 a caso per tentativo)
 --   • 0 domande per modulo-4, modulo-9, modulo-10 (segnaposto)
 --   • 14 domande per l'esame finale
 --   • tutti i controlli di integrità a 0

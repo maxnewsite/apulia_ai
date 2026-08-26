@@ -35,27 +35,46 @@ on conflict (slug) do update set
 -- Un quiz per ogni modulo: 10 domande, 80% per passare, 3 tentativi.
 -- pass_score e max_attempts sono nell'on-conflict: rieseguire questo file
 -- aggiorna anche i quiz gia' presenti, senza toccare le domande.
-insert into trainer_quizzes (kind, module_id, title, intro, pass_score, max_attempts, is_published)
+insert into trainer_quizzes (kind, module_id, title, intro, pass_score, max_attempts,
+                             questions_per_attempt, time_limit_minutes, is_published)
 select
   'module',
   m.id,
   'Quiz — ' || m.title,
-  'Dieci domande. Servono almeno 80 punti su 100 per superare il modulo. Hai a disposizione 3 tentativi.',
+  'Dieci domande estratte dal pool del modulo, 20 minuti di tempo. Servono almeno 80 punti su 100. Hai a disposizione 3 tentativi, e ogni tentativo propone domande diverse.',
   80,
   3,
+  10,   -- estratte a caso dal pool: i tre tentativi non si somigliano
+  20,
   false
 from trainer_modules m
 on conflict (module_id) do update set
-  title        = excluded.title,
-  intro        = excluded.intro,
-  pass_score   = excluded.pass_score,
-  max_attempts = excluded.max_attempts;
+  title                 = excluded.title,
+  intro                 = excluded.intro,
+  pass_score            = excluded.pass_score,
+  max_attempts          = excluded.max_attempts,
+  questions_per_attempt = excluded.questions_per_attempt,
+  time_limit_minutes    = excluded.time_limit_minutes;
 
 -- Esame finale: soglia più alta, tentativo unico, correzione ibrida
 -- (parte chiusa automatica + review manuale del video da parte dell'admin).
-insert into trainer_quizzes (kind, module_id, title, intro, pass_score, max_attempts, is_published)
+insert into trainer_quizzes (kind, module_id, title, intro, pass_score, max_attempts,
+                             questions_per_attempt, time_limit_minutes, is_published)
 select 'exam', null,
   'Esame finale — Metodo apulia.ai',
   'L''esame si supera con almeno l''80% nella parte a risposta chiusa E con la valutazione positiva del video e dei materiali caricati. Hai un solo tentativo.',
-  80, 1, false
+  80, 1,
+  null,  -- l'esame somministra tutte le sue domande, non un campione
+  90,
+  false
 where not exists (select 1 from trainer_quizzes where kind = 'exam');
+
+-- L'inserimento dell'esame è condizionato a "non esiste già", quindi su
+-- un'installazione precedente non aggiornerebbe nulla: i parametri vanno
+-- riallineati esplicitamente.
+update trainer_quizzes
+set pass_score            = 80,
+    max_attempts          = 1,
+    questions_per_attempt = null,
+    time_limit_minutes    = 90
+where kind = 'exam';

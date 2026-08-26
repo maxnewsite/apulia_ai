@@ -14,7 +14,9 @@ da `apulia.ai/trainer` dentro l'app `landing` già in produzione su Cloud Run.
 3. **Formazione** — a trainer approvato, `/trainer/dashboard` mostra i moduli
    pubblicati. L'avanzamento è **sequenziale**: il modulo N si apre solo quando
    il quiz del modulo N−1 è superato.
-4. **Quiz di modulo** — 10 domande, soglia 80%, massimo 3 tentativi. Esauriti i tentativi
+4. **Quiz di modulo** — 10 domande estratte a caso da un pool di 20, 20
+   minuti di tempo, soglia 80%, massimo 3 tentativi. Ogni tentativo propone
+   un campione diverso e un diverso ordine delle opzioni. Esauriti i tentativi
    il modulo si blocca finché l'admin non concede un tentativo extra.
 5. **Esame finale** — si apre quando tutti i 10 moduli sono pubblicati e
    superati. Due parti: domande (corrette in automatico, soglia 80%) e un
@@ -47,8 +49,11 @@ supabase/
   seed_trainer.sql            10 moduli + quiz + esame
   schema_trainer_activity.sql tracciamento aperture dei materiali
   schema_trainer_security.sql rate limit, verifica email, audit trail
+  schema_trainer_pool.sql     pool di domande ed estrazione per tentativo
   seed_trainer_quizzes.sql    70 domande derivate dai deck dei moduli
   seed_trainer_quizzes_9_10.sql  domande 9 e 10 di ogni quiz di modulo
+  seed_trainer_pool_11_20.sql    domande 11-20, moduli 1-3
+  seed_trainer_pool_11_20_b.sql  domande 11-20, moduli 5-8
   verify_trainer.sql          report di verifica post-installazione
 
 landing/src/
@@ -78,9 +83,12 @@ supabase/schema.sql              (già applicato)
 supabase/schema_trainer.sql
 supabase/schema_trainer_activity.sql
 supabase/schema_trainer_security.sql
+supabase/schema_trainer_pool.sql
 supabase/seed_trainer.sql
 supabase/seed_trainer_quizzes.sql
 supabase/seed_trainer_quizzes_9_10.sql
+supabase/seed_trainer_pool_11_20.sql
+supabase/seed_trainer_pool_11_20_b.sql
 ```
 
 Se hai gia' applicato una versione precedente, rieseguire `seed_trainer.sql`
