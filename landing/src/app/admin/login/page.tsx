@@ -24,7 +24,10 @@ export default function AdminLogin() {
       })
 
       if (res.ok) {
-        router.push('/admin')
+        // La destinazione la decide il server in base al ruolo: un coach non
+        // ha accesso alla dashboard iscritti.
+        const { redirect } = await res.json().catch(() => ({ redirect: '/admin' }))
+        router.push(redirect ?? '/admin')
         router.refresh()
       } else {
         const { error: msg } = await res.json()

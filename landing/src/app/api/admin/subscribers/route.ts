@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireCapability } from '@/lib/admin-session'
+
+export const runtime = 'nodejs'
 
 export async function GET() {
+  // Il proxy tiene già i coach fuori da questo percorso; il controllo è
+  // ripetuto qui perché una rotta non deve dipendere dal fatto che qualcuno
+  // ricordi di aggiornare l'elenco dei prefissi nel proxy.
+  const { denial } = await requireCapability('subscribers')
+  if (denial) return NextResponse.json({ error: denial.error }, { status: denial.status })
+
   const { data, error } = await supabaseAdmin
     .from('subscribers')
     .select('id, email, preferred_language, products, status, source, created_at, confirmed_at')

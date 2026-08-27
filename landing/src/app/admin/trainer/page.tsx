@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
+import { can, type StaffRole } from '@/lib/staff-roles'
+import { COHORT_LABEL, IDLE_DAYS, type Cohort } from '@/lib/trainer-cohort'
 
 interface TrainerRow {
   id: string
@@ -16,7 +18,17 @@ interface TrainerRow {
   reviewed_by: string | null
   modules_passed: number
   exam_status: string | null
+  exam: { id: string; status: string; created_at: string; has_video: boolean; files: number } | null
+  last_activity_at: string | null
+  blocked: boolean
+  cohort: Cohort
 }
+
+/** Filtro attivo: per coorte di avanzamento oppure per stato candidatura. */
+type View =
+  | { kind: 'cohort'; value: Cohort }
+  | { kind: 'status'; value: TrainerRow['status'] }
+  | { kind: 'all' }
 
 interface Stats {
   total: number
@@ -112,7 +124,43 @@ const STATUS_STYLE: Record<string, string> = {
   submitted: 'bg-blue-50 text-blue-700 border-blue-200',
   under_review: 'bg-blue-50 text-blue-700 border-blue-200',
   qualified: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  needs_work: 'bg-amber-50 text-amber-700 border-amber-200',
   superato: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+}
+
+const COHORT_STYLE: Record<Cohort, string> = {
+  da_valutare: 'bg-amber-50 text-amber-700 border-amber-200',
+  non_ammesso: 'bg-red-50 text-red-700 border-red-200',
+  sospeso: 'bg-[#F8FAFC] text-[#475569] border-[#E2E8F0]',
+  mai_iniziato: 'bg-[#F8FAFC] text-[#475569] border-[#E2E8F0]',
+  in_corso: 'bg-blue-50 text-blue-700 border-blue-200',
+  fermo: 'bg-orange-50 text-orange-700 border-orange-200',
+  bloccato: 'bg-red-50 text-red-700 border-red-200',
+  esame_da_valutare: 'bg-violet-50 text-violet-700 border-violet-200',
+  integrazioni: 'bg-amber-50 text-amber-700 border-amber-200',
+  esame_respinto: 'bg-red-50 text-red-700 border-red-200',
+  qualificato: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+}
+
+function CohortBadge({ cohort }: { cohort: Cohort }) {
+  return (
+    <span
+      className={`text-xs font-semibold border rounded-full px-2.5 py-1 whitespace-nowrap ${COHORT_STYLE[cohort]}`}
+    >
+      {COHORT_LABEL[cohort]}
+    </span>
+  )
+}
+
+/** "3 giorni fa", o "mai" quando non c'è alcuna traccia di attività. */
+function sinceLabel(iso: string | null): string {
+  if (!iso) return 'mai'
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000)
+  if (days <= 0) return 'oggi'
+  if (days === 1) return 'ieri'
+  if (days < 30) return `${days} giorni fa`
+  const months = Math.floor(days / 30)
+  return months === 1 ? '1 mese fa' : `${months} mesi fa`
 }
 
 function Badge({ value }: { value: string }) {
@@ -146,7 +194,9 @@ export default function AdminTrainersPage() {
   const [stats, setStats] = useState<Stats | null>(null)
   const [modulesTotal, setModulesTotal] = useState(0)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
-  const [filter, setFilter] = useState<'all' | TrainerRow['status']>('pending')
+  const [cohorts, setCohorts] = useState<{ cohort: Cohort; count: number }[]>([])
+  const [role, setRole] = useState<StaffRole | null>(null)
+  const [view, setView] = useState<View>({ kind: 'cohort', value: 'esame_da_valutare' })
   const [selected, setSelected] = useState<string | null>(null)
   const [detail, setDetail] = useState<Detail | null>(null)
   const [notes, setNotes] = useState('')
@@ -162,7 +212,17 @@ export default function AdminTrainersPage() {
     const json = await res.json()
     setRows(json.trainers)
     setStats(json.stats)
+    setCohorts(json.cohorts ?? [])
     setModulesTotal(json.modules_total ?? 0)
+  }, [])
+
+  // Il ruolo decide quali azioni mostrare. È solo presentazione: ogni azione
+  // è ri-autorizzata lato server, dove il coach viene respinto comunque.
+  useEffect(() => {
+    fetch('/api/admin/me')
+      .then(r => (r.ok ? r.json() : null))
+      .then(json => json && setRole(json.role))
+      .catch(() => {})
   }, [])
 
   const loadDetail = useCallback(async (id: string) => {
@@ -212,49 +272,111 @@ export default function AdminTrainersPage() {
     await Promise.all([loadList(), loadDetail(selected)])
   }
 
-  const visible = filter === 'all' ? rows : rows.filter(r => r.status === filter)
+  const visible =
+    view.kind === 'all'
+      ? rows
+      : view.kind === 'cohort'
+        ? rows.filter(r => r.cohort === view.value)
+        : rows.filter(r => r.status === view.value)
+
+  const isAdmin = role === 'admin'
+  const mayReviewApplications = role !== null && can(role, 'review_applications')
+  const mayDelete = role !== null && can(role, 'delete_trainer_data')
 
   return (
     <div className="max-w-6xl mx-auto px-5 py-10">
       <div className="flex items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl font-black tracking-tight">Trainer Academy</h1>
-        <Link href="/admin" className="text-sm text-[#475569] hover:text-[#2563EB]">
-          ← Iscritti newsletter
-        </Link>
+        <div className="flex flex-wrap items-center gap-4 text-sm">
+          {isAdmin && (
+            <>
+              <Link href="/admin" className="text-[#475569] hover:text-[#2563EB]">
+                ← Iscritti newsletter
+              </Link>
+              <Link href="/admin/staff" className="text-[#475569] hover:text-[#2563EB]">
+                Staff
+              </Link>
+            </>
+          )}
+          <Link
+            href="/admin/trainer/quiz"
+            className="font-semibold text-[#2563EB] border border-[#2563EB]/30 rounded-full px-4 py-1.5 hover:bg-[#2563EB]/10 transition-colors"
+          >
+            Anteprima quiz →
+          </Link>
+          <Link href="/trainer" className="text-[#475569] hover:text-[#2563EB]">
+            Area trainer →
+          </Link>
+        </div>
       </div>
 
-      {stats && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-          {[
-            { label: 'Da valutare', value: stats.pending },
-            { label: 'Approvati', value: stats.approved },
-            { label: 'Esami da rivedere', value: stats.exams_to_review },
-            { label: 'Qualificati', value: stats.qualified },
-          ].map(card => (
-            <div key={card.label} className="border border-[#E2E8F0] rounded-xl p-4">
-              <div className="text-2xl font-black font-mono">{card.value}</div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-[#475569]">
-                {card.label}
-              </div>
-            </div>
-          ))}
+      {/* Come va la classe. Il filtro per stato della candidatura risponde a
+          "chi devo ancora ammettere"; questo risponde a "chi si è fermato",
+          "chi aspetta una mia valutazione", "chi ha finito" — che è il
+          lavoro di tutti i giorni. Ogni riquadro è anche un filtro. */}
+      <h2 className="text-xs font-semibold uppercase tracking-wider text-[#475569] mb-3">
+        Come vanno i trainer
+      </h2>
+      {cohorts.length === 0 ? (
+        <p className="text-sm text-[#475569] border border-[#E2E8F0] rounded-xl p-4 mb-8">
+          Nessun candidato registrato.
+        </p>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+          {cohorts.map(({ cohort, count }) => {
+            const active = view.kind === 'cohort' && view.value === cohort
+            return (
+              <button
+                key={cohort}
+                onClick={() => setView({ kind: 'cohort', value: cohort })}
+                className={`text-left border rounded-xl p-4 transition-colors ${
+                  active
+                    ? 'border-[#2563EB] bg-blue-50'
+                    : 'border-[#E2E8F0] hover:border-[#94A3B8]'
+                }`}
+              >
+                <div className="text-2xl font-black font-mono">{count}</div>
+                <div className="text-xs font-semibold text-[#475569] leading-snug mt-0.5">
+                  {COHORT_LABEL[cohort]}
+                </div>
+              </button>
+            )
+          })}
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2 mb-5">
-        {(['pending', 'approved', 'rejected', 'suspended', 'all'] as const).map(key => (
+      <div className="flex flex-wrap items-center gap-2 mb-5">
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#475569] mr-1">
+          Candidatura
+        </span>
+        {(['pending', 'approved', 'rejected', 'suspended'] as const).map(key => (
           <button
             key={key}
-            onClick={() => setFilter(key)}
+            onClick={() => setView({ kind: 'status', value: key })}
             className={`text-sm font-medium px-4 py-1.5 rounded-full border transition-colors ${
-              filter === key
+              view.kind === 'status' && view.value === key
                 ? 'border-[#2563EB] text-[#2563EB] bg-blue-50'
                 : 'border-[#E2E8F0] text-[#475569] hover:border-[#94A3B8]'
             }`}
           >
-            {key === 'all' ? 'tutti' : key}
+            {key}
           </button>
         ))}
+        <button
+          onClick={() => setView({ kind: 'all' })}
+          className={`text-sm font-medium px-4 py-1.5 rounded-full border transition-colors ${
+            view.kind === 'all'
+              ? 'border-[#2563EB] text-[#2563EB] bg-blue-50'
+              : 'border-[#E2E8F0] text-[#475569] hover:border-[#94A3B8]'
+          }`}
+        >
+          tutti
+        </button>
+        {stats && (
+          <span className="text-xs text-[#475569] ml-auto">
+            {visible.length} di {stats.total}
+          </span>
+        )}
       </div>
 
       {error && (
@@ -270,6 +392,9 @@ export default function AdminTrainersPage() {
               <th className="text-left font-semibold px-4 py-3">Candidato</th>
               <th className="text-left font-semibold px-4 py-3 hidden sm:table-cell">Candidatura</th>
               <th className="text-left font-semibold px-4 py-3">Moduli</th>
+              <th className="text-left font-semibold px-4 py-3 hidden md:table-cell">
+                Ultima attività
+              </th>
               <th className="text-left font-semibold px-4 py-3">Stato</th>
               <th className="px-4 py-3" />
             </tr>
@@ -277,8 +402,8 @@ export default function AdminTrainersPage() {
           <tbody>
             {visible.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-[#475569]">
-                  Nessun candidato in questo stato.
+                <td colSpan={6} className="px-4 py-8 text-center text-[#475569]">
+                  Nessun trainer in questo gruppo.
                 </td>
               </tr>
             )}
@@ -306,10 +431,31 @@ export default function AdminTrainersPage() {
                     </span>
                   </div>
                 </td>
+                <td className="px-4 py-3 text-[#475569] hidden md:table-cell">
+                  <span
+                    className={
+                      row.cohort === 'fermo' ? 'text-orange-700 font-semibold' : undefined
+                    }
+                    title={
+                      row.last_activity_at
+                        ? new Date(row.last_activity_at).toLocaleString('it-IT')
+                        : 'Nessun quiz consegnato e nessun materiale aperto'
+                    }
+                  >
+                    {sinceLabel(row.last_activity_at)}
+                  </span>
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-1.5">
-                    <Badge value={row.status} />
-                    {row.exam_status && <Badge value={row.exam_status} />}
+                    <CohortBadge cohort={row.cohort} />
+                    {row.exam && (
+                      <span
+                        className="text-xs text-[#475569] whitespace-nowrap"
+                        title={`Consegna del ${formatDate(row.exam.created_at)}`}
+                      >
+                        {row.exam.has_video ? '🎬' : '—'} {row.exam.files} allegati
+                      </span>
+                    )}
                   </div>
                 </td>
                 <td className="px-4 py-3 text-right">
@@ -533,37 +679,62 @@ export default function AdminTrainersPage() {
                     </p>
                   )}
 
-                  {(submission.status === 'submitted' || submission.status === 'under_review') && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      <button
-                        onClick={() =>
-                          act({ action: 'review_exam', decision: 'qualified', submission_id: submission.id })
-                        }
-                        disabled={busy}
-                        className="text-sm font-semibold bg-emerald-600 text-white px-4 py-2 rounded-full hover:bg-emerald-700 disabled:opacity-50"
-                      >
-                        Qualifica
-                      </button>
-                      <button
-                        onClick={() =>
-                          act({ action: 'review_exam', decision: 'rejected', submission_id: submission.id })
-                        }
-                        disabled={busy}
-                        className="text-sm font-semibold border border-red-200 text-red-700 px-4 py-2 rounded-full hover:bg-red-50 disabled:opacity-50"
-                      >
-                        Respingi
-                      </button>
-                      {submission.status === 'submitted' && (
+                  {['submitted', 'under_review', 'needs_work'].includes(submission.status) && (
+                    <div className="mt-4 pt-4 border-t border-[#E2E8F0]">
+                      <p className="text-xs text-[#475569] mb-2">
+                        La nota del revisore qui sotto viene inclusa nell&apos;email al candidato
+                        {submission.status !== 'needs_work' &&
+                          ' — è obbligatoria per chiedere integrazioni'}
+                        .
+                      </p>
+                      <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() =>
-                            act({ action: 'review_exam', decision: 'under_review', submission_id: submission.id })
+                            act({ action: 'review_exam', decision: 'qualified', submission_id: submission.id })
                           }
                           disabled={busy}
-                          className="text-sm font-semibold border border-[#E2E8F0] px-4 py-2 rounded-full hover:border-[#2563EB] disabled:opacity-50"
+                          className="text-sm font-semibold bg-emerald-600 text-white px-4 py-2 rounded-full hover:bg-emerald-700 disabled:opacity-50"
                         >
-                          Segna in revisione
+                          Certifica trainer
                         </button>
-                      )}
+                        {/* Riapre la consegna al candidato: è l'unico esito che
+                            gli restituisce la palla, e senza una nota che dica
+                            cosa integrare non serve a niente. */}
+                        <button
+                          onClick={() =>
+                            act({ action: 'review_exam', decision: 'needs_work', submission_id: submission.id })
+                          }
+                          disabled={busy || !notes.trim()}
+                          title={
+                            notes.trim()
+                              ? undefined
+                              : 'Scrivi nella nota che cosa deve integrare il candidato'
+                          }
+                          className="text-sm font-semibold border border-amber-300 text-amber-800 bg-amber-50 px-4 py-2 rounded-full hover:bg-amber-100 disabled:opacity-50"
+                        >
+                          Chiedi integrazioni
+                        </button>
+                        <button
+                          onClick={() =>
+                            act({ action: 'review_exam', decision: 'rejected', submission_id: submission.id })
+                          }
+                          disabled={busy}
+                          className="text-sm font-semibold border border-red-200 text-red-700 px-4 py-2 rounded-full hover:bg-red-50 disabled:opacity-50"
+                        >
+                          Respingi
+                        </button>
+                        {submission.status === 'submitted' && (
+                          <button
+                            onClick={() =>
+                              act({ action: 'review_exam', decision: 'under_review', submission_id: submission.id })
+                            }
+                            disabled={busy}
+                            className="text-sm font-semibold border border-[#E2E8F0] px-4 py-2 rounded-full hover:border-[#2563EB] disabled:opacity-50"
+                          >
+                            Prendi in carico
+                          </button>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -583,7 +754,13 @@ export default function AdminTrainersPage() {
             />
 
             <div className="flex flex-wrap gap-2 mt-4">
-              {detail.profile.status !== 'approved' && (
+              {!mayReviewApplications && (
+                <p className="text-sm text-[#475569] border border-[#E2E8F0] rounded-xl px-4 py-3">
+                  Come coach puoi valutare avanzamento ed esami, ma non ammettere o respingere
+                  candidature: quelle restano all&apos;admin.
+                </p>
+              )}
+              {mayReviewApplications && detail.profile.status !== 'approved' && (
                 <button
                   onClick={() => act({ action: 'approve' })}
                   disabled={busy}
@@ -592,7 +769,7 @@ export default function AdminTrainersPage() {
                   Approva candidatura
                 </button>
               )}
-              {detail.profile.status === 'pending' && (
+              {mayReviewApplications && detail.profile.status === 'pending' && (
                 <button
                   onClick={() => act({ action: 'reject' })}
                   disabled={busy}
@@ -601,7 +778,7 @@ export default function AdminTrainersPage() {
                   Respingi
                 </button>
               )}
-              {detail.profile.status === 'approved' && (
+              {mayReviewApplications && detail.profile.status === 'approved' && (
                 <button
                   onClick={() => act({ action: 'suspend' })}
                   disabled={busy}
@@ -614,6 +791,7 @@ export default function AdminTrainersPage() {
 
             {/* Cancellazione: irreversibile, quindi in due passaggi e in
                 fondo, lontano dai pulsanti che si usano tutti i giorni. */}
+            {mayDelete && (
             <div className="mt-8 pt-6 border-t border-[#E2E8F0]">
               {confirmDelete === detail.profile.id ? (
                 <div className="flex flex-wrap items-center gap-3">
@@ -649,6 +827,7 @@ export default function AdminTrainersPage() {
                 </button>
               )}
             </div>
+            )}
           </div>
 
           {detail.audit?.length > 0 && (

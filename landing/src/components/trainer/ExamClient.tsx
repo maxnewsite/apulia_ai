@@ -10,7 +10,7 @@ import QuestionList, {
 
 interface Submission {
   id: string
-  status: 'draft' | 'submitted' | 'under_review' | 'qualified' | 'rejected'
+  status: 'draft' | 'submitted' | 'under_review' | 'needs_work' | 'qualified' | 'rejected'
   video_url: string | null
   auto_score: number | null
   review_notes: string | null
@@ -54,12 +54,20 @@ const STATUS_COPY: Record<Submission['status'], { title: string; body: string; t
     body: 'Hai superato l’esame finale: sei trainer qualificato del metodo apulia.ai.',
     tone: 'border-emerald-200 bg-emerald-50',
   },
+  needs_work: {
+    title: 'Integrazioni richieste',
+    body: 'Il revisore ti chiede di integrare la consegna prima di decidere. Leggi la nota qui sotto, poi ricarica video e materiali.',
+    tone: 'border-amber-200 bg-amber-50',
+  },
   rejected: {
     title: 'Esame non superato',
     body: 'La consegna non ha superato la valutazione.',
     tone: 'border-amber-200 bg-amber-50',
   },
 }
+
+/** Stati in cui la consegna torna modificabile dal candidato. */
+const REOPENED: Submission['status'][] = ['draft', 'needs_work']
 
 export default function ExamClient() {
   const [state, setState] = useState<ExamState | null>(null)
@@ -80,7 +88,11 @@ export default function ExamClient() {
     }
     setState(json)
 
-    if (!json.quiz_id || json.submission) return
+    // A consegna riaperta serve comunque l'id del tentativo d'esame gia'
+    // chiuso: la nuova consegna si aggancia a quello, l'esame ha un solo
+    // tentativo e non se ne apre un altro.
+    if (!json.quiz_id) return
+    if (json.submission && !REOPENED.includes(json.submission.status)) return
 
     // Recupera l'eventuale tentativo già aperto o già consegnato: serve per
     // riprendere il flusso se il candidato ricarica la pagina a metà.
@@ -206,8 +218,8 @@ export default function ExamClient() {
   }
   if (!state) return <p className="text-sm text-[#475569]">Caricamento…</p>
 
-  // ── Consegna già effettuata ────────────────────────────
-  if (state.submission) {
+  // ── Consegna già effettuata e chiusa alla modifica ─────
+  if (state.submission && !REOPENED.includes(state.submission.status)) {
     const copy = STATUS_COPY[state.submission.status]
     return (
       <div className={`border rounded-2xl p-8 ${copy.tone}`}>
@@ -274,9 +286,24 @@ export default function ExamClient() {
   if (quizDone) {
     return (
       <form onSubmit={submitExam} className="space-y-6">
-        <div className="border border-emerald-200 bg-emerald-50 rounded-2xl p-6 text-sm text-[#475569]">
-          Domande consegnate. Manca l&apos;ultima parte: il video e i materiali di supporto.
-        </div>
+        {state.submission?.status === 'needs_work' ? (
+          <div className="border border-amber-200 bg-amber-50 rounded-2xl p-6 text-sm text-[#475569]">
+            <strong className="block text-[#0F172A] mb-1">Integrazioni richieste</strong>
+            {state.submission.review_notes ? (
+              <p className="whitespace-pre-wrap">{state.submission.review_notes}</p>
+            ) : (
+              <p>Il revisore non ha lasciato una nota: scrivici per sapere cosa integrare.</p>
+            )}
+            <p className="mt-3">
+              Carica di nuovo video e materiali. La consegna precedente resta agli atti; le domande
+              a risposta chiusa non vanno rifatte.
+            </p>
+          </div>
+        ) : (
+          <div className="border border-emerald-200 bg-emerald-50 rounded-2xl p-6 text-sm text-[#475569]">
+            Domande consegnate. Manca l&apos;ultima parte: il video e i materiali di supporto.
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-semibold mb-2" htmlFor="video_url">
@@ -287,6 +314,7 @@ export default function ExamClient() {
             name="video_url"
             type="url"
             required
+            defaultValue={state.submission?.video_url ?? ''}
             placeholder="https://youtube.com/watch?v=…"
             className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
           />
@@ -357,7 +385,11 @@ export default function ExamClient() {
           disabled={busy}
           className="bg-[#2563EB] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#1D4ED8] transition-colors disabled:opacity-50"
         >
-          {busy ? 'Invio…' : 'Consegna l’esame'}
+          {busy
+            ? 'Invio…'
+            : state.submission?.status === 'needs_work'
+              ? 'Invia la consegna aggiornata'
+              : 'Consegna l’esame'}
         </button>
       </form>
     )

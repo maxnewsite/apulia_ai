@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { COOKIE_NAME, verifyAdminToken } from '@/lib/auth'
+import { can, type Capability } from '@/lib/staff-roles'
+import { getStaffSession } from '@/lib/admin-session'
 import { getCurriculum, getTrainerProfile } from '@/lib/trainer'
 import { sendEmail } from '@/lib/zepto'
 import {
   applicationApprovedEmail,
   applicationRejectedEmail,
+  examNeedsWorkEmail,
   examResultEmail,
 } from '@/lib/trainer-emails'
 
@@ -14,10 +15,23 @@ export const runtime = 'nodejs'
 
 const SIGNED_URL_SECONDS = 600
 
-async function adminEmail(): Promise<string> {
-  const token = (await cookies()).get(COOKIE_NAME)?.value
-  if (!token) return 'admin'
-  return (await verifyAdminToken(token))?.email ?? 'admin'
+/** Esiti che il revisore puo' assegnare a una consegna d'esame. */
+const EXAM_DECISIONS = ['qualified', 'rejected', 'needs_work', 'under_review'] as const
+type ExamDecision = (typeof EXAM_DECISIONS)[number]
+
+/**
+ * Permesso richiesto da ciascuna azione. Il proxy concede al coach l'intera
+ * rotta — deve poter valutare — quindi il confine tra "valuta" e "ammette"
+ * si applica qui, azione per azione.
+ */
+const ACTION_CAPABILITY: Record<string, Capability> = {
+  approve: 'review_applications',
+  reject: 'review_applications',
+  suspend: 'review_applications',
+  reactivate: 'review_applications',
+  delete_data: 'delete_trainer_data',
+  grant_attempts: 'grant_attempts',
+  review_exam: 'review_exams',
 }
 
 // ────────────────────────────────────────────────────────────
@@ -122,7 +136,18 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
     return NextResponse.json({ error: 'Richiesta non valida.' }, { status: 400 })
   }
 
-  const reviewer = await adminEmail()
+  const session = await getStaffSession()
+  if (!session) return NextResponse.json({ error: 'Non autorizzato.' }, { status: 401 })
+
+  const required = ACTION_CAPABILITY[body.action ?? '']
+  if (!required) return NextResponse.json({ error: 'Azione non riconosciuta.' }, { status: 400 })
+  if (!can(session.role, required))
+    return NextResponse.json(
+      { error: 'Il tuo ruolo non consente questa operazione.' },
+      { status: 403 },
+    )
+
+  const reviewer = session.email
   const notes = (body.notes ?? '').trim() || null
   const now = new Date().toISOString()
 
@@ -255,10 +280,18 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
 
       case 'review_exam': {
         const decision = (body as { decision?: string }).decision
-        if (decision !== 'qualified' && decision !== 'rejected' && decision !== 'under_review')
+        if (!EXAM_DECISIONS.includes(decision as ExamDecision))
           return NextResponse.json({ error: 'Decisione non valida.' }, { status: 422 })
         if (!body.submission_id)
           return NextResponse.json({ error: 'Consegna non specificata.' }, { status: 422 })
+
+        // Chiedere integrazioni senza dire cosa integrare lascia il candidato
+        // fermo: l'email non avrebbe altro contenuto che "rifai qualcosa".
+        if (decision === 'needs_work' && !notes)
+          return NextResponse.json(
+            { error: 'Scrivi nella nota che cosa deve integrare il candidato.' },
+            { status: 422 },
+          )
 
         const { error } = await supabaseAdmin
           .from('trainer_exam_submissions')
@@ -273,12 +306,13 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
         if (error) throw new Error(error.message)
         await audit('review_exam', { decision, submission_id: body.submission_id })
 
+        // `under_review` e' un marcatore interno del revisore: al candidato
+        // non cambia nulla, quindi non parte nessuna email.
         if (decision !== 'under_review') {
-          const { subject, html } = examResultEmail(
-            profile.full_name,
-            decision === 'qualified',
-            notes,
-          )
+          const { subject, html } =
+            decision === 'needs_work'
+              ? examNeedsWorkEmail(profile.full_name, notes)
+              : examResultEmail(profile.full_name, decision === 'qualified', notes)
           const sent = await sendEmail({ to: profile.email, subject, html })
           if (!sent.ok) console.error('exam result email failed:', sent.status, sent.error)
         }

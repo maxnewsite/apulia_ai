@@ -250,6 +250,7 @@ export const translations = {
         privacy: 'Privacy Policy',
         unsubscribe: 'Disiscrizione',
         about: 'Chi siamo',
+        trainer: 'AI Trainer',
       },
       unsubscribeNote: 'Per disiscriverti, clicca il link in fondo a ogni email.',
       copyright: '© 2026 apulia.ai — Tutti i diritti riservati.',
@@ -505,6 +506,7 @@ export const translations = {
         privacy: 'Privacy Policy',
         unsubscribe: 'Unsubscribe',
         about: 'About',
+        trainer: 'AI Trainer',
       },
       unsubscribeNote: 'To unsubscribe, click the link at the bottom of any email.',
       copyright: '© 2026 apulia.ai — All rights reserved.',
@@ -620,6 +622,7 @@ export type TranslationKeys = {
       privacy: string
       unsubscribe: string
       about: string
+      trainer: string
     }
     unsubscribeNote: string
     copyright: string

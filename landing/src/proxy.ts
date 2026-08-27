@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { COOKIE_NAME } from '@/lib/auth'
+import { pathAllowed, staffHome, type StaffRole } from '@/lib/staff-roles'
 import { refreshTrainerSession } from '@/lib/supabase-ssr'
 
 // Pagine dell'area trainer raggiungibili senza sessione.
@@ -30,10 +31,16 @@ function fromB64url(str: string): ArrayBuffer {
   return buffer
 }
 
-async function isValidToken(token: string): Promise<boolean> {
+/**
+ * Verifica la firma e restituisce il ruolo. Il proxy gira nel runtime Edge e
+ * non puo' importare `lib/auth.ts` per intero — quel modulo tira dentro il
+ * resto della configurazione — quindi la verifica HMAC e' ripetuta qui in
+ * forma minima. Il formato del token e' lo stesso.
+ */
+async function tokenRole(token: string): Promise<StaffRole | null> {
   try {
     const parts = token.split('.')
-    if (parts.length !== 3) return false
+    if (parts.length !== 3) return null
     const [header, payload, sig] = parts
     const key = await crypto.subtle.importKey(
       'raw',
@@ -48,11 +55,12 @@ async function isValidToken(token: string): Promise<boolean> {
       fromB64url(sig),
       new TextEncoder().encode(`${header}.${payload}`)
     )
-    if (!valid) return false
+    if (!valid) return null
     const claims = JSON.parse(new TextDecoder().decode(fromB64url(payload)))
-    return !claims.exp || claims.exp >= Math.floor(Date.now() / 1000)
+    if (claims.exp && claims.exp < Math.floor(Date.now() / 1000)) return null
+    return claims.role === 'coach' ? 'coach' : 'admin'
   } catch {
-    return false
+    return null
   }
 }
 
@@ -65,14 +73,27 @@ export async function proxy(request: NextRequest) {
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const token = request.cookies.get(COOKIE_NAME)?.value
+    const role = token ? await tokenRole(token) : null
 
-    if (!token || !(await isValidToken(token))) {
+    if (!role) {
       if (pathname.startsWith('/api/')) {
         return NextResponse.json({ error: 'Non autorizzato.' }, { status: 401 })
       }
       const response = NextResponse.redirect(new URL('/admin/login', request.url))
       response.cookies.delete(COOKIE_NAME)
       return response
+    }
+
+    // Sessione valida ma ruolo insufficiente per questo percorso: il coach
+    // non vede iscritti alla newsletter né la gestione dello staff.
+    if (!pathAllowed(role, pathname)) {
+      if (pathname.startsWith('/api/')) {
+        return NextResponse.json(
+          { error: 'Il tuo ruolo non consente questa operazione.' },
+          { status: 403 },
+        )
+      }
+      return NextResponse.redirect(new URL(staffHome(role), request.url))
     }
 
     return NextResponse.next()

@@ -1,6 +1,8 @@
 // JWT-compatible token signing/verification using Web Crypto API (no external deps)
 // Compatible with both Node.js 18+ and Next.js Edge runtime
 
+import type { StaffRole } from '@/lib/staff-roles'
+
 export const COOKIE_NAME = 'apulia_admin_token'
 export const SESSION_DURATION = 60 * 60 * 8 // 8 hours in seconds
 
@@ -33,13 +35,18 @@ async function getKey(): Promise<CryptoKey> {
   )
 }
 
-export async function signAdminToken(email: string): Promise<string> {
+/**
+ * Firma il token di sessione della console. Il ruolo viaggia nel payload:
+ * il proxy deve poter decidere se una rotta è concessa senza interrogare il
+ * database a ogni richiesta.
+ */
+export async function signAdminToken(email: string, role: StaffRole = 'admin'): Promise<string> {
   const header = b64url(new TextEncoder().encode(JSON.stringify({ alg: 'HS256', typ: 'JWT' })))
   const payload = b64url(
     new TextEncoder().encode(
       JSON.stringify({
         email,
-        role: 'admin',
+        role,
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + SESSION_DURATION,
       })
@@ -51,7 +58,9 @@ export async function signAdminToken(email: string): Promise<string> {
   return `${msg}.${b64url(sig)}`
 }
 
-export async function verifyAdminToken(token: string): Promise<{ email: string } | null> {
+export async function verifyAdminToken(
+  token: string,
+): Promise<{ email: string; role: StaffRole } | null> {
   try {
     const parts = token.split('.')
     if (parts.length !== 3) return null
@@ -67,12 +76,19 @@ export async function verifyAdminToken(token: string): Promise<{ email: string }
     if (!valid) return null
     const claims = JSON.parse(new TextDecoder().decode(fromB64url(payload)))
     if (claims.exp && claims.exp < Math.floor(Date.now() / 1000)) return null
-    return { email: claims.email }
+    // I token emessi prima dell'introduzione del ruolo hanno gia' role:'admin';
+    // il fallback copre solo eventuali payload manomessi o troncati.
+    return { email: claims.email, role: claims.role === 'coach' ? 'coach' : 'admin' }
   } catch {
     return null
   }
 }
 
+/**
+ * Admin "di fabbrica", quello delle variabili d'ambiente. Resta perché è
+ * l'unico accesso che funziona anche a database vuoto: senza, creare il
+ * primo account di staff sarebbe impossibile.
+ */
 export function checkCredentials(email: string, password: string): boolean {
   return (
     email === process.env.ADMIN_EMAIL &&

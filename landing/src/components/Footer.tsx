@@ -62,6 +62,9 @@ export default function Footer() {
                 { label: f.links.newsletter, href: '#subscribe' },
                 { label: f.links.analysis, href: '#products' },
                 { label: f.links.about, href: '/chi-siamo' },
+                // Area riservata: raggiungibile dall'header, ma chi scorre
+                // fino in fondo non deve tornare su per trovarla.
+                { label: f.links.trainer, href: '/trainer' },
                 { label: f.links.privacy, href: '/privacy' },
                 { label: f.links.unsubscribe, href: '/unsubscribe' },
               ].map((link) => (

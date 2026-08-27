@@ -118,6 +118,28 @@ export function examSubmittedEmail(fullName: string) {
   }
 }
 
+/**
+ * Integrazioni richieste: e' l'unico esito di revisione che riapre la
+ * consegna. La nota del revisore non e' decorativa — e' l'unica indicazione
+ * che il candidato riceve su cosa rifare, quindi la si mette in evidenza.
+ */
+export function examNeedsWorkEmail(fullName: string, notes: string | null) {
+  return {
+    subject: 'Esame finale apulia.ai — servono alcune integrazioni',
+    html: shell(
+      `Ciao ${fullName}`,
+      `<p>Il revisore ha esaminato il tuo esame finale e ti chiede di <strong>integrare la consegna</strong> prima di decidere sulla qualifica. Non e' una bocciatura: il percorso resta aperto.</p>
+       ${
+         notes
+           ? `<p><strong>Cosa serve:</strong> ${notes}</p>`
+           : `<p>Il revisore non ha lasciato una nota: scrivici per sapere cosa integrare.</p>`
+       }
+       <p>Puoi caricare un nuovo video e nuovi materiali dalla pagina dell'esame: la consegna precedente resta agli atti.</p>`,
+      { label: 'Aggiorna la consegna', url: `${appUrl()}/trainer/esame` },
+    ),
+  }
+}
+
 /** Esito finale della qualifica. */
 export function examResultEmail(fullName: string, qualified: boolean, notes: string | null) {
   if (qualified) {

@@ -109,9 +109,19 @@ export async function POST(request: NextRequest) {
     .limit(1)
     .maybeSingle()
 
-  if (existing && existing.status !== 'draft' && existing.status !== 'rejected')
+  // Una consegna si puo' rifare solo se il revisore ha chiesto integrazioni
+  // (`needs_work`) o se non e' mai stata completata (`draft`). Dopo
+  // `rejected` la strada e' chiusa: riaprirla e' una decisione del revisore,
+  // che riporta la consegna a `needs_work`.
+  const REOPENABLE = ['draft', 'needs_work']
+  if (existing && !REOPENABLE.includes(existing.status))
     return NextResponse.json(
-      { error: 'Hai già consegnato l’esame: è in valutazione.' },
+      {
+        error:
+          existing.status === 'rejected'
+            ? 'Il tuo esame è stato respinto: scrivici per concordare una nuova prova.'
+            : 'Hai già consegnato l’esame: è in valutazione.',
+      },
       { status: 409 },
     )
 

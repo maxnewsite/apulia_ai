@@ -54,6 +54,9 @@ supabase/
   seed_trainer_quizzes_9_10.sql  domande 9 e 10 di ogni quiz di modulo
   seed_trainer_pool_11_20.sql    domande 11-20, moduli 1-3
   seed_trainer_pool_11_20_b.sql  domande 11-20, moduli 5-8
+  schema_trainer_review.sql   esito "integrazioni richieste" sull'esame
+  schema_staff.sql            account di staff della console (ruolo coach)
+  publish_trainer_modules.sql pubblica i moduli il cui pool e' pronto
   verify_trainer.sql          report di verifica post-installazione
 
 landing/src/
@@ -64,12 +67,25 @@ landing/src/
   lib/trainer-emails.ts       template email transazionali
   proxy.ts                    gating /trainer e /api/trainer
 
+  lib/trainer-preview.ts      estrazione e correzione in anteprima, senza tentativi
+  lib/trainer-cohort.ts       coorte di avanzamento di ciascun trainer
+  lib/staff-roles.ts          ruoli e permessi (senza dipendenze: lo usa il proxy)
+  lib/staff.ts                account di staff: lettura, password PBKDF2
+  lib/admin-session.ts        identita' e permessi lato server nelle API route
+
   app/trainer/…               pagine dell'area riservata
   app/admin/trainer/          console di revisione
+  app/admin/trainer/quiz/     anteprima dei quiz per il revisore
+  app/admin/staff/            gestione degli account di staff (solo admin)
+  app/api/admin/quiz-preview/ campione e correzione dell'anteprima
+  app/api/admin/me/           chi e' collegato e con che ruolo
+  app/api/admin/staff/        creazione e stato degli account di staff
   app/api/trainer/…           registrazione, quiz, risorse, upload, esame
   app/api/admin/trainers/…    elenco, dossier, azioni del revisore
 
-  components/trainer/         TrainerNav, QuestionList, QuizRunner, ExamClient
+  components/trainer/         TrainerNav, QuestionList, QuizRunner, ExamClient,
+                              QuizPreviewRunner
+  components/admin/           StaffBadge (identita' e ruolo in alto a destra)
 ```
 
 ## Messa in opera
@@ -89,7 +105,17 @@ supabase/seed_trainer_quizzes.sql
 supabase/seed_trainer_quizzes_9_10.sql
 supabase/seed_trainer_pool_11_20.sql
 supabase/seed_trainer_pool_11_20_b.sql
+supabase/schema_trainer_review.sql
+supabase/schema_staff.sql
+supabase/publish_trainer_modules.sql
 ```
+
+`publish_trainer_modules.sql` chiude l'installazione pubblicando i moduli il
+cui quiz ha gia' abbastanza domande. E' guidato dai dati e non da un elenco di
+slug: i tre segnaposto senza pool restano invisibili, e caricare il pool del
+modulo 4 e rieseguire il file lo pubblica senza modificarlo. Serve perche'
+altrimenti la dashboard di un trainer approvato e' vuota — il seed crea tutto
+non pubblicato — e i quiz non sono raggiungibili nemmeno per provarli.
 
 Se hai gia' applicato una versione precedente, rieseguire `seed_trainer.sql`
 aggiorna soglia e tentativi dei quiz esistenti (da 70% a 80%) senza toccare
@@ -139,7 +165,10 @@ limiti di invio sono bassi: se il volume cresce, configurare un SMTP proprio.
 ## Caricare i contenuti dei moduli
 
 I moduli nascono **non pubblicati**: nessun trainer li vede finché non lo si
-decide esplicitamente.
+decide esplicitamente. `supabase/publish_trainer_modules.sql` fa questo passo
+per i moduli il cui quiz è pronto, così il percorso è navigabile mentre slide
+e video sono ancora in lavorazione; la pagina di un modulo senza materiali lo
+dice e mostra comunque il quiz.
 
 1. Caricare PDF e slide nel bucket `trainer-materials`, con un percorso
    leggibile, per esempio `fondamenti-ai/slide.pdf`.
@@ -208,10 +237,127 @@ soglia è "tutti e dieci pubblicati e superati" (`REQUIRED_MODULES` in
 - **Esame finale**: `passed` resta sempre `false` a livello di tentativo — la
   qualifica la decide il revisore su video e materiali, non l'automatismo.
 
+## Provare un quiz senza essere un trainer
+
+`/admin/trainer/quiz` elenca tutti i quiz con la dimensione del pool e lo stato
+di pubblicazione; da li' si apre l'anteprima del singolo quiz.
+
+L'anteprima estrae un campione dal pool e mescola le opzioni come farebbe
+`trainer_compose_attempt`, mostra il conto alla rovescia e corregge con lo
+stesso `gradeAttempt()` del quiz vero, poi rivela risposte esatte e
+spiegazioni. **Non scrive nulla**: nessuna riga in `trainer_quiz_attempts`,
+nessun tentativo consumato, nessun avanzamento alterato. Di conseguenza si
+puo' ripetere all'infinito, si applica anche ai quiz non pubblicati, e non
+serve avere un profilo trainer approvato.
+
+Cio' che l'anteprima **non** copre, perche' vive nei tentativi persistiti: il
+limite di tre prove, lo sblocco sequenziale dei moduli, l'annullamento
+server-side del tentativo fuori tempo. Il conto alla rovescia in anteprima e'
+solo indicativo. Quelle regole si verificano con un account trainer vero, o
+dai test unitari su `buildCurriculum`.
+
+Il percorso opposto e' altrettanto diretto: dall'anteprima si salta al modulo
+corrispondente nell'area trainer, e la console di revisione ha in testa i link
+a iscritti newsletter, anteprima quiz e area trainer.
+
+## Ruoli della console
+
+| Ruolo | Come si accede | Cosa puo' fare |
+|---|---|---|
+| **Admin** | `ADMIN_EMAIL`/`ADMIN_PASSWORD`, oppure un account `admin` in `trainer_staff` | tutto: iscritti newsletter, candidature, sospensioni, cancellazioni GDPR, gestione staff |
+| **Coach** | account `coach` in `trainer_staff` | avanzamento dei trainer ammessi, valutazione degli esami finali, tentativi extra, anteprima quiz |
+| **Trainer** | Supabase Auth, dall'area `/trainer` | il proprio percorso |
+
+Il coach **non ammette e non respinge candidature**, non sospende accessi,
+non cancella dati e non vede la dashboard iscritti. Il confine e' applicato
+in tre punti, tutti che leggono la stessa `can()` di `lib/staff-roles.ts`:
+
+1. `proxy.ts` sui percorsi — `/admin`, `/admin/staff`, `/api/admin/staff` e
+   `/api/admin/subscribers` sono chiusi al coach, che viene rimandato a
+   `/admin/trainer`;
+2. le API route sulla singola azione — `approve`, `reject`, `suspend`,
+   `reactivate` e `delete_data` rispondono 403 anche se la rotta e' concessa,
+   perche' convivono con `review_exam` sullo stesso endpoint;
+3. l'interfaccia, che nasconde i pulsanti. Solo il terzo punto e' visibile,
+   e da solo non sarebbe un controllo di sicurezza.
+
+Il ruolo viaggia nel token di sessione (`role` nel payload firmato), cosi' il
+proxy decide senza interrogare il database a ogni richiesta.
+
+### Creare un coach
+
+`/admin/staff`, raggiungibile dal link «Staff» nella console Trainer Academy.
+Servono email, ruolo e una password provvisoria di almeno 12 caratteri con
+lettere e cifre. **La password non viene inviata via email**: la comunichi
+tu. Da li' si disattiva un account o se ne reimposta la password.
+
+Le password sono hash PBKDF2-SHA256 (210.000 iterazioni, salt per riga) nel
+formato `pbkdf2$<iterazioni>$<salt>$<hash>`: non inserire mai una password in
+chiaro direttamente in `trainer_staff`.
+
+L'admin delle variabili d'ambiente resta valido e non compare nell'elenco:
+e' l'unico accesso che funziona anche a tabella vuota, quindi e' l'unico modo
+di creare il primo account.
+
+### Chi sono io
+
+Ogni pagina della console mostra in alto a destra l'indirizzo collegato e il
+ruolo — Admin o Coach — con il pulsante di uscita. L'area trainer mostra la
+stessa riga con l'etichetta Trainer. Con due ruoli sulla stessa console,
+«manca un pulsante» e «sono entrato con l'account sbagliato» sarebbero
+altrimenti indistinguibili.
+
+## Come vanno i trainer
+
+La console apre su **«Come vanno i trainer»**: un riquadro per coorte, con il
+numero di persone e il filtro sulla tabella. Risponde alla domanda che il
+filtro per stato della candidatura non copre — quello dice chi devi ancora
+ammettere, non chi si e' fermato.
+
+| Coorte | Significato | Cosa fare |
+|---|---|---|
+| Esame da valutare | ha consegnato video e materiali | valutare |
+| Bloccato | tentativi esauriti su un modulo, non superato | concedere «+1 tentativo» |
+| Fermo da oltre 14 giorni | ammesso e avviato, nessun segno di vita | contattare |
+| Integrazioni richieste | il revisore ha rimandato la consegna | aspettare il candidato |
+| In corso | attivo negli ultimi 14 giorni | niente |
+| Mai iniziato | ammesso, non ha mai aperto un materiale ne' un quiz | avviare |
+| Qualificato | esame superato e certificato | niente |
+
+La precedenza fra i criteri e' fissata in `classify()` di
+`lib/trainer-cohort.ts` ed e' coperta da test: lo stato della candidatura
+vince su tutto (un sospeso inattivo da mesi resta «sospeso», non «fermo»),
+poi l'esito dell'esame, poi il blocco sui tentativi, poi l'attivita'.
+
+«Ultima attivita'» e' il piu' recente fra l'ultima consegna di un quiz e
+l'ultima apertura di un materiale: un trainer che sta studiando senza aver
+ancora consegnato nulla risulta attivo, non fermo.
+
+## Valutare l'esame finale
+
+Il dossier del candidato mostra la consegna per intero: punteggio della parte
+chiusa, link al video, note del candidato e allegati con link firmati validi
+10 minuti. Sotto, quattro esiti:
+
+- **Certifica trainer** (`qualified`) — qualifica ottenuta, parte l'email.
+- **Chiedi integrazioni** (`needs_work`) — l'unico esito che restituisce la
+  palla al candidato: la consegna torna modificabile, lui ricarica video e
+  materiali senza rifare le domande, e la coorte diventa «Integrazioni
+  richieste». **La nota del revisore e' obbligatoria** — API e interfaccia la
+  pretendono entrambe: un'email che dice «rifai qualcosa» senza dire cosa
+  lascia il candidato fermo esattamente come una bocciatura.
+- **Respingi** (`rejected`) — esito definitivo, parte l'email. Dopo un
+  respingimento il candidato non puo' riconsegnare da solo: riaprire e' una
+  decisione del revisore, che riporta la consegna a `needs_work`.
+- **Prendi in carico** (`under_review`) — marcatore interno, nessuna email:
+  al candidato non cambia niente.
+
+La nota scritta in fondo al dossier e' quella che finisce nell'email.
+
 ## Operazioni ricorrenti dell'admin
 
 Si arriva da `/admin` (link «Trainer Academy →» nella barra in alto) oppure
-direttamente a `/admin/trainer`. La console mostra i contatori, il filtro per
+direttamente a `/admin/trainer`, che e' anche la home di un coach. La console mostra i contatori, il filtro per
 stato, la tabella con l'avanzamento moduli di ciascun candidato e, aprendo un
 dossier, CV, motivazione, storico dei tentativi quiz e consegna d'esame.
 
@@ -221,8 +367,8 @@ Azioni disponibili:
 - **Sospendere** un accesso già concesso.
 - **Concedere un tentativo extra** su un modulo bloccato (pulsante «+1
   tentativo» sulla riga del modulo). I grant sono cumulativi.
-- **Valutare l'esame**: qualifica, respingi o segna in revisione. Video e
-  allegati si aprono con link firmati validi 10 minuti.
+- **Valutare l'esame**: certifica, chiedi integrazioni o respingi — vedi
+  «Valutare l'esame finale» qui sopra.
 
 ## Limiti noti e scelte da rivedere
 
@@ -232,11 +378,17 @@ Azioni disponibili:
   passare a `email_confirm: false` e gestire la conferma.
 - **Certificato di qualifica**: non implementato. Lo stato `qualified` è a
   database e in pagina, ma non esiste un PDF verificabile.
-- **Editor dei quiz**: le domande si gestiscono in SQL. Un'interfaccia admin
-  di authoring è il naturale passo successivo.
+- **Password dello staff**: non c'è recupero via email. Un coach che perde la
+  password se la fa reimpostare da un admin in `/admin/staff`.
+- **Notifiche al coach**: l'avviso di nuova candidatura va al solo
+  `ADMIN_EMAIL`. Una consegna d'esame non avvisa nessuno: il coach la trova
+  aprendo la console, nel riquadro «Esame da valutare».
+- **Editor dei quiz**: le domande si gestiscono in SQL. L'anteprima in
+  `/admin/trainer/quiz` permette di provarle, non di modificarle:
+  un'interfaccia di authoring è il naturale passo successivo.
 - **Limite di tempo sui quiz**: la colonna `time_limit_minutes` esiste ed è
-  applicata dalle API (con 60 secondi di tolleranza), ma i seed la lasciano
-  nulla: nessun quiz è a tempo finché non si popola.
+  applicata dalle API (con 60 secondi di tolleranza). I seed ora la popolano:
+  20 minuti sui quiz di modulo, 90 sull'esame.
 - **Lingua**: l'area trainer è solo in italiano, fuori dal `LanguageContext`
   del resto del sito.
 

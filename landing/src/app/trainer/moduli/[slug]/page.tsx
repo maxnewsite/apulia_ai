@@ -54,7 +54,8 @@ export default async function ModulePage({ params }: { params: Promise<{ slug: s
 
       {resources.length === 0 ? (
         <p className="text-sm text-[#475569] bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-6">
-          I materiali di questo modulo non sono ancora stati caricati.
+          Slide e video di questo modulo sono in preparazione: li trovi qui appena pubblicati. Il
+          quiz qui sotto è già attivo.
         </p>
       ) : (
         <ul className="space-y-3">
