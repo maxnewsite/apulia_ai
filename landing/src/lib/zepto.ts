@@ -116,3 +116,36 @@ export function confirmationEmailHtml(
 </div>`,
   }
 }
+
+export function loginLinkEmailHtml(
+  lang: 'it' | 'en',
+  loginUrl: string,
+  ttlMinutes: number,
+): { subject: string; html: string } {
+  if (lang === 'en') {
+    return {
+      subject: 'Your access link to the apulia.ai archive',
+      html: `<div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #0a1628; line-height: 1.65;">
+  <h2 style="color: #0F172A; margin: 0 0 16px;">Access the archive</h2>
+  <p>Here is your personal link to read every past edition of <strong>AI Europa Weekly</strong>.</p>
+  <p style="margin: 28px 0;">
+    <a href="${loginUrl}" style="background: #2563EB; color: #fff; padding: 12px 22px; border-radius: 999px; text-decoration: none; font-weight: 600; display: inline-block;">Open the archive</a>
+  </p>
+  <p style="color: #64748b; font-size: 13px;">The link works once and expires in ${ttlMinutes} minutes. If the button doesn't work, copy and paste this address:<br><a href="${loginUrl}" style="color: #1e40af; word-break: break-all;">${loginUrl}</a></p>
+  <p style="color: #94a3b8; font-size: 12px; margin-top: 32px;">If you didn't request this, you can safely ignore this email.</p>
+</div>`,
+    }
+  }
+  return {
+    subject: 'Il tuo link di accesso all’archivio apulia.ai',
+    html: `<div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #0a1628; line-height: 1.65;">
+  <h2 style="color: #0F172A; margin: 0 0 16px;">Accedi all&rsquo;archivio</h2>
+  <p>Ecco il tuo link personale per leggere tutte le edizioni precedenti di <strong>AI Europa Weekly</strong>.</p>
+  <p style="margin: 28px 0;">
+    <a href="${loginUrl}" style="background: #2563EB; color: #fff; padding: 12px 22px; border-radius: 999px; text-decoration: none; font-weight: 600; display: inline-block;">Apri l&rsquo;archivio</a>
+  </p>
+  <p style="color: #64748b; font-size: 13px;">Il link è valido una sola volta e scade tra ${ttlMinutes} minuti. Se il pulsante non funziona, copia e incolla questo indirizzo:<br><a href="${loginUrl}" style="color: #1e40af; word-break: break-all;">${loginUrl}</a></p>
+  <p style="color: #94a3b8; font-size: 12px; margin-top: 32px;">Se non hai richiesto tu l&rsquo;accesso, puoi ignorare questa email.</p>
+</div>`,
+  }
+}

@@ -4,26 +4,23 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getAllIssues, getIssueBySlug } from '@/lib/newsletter-issues'
+import { getReaderSession } from '@/lib/reader-session'
+import { canReadIssue } from '@/lib/reader-gate'
 import {
   extractBodyContent,
   extractDescription,
+  extractTopBullets,
   formatItalianDate,
   parseSlugDate,
 } from '@/lib/newsletter-html'
 import '../newsletter.css'
 
-// Revalidate every hour — new editions ship Sunday afternoon
-export const revalidate = 3600
-export const dynamicParams = true
+// Reso a ogni richiesta: il contenuto mostrato dipende dal cookie di
+// sessione dell'iscritto, quindi non può essere una pagina statica condivisa
+// fra chi ha accesso all'archivio e chi no.
+export const dynamic = 'force-dynamic'
 
 type Params = Promise<{ slug: string }>
-
-export async function generateStaticParams() {
-  const issues = await getAllIssues('weekly')
-  return issues.map((i) => ({
-    slug: i.slug.replace(/^weekly-/, ''),
-  }))
-}
 
 export async function generateMetadata(
   { params }: { params: Params }
@@ -87,11 +84,20 @@ export default async function EditionPage({ params }: { params: Params }) {
 
   if (!issue) notFound()
 
-  const body = extractBodyContent(issue.html_content)
   const description =
     extractDescription(issue.html_content) || issue.dek || ''
   const issueDate = parseSlugDate(issue.slug) || issue.published_at.slice(0, 10)
   const url = `https://apulia.ai/weekly/${slug}`
+
+  // L'ultima edizione è pubblica; le precedenti sono il motivo per cui vale
+  // la pena iscriversi, quindi si aprono solo con una sessione da iscritto.
+  const issues = await getAllIssues('weekly')
+  const latestSlug = issues[0]?.slug ?? null
+  const session = await getReaderSession()
+  const unlocked = canReadIssue(issue.slug, latestSlug, session !== null)
+
+  const body = unlocked ? extractBodyContent(issue.html_content) : ''
+  const teaser = unlocked ? [] : extractTopBullets(issue.html_content, 3)
 
   // NewsArticle JSON-LD — what Google News and AI search use to rank
   // editorial content. References the global Organization + Periodical
@@ -106,7 +112,16 @@ export default async function EditionPage({ params }: { params: Params }) {
     datePublished: issue.published_at,
     dateModified: issue.published_at,
     inLanguage: 'it-IT',
-    isAccessibleForFree: true,
+    isAccessibleForFree: unlocked,
+    // Segnala a Google quale parte della pagina è dietro accesso: senza
+    // questo, mostrare ai crawler meno testo che ai lettori è cloaking.
+    hasPart: unlocked
+      ? undefined
+      : {
+          '@type': 'WebPageElement',
+          isAccessibleForFree: false,
+          cssSelector: '.newsletter-body',
+        },
     isPartOf: { '@id': 'https://apulia.ai/#weekly' },
     publisher: { '@id': 'https://apulia.ai/#organization' },
     author: { '@id': 'https://apulia.ai/#organization' },
@@ -252,10 +267,14 @@ export default async function EditionPage({ params }: { params: Params }) {
           <meta itemProp="datePublished" content={issue.published_at} />
           <meta itemProp="headline" content={issue.title} />
           <meta itemProp="inLanguage" content="it-IT" />
-          <div
-            className="newsletter-body"
-            dangerouslySetInnerHTML={{ __html: body }}
-          />
+          {unlocked ? (
+            <div
+              className="newsletter-body"
+              dangerouslySetInnerHTML={{ __html: body }}
+            />
+          ) : (
+            <LockedIssue teaser={teaser} slug={slug} />
+          )}
         </article>
 
         <aside className="mt-16 p-8 md:p-10 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl text-center">
@@ -301,5 +320,73 @@ export default async function EditionPage({ params }: { params: Params }) {
 
       <Footer />
     </>
+  )
+}
+
+/**
+ * Edizione di archivio senza sessione: si mostrano i primi punti e si chiede
+ * l'accesso. Il titolo e l'occhiello restano visibili sopra — la pagina deve
+ * dire di cosa parla anche a chi non è iscritto.
+ */
+function LockedIssue({ teaser, slug }: { teaser: string[]; slug: string }) {
+  return (
+    <div className="newsletter-locked">
+      {teaser.length > 0 && (
+        <ul className="space-y-4 mb-10">
+          {teaser.map((text, i) => (
+            <li key={i} className="flex gap-4 text-[#0F172A] leading-relaxed">
+              <span
+                className="font-mono text-2xl font-black text-[#2563EB]/40 leading-none flex-shrink-0"
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span>{text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-8 md:p-10 text-center">
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          className="mx-auto mb-4 text-[#2563EB]"
+        >
+          <path
+            d="M7 10V7a5 5 0 0110 0v3m-11 0h12a1 1 0 011 1v9a1 1 0 01-1 1H6a1 1 0 01-1-1v-9a1 1 0 011-1z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <h2 className="text-2xl md:text-3xl font-black text-[#0F172A] mb-3">
+          Il resto dell&apos;edizione è riservato agli iscritti
+        </h2>
+        <p className="text-[#475569] max-w-xl mx-auto mb-7 leading-relaxed">
+          L&apos;archivio completo di AI Europa Weekly è accessibile a chi
+          riceve la newsletter. L&apos;iscrizione è gratuita e l&apos;accesso
+          avviene con un link inviato via email: nessuna password.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href={`/accedi?next=${encodeURIComponent(`/weekly/${slug}`)}`}
+            className="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#2563EB] text-white font-semibold hover:bg-[#1d4ed8] transition-colors shadow-md shadow-[#2563EB]/25"
+          >
+            Accedi
+          </Link>
+          <Link
+            href="/#subscribe"
+            className="inline-flex items-center justify-center px-7 py-3 rounded-full border border-[#E2E8F0] text-[#0F172A] font-semibold hover:border-[#2563EB] hover:text-[#2563EB] transition-colors"
+          >
+            Iscriviti gratis
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -175,6 +175,30 @@ Sundays at 15:00 Europe/Rome. The scheduler service account needs
 
 ---
 
+## 5b. Subscriber login (newsletter archive)
+
+Readers sign in with a one-time link emailed to the address they subscribed
+with — no passwords. Two prerequisites:
+
+```bash
+# 1. Apply the schema (Supabase SQL editor, project amkixorrowqbgohzopvi)
+#    supabase/schema_reader_auth.sql
+#    Creates subscriber_login_tokens + consume_subscriber_login_token().
+#    Requires schema.sql and schema_trainer_security.sql (rate limiting) first.
+
+# 2. Optional: a dedicated signing secret for reader cookies.
+#    Falls back to ADMIN_JWT_SECRET when unset, so the deploy works as is.
+gcloud run services update apulia-landing --region europe-west1   --set-secrets READER_JWT_SECRET=reader-jwt-secret:latest
+```
+
+Login emails go out through the same Zepto sender as the confirmation email
+(`ZEPTO_FROM_EMAIL_CONFIRM`), so no extra mail configuration is needed.
+
+Access rule: the most recent edition stays public (and indexable); every
+earlier edition requires a reader session. Locked pages declare
+`isAccessibleForFree: false` plus a `hasPart` selector so Google treats them
+as gated content rather than cloaking.
+
 ## 6. Local development checklist
 
 ```bash

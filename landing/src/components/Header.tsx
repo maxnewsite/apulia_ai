@@ -31,11 +31,27 @@ export default function Header() {
   const { t, language, setLanguage } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  // null finché non sappiamo: l'header si renderizza da subito con il
+  // pulsante di login e si aggiorna quando la sessione è nota.
+  const [readerEmail, setReaderEmail] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    let alive = true
+    fetch('/api/reader/me')
+      .then(r => (r.ok ? r.json() : { email: null }))
+      .then((d: { email: string | null }) => {
+        if (alive) setReaderEmail(d.email)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
   }, [])
 
   function toggleLanguage() {
@@ -106,13 +122,25 @@ export default function Header() {
               )}
             </button>
 
-            {/* CTA - desktop only */}
-            <a
-              href="#subscribe"
-              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-colors shadow-md shadow-[#2563EB]/20"
-            >
-              {t.hero.cta}
-            </a>
+            {/* CTA - desktop only. Con sessione attiva diventa l'uscita. */}
+            {readerEmail ? (
+              <form action="/api/reader/esci" method="post" className="hidden sm:block">
+                <button
+                  type="submit"
+                  title={readerEmail}
+                  className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full border border-[#E2E8F0] text-[#0F172A] hover:border-[#2563EB] hover:text-[#2563EB] transition-colors"
+                >
+                  {language === 'it' ? 'Esci' : 'Log out'}
+                </button>
+              </form>
+            ) : (
+              <a
+                href="/accedi"
+                className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-colors shadow-md shadow-[#2563EB]/20"
+              >
+                Login
+              </a>
+            )}
 
             {/* Mobile menu toggle */}
             <button
@@ -161,13 +189,24 @@ export default function Header() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#subscribe"
-                onClick={() => setMenuOpen(false)}
-                className="mt-2 mx-4 flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-colors"
-              >
-                {t.hero.cta}
-              </a>
+              {readerEmail ? (
+                <form action="/api/reader/esci" method="post" className="mt-2 mx-4">
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-full border border-[#E2E8F0] text-[#0F172A] hover:border-[#2563EB] hover:text-[#2563EB] transition-colors"
+                  >
+                    {language === 'it' ? 'Esci' : 'Log out'}
+                  </button>
+                </form>
+              ) : (
+                <a
+                  href="/accedi"
+                  onClick={() => setMenuOpen(false)}
+                  className="mt-2 mx-4 flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-full bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-colors"
+                >
+                  Login
+                </a>
+              )}
             </div>
           </nav>
         )}

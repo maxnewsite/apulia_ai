@@ -3,13 +3,17 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getAllIssues } from '@/lib/newsletter-issues'
+import { getReaderSession } from '@/lib/reader-session'
+import { canReadIssue } from '@/lib/reader-gate'
 import {
   formatItalianDate,
   parseSlugDate,
   stripSlugPrefix,
 } from '@/lib/newsletter-html'
 
-export const revalidate = 3600
+// L'elenco è pubblico, ma il lucchetto sulle singole edizioni dipende dalla
+// sessione: niente pagina statica condivisa fra iscritti e non iscritti.
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Archivio AI Europa Weekly — Tutte le edizioni',
@@ -29,6 +33,11 @@ export const metadata: Metadata = {
 
 export default async function WeeklyArchivePage() {
   const issues = await getAllIssues('weekly')
+  const latestSlug = issues[0]?.slug ?? null
+  const session = await getReaderSession()
+  const lockedCount = session
+    ? 0
+    : issues.filter(i => !canReadIssue(i.slug, latestSlug, false)).length
 
   const collectionSchema = {
     '@context': 'https://schema.org',
@@ -116,6 +125,25 @@ export default async function WeeklyArchivePage() {
           </p>
         </header>
 
+        {lockedCount > 0 && (
+          <div className="mb-10 flex flex-col sm:flex-row sm:items-center gap-4 justify-between rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] px-6 py-5">
+            <p className="text-sm text-[#475569] leading-relaxed">
+              L&apos;ultima edizione è aperta a tutti.{' '}
+              <strong className="text-[#0F172A] font-semibold">
+                Le altre {lockedCount}
+              </strong>{' '}
+              sono riservate agli iscritti: accedi con la tua email, senza
+              password.
+            </p>
+            <Link
+              href="/accedi?next=%2Fweekly"
+              className="shrink-0 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#2563EB] text-white text-sm font-semibold hover:bg-[#1d4ed8] transition-colors"
+            >
+              Accedi
+            </Link>
+          </div>
+        )}
+
         {issues.length === 0 ? (
           <div className="text-center py-16 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl">
             <p className="text-[#475569] mb-6">
@@ -133,6 +161,7 @@ export default async function WeeklyArchivePage() {
             {issues.map((issue) => {
               const urlSlug = stripSlugPrefix(issue.slug)
               const date = parseSlugDate(issue.slug)
+              const locked = !canReadIssue(issue.slug, latestSlug, session !== null)
               return (
                 <li key={issue.id}>
                   <Link
@@ -140,7 +169,26 @@ export default async function WeeklyArchivePage() {
                     className="block p-6 md:p-7 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl hover:border-[#2563EB] transition-colors group"
                   >
                     <div className="flex items-baseline justify-between gap-4 mb-2 flex-wrap">
-                      <span className="text-xs uppercase tracking-wider text-[#475569] font-semibold">
+                      <span className="text-xs uppercase tracking-wider text-[#475569] font-semibold inline-flex items-center gap-2">
+                        {locked && (
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-label="Riservata agli iscritti"
+                            role="img"
+                            className="text-[#94A3B8]"
+                          >
+                            <path
+                              d="M7 10V7a5 5 0 0110 0v3m-11 0h12a1 1 0 011 1v9a1 1 0 01-1 1H6a1 1 0 01-1-1v-9a1 1 0 011-1z"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        )}
                         Edizione #{issue.issue_number}
                         {date && (
                           <>
@@ -163,7 +211,7 @@ export default async function WeeklyArchivePage() {
                       </p>
                     )}
                     <div className="mt-4 text-sm text-[#2563EB] font-semibold inline-flex items-center gap-1">
-                      Leggi l&apos;edizione
+                      {locked ? 'Accedi per leggerla' : "Leggi l'edizione"}
                       <svg
                         width="14"
                         height="14"
