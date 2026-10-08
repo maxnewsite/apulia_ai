@@ -23,7 +23,7 @@ from anthropic import Anthropic
 from .sources import Article
 
 
-HAIKU = "claude-haiku-4-5-20251001"
+HAIKU = "claude-haiku-5-5"
 SONNET = "claude-sonnet-4-6"
 
 
