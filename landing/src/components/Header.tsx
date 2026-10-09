@@ -65,6 +65,7 @@ export default function Header() {
     { label: language === 'it' ? 'Come funziona' : 'How it works', href: '/#come-funziona' },
     { label: language === 'it' ? 'Ultima edizione' : 'Latest issue',  href: '/#preview' },
     { label: 'Archivio',                                              href: '/weekly' },
+    { label: language === 'it' ? 'Temi' : 'Topics',                  href: '/temi' },
     { label: t.nav.analysis,                                          href: '/#products' },
     { label: 'FAQ',                                                   href: '/#faq' },
     { label: t.nav.about,                                             href: '/chi-siamo' },
