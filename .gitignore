@@ -31,3 +31,6 @@ pipeline/output/monthly-*.pdf
 # Claude Code local settings
 .claude/settings.local.json
 .gstack/
+
+# Report locali del monitoraggio SEO settimanale
+claudedocs/seo-monitor/
