@@ -32,13 +32,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'apulia.ai', url: 'https://apulia.ai' }],
   creator: 'apulia.ai',
   publisher: 'apulia.ai',
-  alternates: {
-    canonical: 'https://apulia.ai',
-    languages: {
-      'it-IT': 'https://apulia.ai',
-      'en-GB': 'https://apulia.ai',
-    },
-  },
   openGraph: {
     title: 'apulia.ai — Newsletter Intelligenza Artificiale Italia e Europa',
     description:
@@ -97,7 +90,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-548VL75B2C');`,
           }}
         />
-        <link rel="canonical" href="https://apulia.ai" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="AI Europa Weekly"
+          href="https://apulia.ai/weekly/feed.xml"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

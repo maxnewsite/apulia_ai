@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ChiSiamoContent from '../ChiSiamoContent'
+import { FOUNDER, founderRef } from '@/lib/seo-entities'
 
 export const metadata: Metadata = {
   title: 'Massimiliano Masi — Founder | apulia.ai',
@@ -9,10 +10,6 @@ export const metadata: Metadata = {
     "Massimiliano Masi, fondatore di apulia.ai. Ex Partner di Boston Consulting Group con 25 anni di esperienza in strategia, finanza e leadership. Advisor C-Level e coach certificato iPEC.",
   alternates: {
     canonical: 'https://apulia.ai/chi-siamo/massimiliano-masi',
-    languages: {
-      'it-IT': 'https://apulia.ai/chi-siamo/massimiliano-masi',
-      'en-GB': 'https://apulia.ai/chi-siamo/massimiliano-masi',
-    },
   },
   openGraph: {
     title: 'Massimiliano Masi — Founder | apulia.ai',
@@ -25,10 +22,8 @@ export const metadata: Metadata = {
 
 const personSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  '@id': 'https://apulia.ai/#massimiliano-masi',
-  name: 'Massimiliano Masi',
-  jobTitle: 'Founder, apulia.ai',
+  ...founderRef,
+  mainEntityOfPage: FOUNDER.url,
   birthPlace: {
     '@type': 'City',
     name: 'Bari',
@@ -36,12 +31,7 @@ const personSchema = {
   },
   description:
     'Ex Partner di Boston Consulting Group, advisor C-Level e coach certificato con 25 anni di esperienza in strategia, finanza e leadership nel settore energia e utilities.',
-  url: 'https://spiridione.com',
-  sameAs: [
-    'https://spiridione.com',
-    'https://www.linkedin.com/in/massimiliano-masi-4265ab',
-  ],
-  worksFor: { '@id': 'https://apulia.ai/#organization' },
+  sameAs: [FOUNDER.linkedin, 'https://spiridione.com'],
   alumniOf: [
     { '@type': 'Organization', name: 'Boston Consulting Group' },
     { '@type': 'Organization', name: 'National University of Singapore, NUS Business School' },

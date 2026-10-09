@@ -45,7 +45,7 @@ const TEAM: TeamMember[] = [
     lastName: 'Masi',
     title: 'Founder',
     company: 'apulia.ai',
-    photo: 'https://spiridione.com/images/image1.jpeg',
+    photo: '/team/massimiliano_masi.jpeg',
     linkedIn: 'https://www.linkedin.com/in/massimiliano-masi-4265ab',
     isFounder: true,
     founderHref: '/chi-siamo/massimiliano-masi',

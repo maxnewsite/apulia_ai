@@ -148,6 +148,9 @@ def main() -> int:
             except Exception as e:
                 print(f"[publish] FALLITO: {e}")
                 exit_code = 1
+            if published_issue is not None:
+                from src.indexnow import notify_new_issue
+                notify_new_issue(nl.issue_date)
 
     # 5. Persisti dedup — solo dopo publish riuscito (o run locale senza publish),
     #    mai in --dry-run/--no-publish: un publish fallito o un test non deve
@@ -234,6 +237,9 @@ def _run_from_existing(args) -> int:
     except Exception as e:
         print(f"[publish] FALLITO: {e}", file=sys.stderr)
         return 1
+
+    from src.indexnow import notify_new_issue
+    notify_new_issue(nl.issue_date)
 
     if args.no_deliver:
         print("[from-existing] --no-deliver: salto consegna")

@@ -10,6 +10,8 @@
 **Nome**: apulia.ai
 **Tipo**: Newsletter editoriale indipendente
 **Lingua primaria**: Italiano (con sezione executive summary in inglese nella weekly)
+**Fondatore**: Massimiliano Masi, Founder (ex Partner di Boston Consulting Group) — https://apulia.ai/chi-siamo/massimiliano-masi
+**Autore delle edizioni**: Massimiliano Masi
 **Pubblico**: Professionisti, manager, imprenditori, policy maker e ricercatori italiani ed europei
 **Missione**: Rendere accessibile e azionabile l'informazione sull'AI europea — senza hype, con segnale.
 
@@ -151,9 +153,10 @@ apulia.ai tratta i dati personali (email, preferenze lingua) esclusivamente per 
 - Sito: https://apulia.ai
 - Email newsletter: newsletter@apulia.ai
 - Email privacy: privacy@apulia.ai
-- Twitter/X: @apuliaai
 - LinkedIn: linkedin.com/company/apulia-ai
+- Archivio edizioni: https://apulia.ai/weekly
+- Feed RSS: https://apulia.ai/weekly/feed.xml
 
 ---
 
-*Ultimo aggiornamento: maggio 2026*
+*Ultimo aggiornamento: ottobre 2026*

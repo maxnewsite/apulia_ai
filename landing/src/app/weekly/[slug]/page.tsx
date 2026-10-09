@@ -13,6 +13,7 @@ import {
   formatItalianDate,
   parseSlugDate,
 } from '@/lib/newsletter-html'
+import { FOUNDER, founderRef } from '@/lib/seo-entities'
 import '../newsletter.css'
 
 // Reso a ogni richiesta: il contenuto mostrato dipende dal cookie di
@@ -43,6 +44,7 @@ export async function generateMetadata(
   return {
     title: issue.title,
     description,
+    authors: [{ name: FOUNDER.name, url: FOUNDER.url }],
     alternates: {
       canonical: url,
     },
@@ -52,7 +54,7 @@ export async function generateMetadata(
       type: 'article',
       url,
       publishedTime: issue.published_at,
-      authors: ['apulia.ai'],
+      authors: [FOUNDER.url],
       tags: [
         'intelligenza artificiale',
         'EU AI Act',
@@ -124,7 +126,9 @@ export default async function EditionPage({ params }: { params: Params }) {
         },
     isPartOf: { '@id': 'https://apulia.ai/#weekly' },
     publisher: { '@id': 'https://apulia.ai/#organization' },
-    author: { '@id': 'https://apulia.ai/#organization' },
+    // Autore = persona reale: per Google (E-E-A-T) e per gli LLM un contenuto
+    // firmato da qualcuno con una pagina profilo pesa più di uno anonimo.
+    author: founderRef,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
@@ -230,6 +234,17 @@ export default async function EditionPage({ params }: { params: Params }) {
               {issue.dek}
             </p>
           )}
+          <p className="mt-5 text-sm text-[#475569]">
+            di{' '}
+            <Link
+              href={FOUNDER.url}
+              rel="author"
+              className="font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
+            >
+              {FOUNDER.name}
+            </Link>
+            , {FOUNDER.jobTitle}
+          </p>
           {issue.pdf_url && (
             <div className="mt-6">
               <a

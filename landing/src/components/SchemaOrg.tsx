@@ -2,6 +2,8 @@
 // editorial publishers. Carries E-E-A-T signals (publishing principles,
 // ethics policy, corrections policy) plus a citation graph of monitored
 // sources for borrowed authority.
+import { founderRef } from '@/lib/seo-entities'
+
 const newsOrganizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'NewsMediaOrganization',
@@ -19,6 +21,7 @@ const newsOrganizationSchema = {
   description:
     "Newsletter editoriale italiana indipendente specializzata in intelligenza artificiale europea. Pubblica AI Europa Weekly (settimanale, gratuita) e Briefing Strategico Mensile (premium).",
   foundingDate: '2026',
+  founder: founderRef,
   foundingLocation: {
     '@type': 'Place',
     address: {
@@ -44,10 +47,9 @@ const newsOrganizationSchema = {
   correctionsPolicy: 'https://apulia.ai/privacy',
   diversityPolicy: 'https://apulia.ai/privacy',
   masthead: 'https://apulia.ai/',
-  sameAs: [
-    'https://twitter.com/apuliaai',
-    'https://www.linkedin.com/company/apulia-ai',
-  ],
+  // Il profilo X va aggiunto qui quando esiste davvero: un sameAs che dà 404
+  // indebolisce l'entità invece di rafforzarla (vedi claudedocs/seo-roadmap.md).
+  sameAs: ['https://www.linkedin.com/company/apulia-ai'],
   contactPoint: {
     '@type': 'ContactPoint',
     email: 'newsletter@apulia.ai',
@@ -126,17 +128,11 @@ const websiteSchema = {
   url: 'https://apulia.ai',
   inLanguage: ['it-IT', 'en-GB'],
   publisher: { '@id': 'https://apulia.ai/#organization' },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://apulia.ai/?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
 }
 
-const faqSchema = {
+// Solo in home: lo schema FAQ deve corrispondere a domande visibili nella
+// pagina, e le FAQ sono renderizzate solo lì.
+export const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   '@id': 'https://apulia.ai/#faq',
@@ -243,10 +239,6 @@ export default function SchemaOrg() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
     </>
   )

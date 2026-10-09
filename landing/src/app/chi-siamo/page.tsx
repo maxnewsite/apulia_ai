@@ -9,10 +9,6 @@ export const metadata: Metadata = {
     "Il team di apulia.ai: le persone che guidano la newsletter indipendente sull'intelligenza artificiale europea per chi decide.",
   alternates: {
     canonical: 'https://apulia.ai/chi-siamo',
-    languages: {
-      'it-IT': 'https://apulia.ai/chi-siamo',
-      'en-GB': 'https://apulia.ai/chi-siamo',
-    },
   },
   openGraph: {
     title: 'Chi siamo — Il team | apulia.ai',

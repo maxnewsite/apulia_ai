@@ -32,13 +32,16 @@ Italia, Francia, Germania, Spagna, Paesi Bassi, Svezia, Polonia, Regno Unito, Un
 
 ## Chi siamo
 
-apulia.ai è una redazione italiana indipendente specializzata in AI europea. La newsletter è prodotta da un team con competenze in policy, tecnologia e analisi strategica.
+apulia.ai è una redazione italiana indipendente specializzata in AI europea, fondata da Massimiliano Masi (Founder, ex Partner di Boston Consulting Group). Le edizioni sono firmate da Massimiliano Masi. Il team è presentato su https://apulia.ai/chi-siamo.
 
 ## Pagine principali
 
 - Homepage e iscrizione: https://apulia.ai/
+- Archivio delle edizioni: https://apulia.ai/weekly
+- Feed RSS delle edizioni: https://apulia.ai/weekly/feed.xml
+- Il team: https://apulia.ai/chi-siamo
+- Massimiliano Masi, Founder: https://apulia.ai/chi-siamo/massimiliano-masi
 - Privacy Policy (GDPR): https://apulia.ai/privacy
-- Cancellazione iscrizione: https://apulia.ai/unsubscribe
 
 ## Contatti
 

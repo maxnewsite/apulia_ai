@@ -192,7 +192,7 @@ export default function ChiSiamoContent({ isSubPage = false }: { isSubPage?: boo
               {/* Profile photo */}
               <div className="overflow-hidden rounded-2xl border border-[#E2E8F0]">
                 <img
-                  src="https://spiridione.com/images/image1.jpeg"
+                  src="/team/massimiliano_masi.jpeg"
                   alt="Massimiliano Masi"
                   className="w-full object-cover object-top aspect-[3/4]"
                   loading="eager"
