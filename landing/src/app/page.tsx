@@ -11,6 +11,10 @@ import SubscribeForm from '@/components/SubscribeForm'
 import SisterPublication from '@/components/SisterPublication'
 import Footer from '@/components/Footer'
 
+// LatestIssue legge l'ultima edizione da Supabase: senza revalidate la home
+// viene prerenderizzata al build e resta ferma all'edizione di quel momento.
+export const revalidate = 300
+
 export default function HomePage() {
   return (
     <>
