@@ -8,12 +8,13 @@ import { getReaderSession } from '@/lib/reader-session'
 import { canReadIssue } from '@/lib/reader-gate'
 import {
   extractBodyContent,
-  extractDescription,
+  issueDescription,
   extractTopBullets,
   formatItalianDate,
   parseSlugDate,
 } from '@/lib/newsletter-html'
 import { FOUNDER, founderRef } from '@/lib/seo-entities'
+import { topicsInIssue } from '@/lib/topics'
 import '../newsletter.css'
 
 // Reso a ogni richiesta: il contenuto mostrato dipende dal cookie di
@@ -38,7 +39,7 @@ export async function generateMetadata(
   }
 
   const description =
-    extractDescription(issue.html_content) || issue.dek || ''
+    issueDescription(issue)
   const url = `https://apulia.ai/weekly/${slug}`
 
   return {
@@ -87,7 +88,7 @@ export default async function EditionPage({ params }: { params: Params }) {
   if (!issue) notFound()
 
   const description =
-    extractDescription(issue.html_content) || issue.dek || ''
+    issueDescription(issue)
   const issueDate = parseSlugDate(issue.slug) || issue.published_at.slice(0, 10)
   const url = `https://apulia.ai/weekly/${slug}`
 
@@ -100,6 +101,7 @@ export default async function EditionPage({ params }: { params: Params }) {
 
   const body = unlocked ? extractBodyContent(issue.html_content) : ''
   const teaser = unlocked ? [] : extractTopBullets(issue.html_content, 3)
+  const issueTopics = topicsInIssue(issue.html_content)
 
   // NewsArticle JSON-LD — what Google News and AI search use to rank
   // editorial content. References the global Organization + Periodical
@@ -291,6 +293,26 @@ export default async function EditionPage({ params }: { params: Params }) {
             <LockedIssue teaser={teaser} slug={slug} />
           )}
         </article>
+
+        {issueTopics.length > 0 && (
+          <nav aria-label="Temi di questa edizione" className="mt-12">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-[#475569] mb-4">
+              Approfondisci per tema
+            </h2>
+            <ul className="flex flex-wrap gap-3">
+              {issueTopics.map((t) => (
+                <li key={t.slug}>
+                  <Link
+                    href={`/temi/${t.slug}`}
+                    className="inline-block px-4 py-2 rounded-full border border-[#E2E8F0] text-sm font-semibold text-[#0F172A] hover:border-[#2563EB] hover:text-[#2563EB] transition-colors"
+                  >
+                    {t.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <aside className="mt-16 p-8 md:p-10 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl text-center">
           <h2 className="text-2xl md:text-3xl font-black mb-3 text-[#0F172A]">

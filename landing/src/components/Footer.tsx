@@ -61,6 +61,8 @@ export default function Footer() {
               {[
                 { label: f.links.newsletter, href: '#subscribe' },
                 { label: f.links.analysis, href: '#products' },
+                { label: language === 'en' ? 'Archive' : 'Archivio edizioni', href: '/weekly' },
+                { label: language === 'en' ? 'Topics' : 'Notizie per tema', href: '/temi' },
                 { label: f.links.about, href: '/chi-siamo' },
                 // Area riservata: raggiungibile dall'header, ma chi scorre
                 // fino in fondo non deve tornare su per trovarla.

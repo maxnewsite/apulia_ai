@@ -32,6 +32,21 @@ export function extractDescription(fullHtml: string, max = 160): string {
   return text.slice(0, max).trim() + '…'
 }
 
+// Sottotitolo fisso delle edizioni pubblicate prima delle description SEO:
+// uguale per tutte, quindi inutile come meta description.
+const LEGACY_DEK = "Intelligence strategica sull'AI in Europa e Italia"
+
+// Meta description di un'edizione: il sottotitolo scritto dalla pipeline
+// (riassume le notizie principali), altrimenti la prima notizia dell'HTML.
+export function issueDescription(issue: {
+  dek: string | null
+  html_content: string
+}): string {
+  const dek = issue.dek?.trim()
+  if (dek && dek !== LEGACY_DEK) return dek
+  return extractDescription(issue.html_content) || dek || ''
+}
+
 // Pull the first N bullet items from the issue HTML — used by the homepage
 // "latest issue" teaser to show real content instead of a mockup.
 export function extractTopBullets(fullHtml: string, count = 4): string[] {

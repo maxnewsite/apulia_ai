@@ -511,3 +511,98 @@ def write_spotlight(articles: list[Article]) -> dict:
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] spotlight fallito: {e}")
         return {"title_it": "Spotlight non disponibile", "title_en": "Spotlight unavailable", "bullets": []}
+
+
+# --------------------------------------------------------------------------
+# Titolo e description SEO dell'edizione
+# --------------------------------------------------------------------------
+
+SEO_HEADLINE_MAX = 70
+SEO_DESCRIPTION_MAX = 160
+
+SEO_META_SYSTEM = """Scrivi il titolo e la meta description di un'edizione della newsletter AI Europa Weekly (apulia.ai), per Google e per i motori di risposta AI.
+
+Ricevi gli sviluppi chiave della settimana, in ordine di importanza.
+
+Titolo ("headline"):
+- italiano, massimo 65 caratteri, senza punto finale
+- nomina la notizia principale con soggetti concreti (persone, aziende, istituzioni, cifre), in una frase che stia in piedi da sola; se c'è spazio, aggiungi la seconda separata da ";"
+- formula che un decisore aziendale cercherebbe: "Draghi chiede 100 miliardi per l'AI europea; AI Act vieta le app di nudificazione"
+- niente "AI Europa Weekly", niente date, niente clickbait, niente maiuscolo enfatico, niente emoji
+
+Description ("description"):
+- italiano, tra 110 e 150 caratteri, frasi complete
+- riassume 2-3 notizie con fatti verificabili presenti nel testo ricevuto
+- non inventare nulla che non sia negli sviluppi chiave
+
+Formato: {"headline": "...", "description": "..."}
+Restituisci SOLO l'oggetto JSON. Niente prosa. Niente markdown fence."""
+
+
+def write_seo_meta(
+    key_developments: list[str], recent_headlines: list[str] | None = None
+) -> dict[str, str] | None:
+    """Titolo e description SEO dagli sviluppi chiave. None se fallisce o se
+    il risultato non rispetta i limiti: chi chiama usa il titolo generico.
+
+    recent_headlines: titoli delle edizioni precedenti. Due pagine con lo
+    stesso titolo si fanno concorrenza su Google, quindi se la notizia
+    principale è già stata titolo si sceglie la successiva."""
+    texts = [t.strip() for t in key_developments if t and t.strip()][:6]
+    if not texts:
+        return None
+    client = _client()
+    user_msg = "Sviluppi chiave della settimana:\n\n" + "\n".join(f"- {t}" for t in texts)
+    if recent_headlines:
+        user_msg += (
+            "\n\nTitoli delle edizioni precedenti. Se la notizia principale è già "
+            "uno di questi, usa come titolo la notizia successiva:\n"
+            + "\n".join(f"- {h}" for h in recent_headlines)
+        )
+    print(f"  [seo] titolo e description da {len(texts)} sviluppi chiave")
+    try:
+        resp = client.messages.create(
+            model=SONNET,
+            max_tokens=400,
+            system=[
+                {
+                    "type": "text",
+                    "text": SEO_META_SYSTEM,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        data = _extract_json_object(resp.content[0].text)  # type: ignore
+    except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
+        print(f"    [warn] titolo SEO fallito: {e}")
+        return None
+
+    headline = _fit_headline(str(data.get("headline") or ""))
+    if not headline:
+        print(f"    [warn] titolo SEO scartato: {data.get('headline')!r}")
+        return None
+    description = _fit_description(str(data.get("description") or ""))
+    return {"headline": headline, "description": description}
+
+
+def _fit_headline(raw: str) -> str:
+    """Il modello conta male i caratteri: se il titolo è lungo si tiene la
+    sola notizia principale (prima del ";"). Vuoto se resta troppo lungo."""
+    headline = re.sub(r"\s+", " ", raw).strip().rstrip(".")
+    if len(headline) > SEO_HEADLINE_MAX and ";" in headline:
+        headline = headline.split(";", 1)[0].strip()
+    return headline if 0 < len(headline) <= SEO_HEADLINE_MAX else ""
+
+
+def _fit_description(raw: str) -> str:
+    """Taglia all'ultima frase completa entro il limite, altrimenti
+    all'ultima parola intera."""
+    description = re.sub(r"\s+", " ", raw).strip()
+    if len(description) <= SEO_DESCRIPTION_MAX:
+        return description
+    cut = description[:SEO_DESCRIPTION_MAX]
+    end = cut.rfind(". ")
+    if end >= 60:
+        return cut[: end + 1]
+    return cut[: SEO_DESCRIPTION_MAX - 1].rsplit(" ", 1)[0] + "…"

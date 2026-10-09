@@ -123,6 +123,16 @@ export default async function WeeklyArchivePage() {
             intelligenza artificiale in Europa. {issues.length}{' '}
             {issues.length === 1 ? 'edizione pubblicata' : 'edizioni pubblicate'}.
           </p>
+          <p className="mt-4 text-sm text-[#475569]">
+            Cerchi un argomento?{' '}
+            <Link
+              href="/temi"
+              className="font-semibold text-[#2563EB] hover:text-[#1d4ed8]"
+            >
+              Sfoglia le notizie per tema
+            </Link>
+            : AI Act, investimenti, AI in Italia, data center.
+          </p>
         </header>
 
         {lockedCount > 0 && (

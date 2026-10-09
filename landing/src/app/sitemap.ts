@@ -1,6 +1,12 @@
 import type { MetadataRoute } from 'next'
 import { getAllIssues } from '@/lib/newsletter-issues'
 import { stripSlugPrefix } from '@/lib/newsletter-html'
+import {
+  MIN_TOPIC_ITEMS,
+  TOPICS,
+  buildTopicEditions,
+  countItems,
+} from '@/lib/topics'
 
 // Revalidate the sitemap hourly so new editions appear within an hour of publish
 export const revalidate = 3600
@@ -61,5 +67,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  return [...staticEntries, ...editionEntries]
+  // Pagine tematiche: cambiano quando un'edizione aggiunge notizie al tema.
+  // Stessa soglia delle pagine stesse, per non elencare URL in 404.
+  const topicEntries: MetadataRoute.Sitemap = []
+  for (const topic of TOPICS) {
+    const editions = buildTopicEditions(topic, issues)
+    if (countItems(editions) < MIN_TOPIC_ITEMS) continue
+    topicEntries.push({
+      url: `https://apulia.ai/temi/${topic.slug}`,
+      lastModified: editions[0].date ? new Date(editions[0].date) : latestPublished,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })
+  }
+  if (topicEntries.length > 0) {
+    topicEntries.unshift({
+      url: 'https://apulia.ai/temi',
+      lastModified: latestPublished,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    })
+  }
+
+  return [...staticEntries, ...topicEntries, ...editionEntries]
 }

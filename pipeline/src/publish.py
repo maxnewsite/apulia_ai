@@ -62,6 +62,29 @@ def _get_next_issue_number(supabase: Client, issue_type: str) -> int:
     return int(rows[0]["issue_number"]) + 1
 
 
+def recent_titles(issue_type: str = "weekly", limit: int = 4) -> list[str]:
+    """Titoli delle ultime edizioni pubblicate, dalla più vecchia alla più
+    recente. Lista vuota se Supabase non è configurato o non risponde: serve
+    solo a evitare titoli duplicati, non deve bloccare la pipeline."""
+    try:
+        rows = (
+            _client()
+            .table("newsletter_issues")
+            .select("title")
+            .eq("type", issue_type)
+            .eq("status", "published")
+            .order("issue_number", desc=True)
+            .limit(limit)
+            .execute()
+            .data
+            or []
+        )
+    except Exception as e:  # noqa: BLE001 — qualsiasi errore: si prosegue senza
+        print(f"  [seo] titoli precedenti non disponibili: {e}")
+        return []
+    return [r["title"] for r in reversed(rows) if r.get("title")]
+
+
 def publish(nl: Newsletter, html_path: Path, pdf_path: Path) -> PublishedIssue:
     """Carica artefatti e fa upsert sulla riga newsletter_issues."""
     supabase = _client()
@@ -81,12 +104,15 @@ def publish(nl: Newsletter, html_path: Path, pdf_path: Path) -> PublishedIssue:
     # Slug: "weekly-2026-05-27"
     slug = f"{issue_type}-{nl.issue_date}"
 
-    # Titolo: "AI Europa Weekly — 20–27 maggio 2026"
-    title_it = f"{nl.title} — {nl.reporting_period}"
+    # Titolo: la notizia principale ("Draghi chiede 100 miliardi per l'AI
+    # europea; …"), che è ciò che la gente cerca. Il nome della newsletter e
+    # il periodo sono già nella pagina (Edizione #N · data). Senza titolo SEO
+    # si ripiega sul formato generico "AI Europa Weekly — 20–27 maggio 2026".
+    title_it = nl.seo_headline or f"{nl.title} — {nl.reporting_period}"
     title_en = f"AI Europa Weekly — {nl.reporting_period}"
 
-    # Dek (sottotitolo)
-    dek_it = nl.tagline
+    # Dek (sottotitolo): usato anche come meta description dal sito
+    dek_it = nl.seo_description or nl.tagline
     dek_en = "Strategic intelligence on AI in Europe and Italy"
 
     row = {

@@ -20,6 +20,7 @@ from .agents import (
     write_regulatory_section,
     write_english_summary,
     write_spotlight,
+    write_seo_meta,
 )
 from .dedupe import SeenStore
 from .sources import Article, fetch_relevant
@@ -86,6 +87,10 @@ class Newsletter:
     article_count: int = 0
     source_count: int = 0
     skipped_dedup: int = 0
+    # Titolo e description per Google/LLM, generati dagli sviluppi chiave.
+    # Vuoti = publish usa il titolo generico con il periodo.
+    seo_headline: str = ""
+    seo_description: str = ""
 
 
 def _format_short_date(iso: str) -> str:
@@ -340,6 +345,18 @@ def build_newsletter(
     en_bullets_raw = write_english_summary(top_articles_en, target_bullets=params["bullets_english_summary"])
     nl.english_summary = collect(_bullets_with_sources(en_bullets_raw, top_articles_en))
 
+    # 15. TITOLO E DESCRIPTION SEO
+    print("[pipeline] titolo e description SEO…")
+    from .publish import recent_titles  # import locale: publish dipende da pipeline
+
+    seo = write_seo_meta(
+        [b.text for b in nl.key_developments],
+        recent_headlines=recent_titles(cadence),
+    )
+    if seo:
+        nl.seo_headline = seo["headline"]
+        nl.seo_description = seo["description"]
+
     return nl, list(cited_all.values())
 
 
@@ -368,4 +385,6 @@ def load_newsletter_meta(json_path: Path) -> Newsletter:
         cadence=data.get("cadence", "weekly"),
         issue_date=data["issue_date"],
         reporting_period=data.get("reporting_period", ""),
+        seo_headline=data.get("seo_headline", ""),
+        seo_description=data.get("seo_description", ""),
     )

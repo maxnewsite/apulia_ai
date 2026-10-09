@@ -39,6 +39,11 @@ apulia.ai è una redazione italiana indipendente specializzata in AI europea, fo
 - Homepage e iscrizione: https://apulia.ai/
 - Archivio delle edizioni: https://apulia.ai/weekly
 - Feed RSS delle edizioni: https://apulia.ai/weekly/feed.xml
+- Notizie per tema: https://apulia.ai/temi
+  - AI Act e normativa: https://apulia.ai/temi/ai-act
+  - Investimenti e round AI in Europa e in Italia: https://apulia.ai/temi/investimenti-ai
+  - Intelligenza artificiale in Italia: https://apulia.ai/temi/ai-italia
+  - Data center e infrastrutture AI: https://apulia.ai/temi/data-center-ai
 - Il team: https://apulia.ai/chi-siamo
 - Massimiliano Masi, Founder: https://apulia.ai/chi-siamo/massimiliano-masi
 - Privacy Policy (GDPR): https://apulia.ai/privacy
