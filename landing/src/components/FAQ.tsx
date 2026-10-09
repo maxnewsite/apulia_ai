@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useLanguage } from '@/context/LanguageContext'
 
 function PlusIcon() {
@@ -94,7 +95,7 @@ export default function FAQ() {
                     id={`faq-question-${index}`}
                     className="w-full flex items-center justify-between px-6 py-5 text-left gap-4 group"
                   >
-                    <span className="text-base font-semibold text-[#0F172A] group-hover:text-white transition-colors">
+                    <span className="text-base font-semibold text-[#0F172A] group-hover:text-[#2563EB] transition-colors">
                       {item.q}
                     </span>
                     <span
@@ -116,12 +117,22 @@ export default function FAQ() {
                   hidden={!isOpen}
                   className={[
                     'overflow-hidden transition-all duration-300 ease-in-out',
-                    isOpen ? 'max-h-96' : 'max-h-0',
+                    isOpen ? 'max-h-[40rem]' : 'max-h-0',
                   ].join(' ')}
                 >
                   <p className="px-6 pb-5 text-[#475569] text-sm leading-relaxed">
                     {item.a}
                   </p>
+                  {item.link && (
+                    <p className="px-6 pb-5 -mt-2 text-sm">
+                      <Link
+                        href={item.link.href}
+                        className="font-semibold text-[#2563EB] hover:text-[#1d4ed8]"
+                      >
+                        {item.link.label} →
+                      </Link>
+                    </p>
+                  )}
                 </dd>
               </div>
             )

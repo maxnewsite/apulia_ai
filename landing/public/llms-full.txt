@@ -64,8 +64,13 @@ L'EU AI Act (Regolamento UE 2024/1689) è il primo quadro normativo globale sull
 **Scadenze principali**:
 - 2 febbraio 2025: Vietati i sistemi AI "inaccettabili" (social scoring, manipolazione subliminale, biometria in tempo reale in spazi pubblici)
 - 2 agosto 2025: Applicabili le norme sui modelli AI general-purpose (GPAI), inclusi i modelli con impatto sistemico
-- 2 agosto 2026: Obblighi completi per sistemi AI ad alto rischio (HR, credito, infrastrutture critiche, istruzione, sanità)
-- 2 agosto 2027: Sistemi AI ad alto rischio già sul mercato devono adeguarsi
+- 27 luglio 2026: in vigore il Digital Omnibus (Regolamento UE 2026/1744), che modifica l'AI Act e rinvia gli obblighi per i sistemi ad alto rischio
+- 2 dicembre 2027: obblighi per i sistemi AI ad alto rischio dell'Allegato III (selezione del personale, credito, biometria, istruzione, servizi essenziali)
+- 2 agosto 2028: obblighi per l'AI integrata in prodotti regolati dell'Allegato I (es. dispositivi medici, macchinari)
+
+**Legge italiana sull'AI**: legge 132/2025 (settembre 2025), prima legge organica sull'AI in uno Stato UE. Decreti attuativi approvati dal Consiglio dei ministri il 10 giugno 2026: vigilanza affidata ad ACN e AgID, reato per l'omissione delle misure di sicurezza nei sistemi ad alto rischio, presunzione del nesso causale per i danni da AI.
+
+Aggiornamenti continui: https://apulia.ai/temi/ai-act
 
 **Categorie di rischio**:
 - Rischio inaccettabile: vietati (es. scoring sociale, manipolazione cognitiva)
@@ -135,13 +140,13 @@ A professionisti che devono prendere decisioni sull'AI: manager di aziende che d
 Sì, è completamente gratuita e lo rimarrà. Nessuna carta di credito, nessun trial a pagamento. L'iscrizione richiede solo un indirizzo email. La newsletter esce ogni domenica pomeriggio (CET) e arriva nella inbox in tempo per il lunedì mattina — pensata strategicamente per chi vuole iniziare la settimana di business già informato.
 
 **Qual è la differenza tra Weekly e Briefing Mensile?**
-La Weekly (gratuita) fornisce 5 fatti chiave ogni settimana in formato veloce, pensata per chi ha 5 minuti. Il Briefing Mensile (premium) è un report di 8–12 pagine con analisi approfondite, dati comparativi e scenari strategici, pensato per chi deve prendere decisioni strategiche sull'AI.
+La Weekly (gratuita) seleziona ogni settimana gli sviluppi chiave sull'AI in Europa e in Italia, con le fonti originali. Il Briefing Mensile (premium) è un report di 8–12 pagine con analisi approfondite, dati comparativi e scenari strategici, pensato per chi deve prendere decisioni strategiche sull'AI.
 
 **Come viene prodotta la newsletter?**
 La newsletter utilizza un sistema editoriale assistito da AI: raccolta automatica da fonti primarie (RSS, Google News, comunicati istituzionali), classificazione e prioritizzazione con modelli AI, e redazione finale curata dal team editoriale. Le fonti includono Wired Italia, Il Sole 24 Ore Tecnologia, AgendaDigitale, Sifted, Tech.eu, POLITICO Tech, MIT Technology Review e oltre 20 feed specializzati.
 
 **Dove posso trovare le edizioni precedenti?**
-Le edizioni della AI Europa Weekly sono archiviate su apulia.ai. Il link all'archivio completo è disponibile nella home page e in ogni email.
+Tutte le edizioni sono elencate su https://apulia.ai/weekly. L'ultima è leggibile da chiunque; le precedenti sono riservate agli iscritti, che accedono con un link via email. Le notizie su AI Act, investimenti, AI in Italia e data center di tutte le edizioni sono consultabili da chiunque nelle pagine per tema: https://apulia.ai/temi.
 
 **Come funziona la privacy e il GDPR?**
 apulia.ai tratta i dati personali (email, preferenze lingua) esclusivamente per l'invio delle newsletter, su base consensuale ai sensi dell'art. 6 GDPR. Non vende dati a terzi, non usa cookie di profilazione. Privacy policy completa disponibile su https://apulia.ai/privacy.

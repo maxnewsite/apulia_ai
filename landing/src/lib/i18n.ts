@@ -197,47 +197,56 @@ export const translations = {
     // FAQ
     faq: {
       sectionTitle: 'Domande frequenti',
-      sectionSubtitle: "Tutto quello che devi sapere sull'AI europea e su apulia.ai.",
+      sectionSubtitle: "AI Act, investimenti, AI in Italia e come funziona apulia.ai.",
       items: [
         {
-          q: "Cos'è apulia.ai?",
-          a: "apulia.ai è la newsletter italiana specializzata in intelligenza artificiale europea: una pubblicazione indipendente che esce ogni domenica pomeriggio (AI Europa Weekly, gratuita) per arrivare nella tua inbox prima del lunedì mattina, e ogni primo lunedì del mese (Briefing Strategico Mensile, premium). Copre EU AI Act, startup AI italiane ed europee, investimenti VC e pubblici, ricerca accademica, infrastrutture compute e politiche industriali nei 9 principali paesi EU più il Regno Unito.",
+          q: "Cos'è apulia.ai e chi c'è dietro?",
+          a: "apulia.ai è una pubblicazione indipendente sull'intelligenza artificiale in Europa e in Italia, pensata per chi prende decisioni in azienda. Ogni settimana pubblica AI Europa Weekly: gli sviluppi che contano su normativa, investimenti, infrastrutture e mercato italiano, con le fonti originali. È fondata da Massimiliano Masi, ex Partner di Boston Consulting Group, che firma ogni edizione.",
+          link: { href: '/chi-siamo', label: 'Il team di apulia.ai' },
         },
         {
-          q: "Cos'è l'EU AI Act e cosa cambia per le aziende italiane?",
-          a: "L'EU AI Act (Regolamento UE 2024/1689) è il primo quadro normativo globale sull'intelligenza artificiale, entrato in vigore il 1° agosto 2024. Per le aziende italiane le scadenze chiave sono: febbraio 2025 (divieto sistemi AI inaccettabili — social scoring, manipolazione cognitiva), agosto 2025 (obblighi per modelli AI general-purpose, GPAI), agosto 2026 (conformità completa per sistemi ad alto rischio in HR, credito, sanità e infrastrutture critiche). Le sanzioni arrivano fino a €35 milioni o il 7% del fatturato globale.",
+          q: "Quali sono le scadenze dell'AI Act dopo il Digital Omnibus?",
+          a: "L'AI Act (Regolamento UE 2024/1689) è in vigore dal 1° agosto 2024. I divieti sulle pratiche inaccettabili si applicano dal 2 febbraio 2025 e le regole sui modelli di AI per uso generale dal 2 agosto 2025. Il Digital Omnibus (Regolamento UE 2026/1744, in vigore dal 27 luglio 2026) ha rinviato gli obblighi per i sistemi ad alto rischio: al 2 dicembre 2027 per quelli dell'Allegato III (es. selezione del personale, credito, biometria) e al 2 agosto 2028 per l'AI integrata in prodotti regolati dell'Allegato I, come i dispositivi medici.",
+          link: { href: '/temi/ai-act', label: "Tutte le novità sull'AI Act" },
         },
         {
-          q: 'La newsletter AI Europa Weekly è gratuita?',
-          a: "Sì, AI Europa Weekly è completamente gratuita e lo rimarrà. Esce ogni domenica pomeriggio (orario CET) e arriva nella tua inbox in tempo per il lunedì mattina, con 8 sviluppi chiave della settimana, radar normativo EU AI Act, focus sull'ecosistema AI italiano, briefing per paese (Francia, Germania, Spagna, UK e altri), aggiornamenti su funding e startup europee. Iscrizione con sola email, nessuna carta di credito.",
+          q: "Cosa prevede la legge italiana sull'intelligenza artificiale?",
+          a: "Con la legge 132/2025, approvata a settembre 2025, l'Italia è stata il primo Stato UE a dotarsi di una legge organica sull'AI. Il 10 giugno 2026 il Consiglio dei ministri ha approvato i due decreti attuativi: affidano la vigilanza ad ACN (Agenzia per la cybersicurezza nazionale) e AgID, introducono un reato per l'omissione delle misure di sicurezza nei sistemi ad alto rischio e una presunzione del nesso causale per i danni causati dall'AI. Completano l'AI Act senza sostituirlo.",
+          link: { href: '/temi/ai-italia', label: "Le notizie sull'AI in Italia" },
         },
         {
-          q: "Quando entra in vigore l'AI Act in Italia? Quali sono le scadenze?",
-          a: "L'EU AI Act si applica in Italia secondo questo calendario: 2 febbraio 2025 — vietati i sistemi AI a rischio inaccettabile (social scoring, biometria in tempo reale in spazi pubblici, manipolazione subliminale). 2 agosto 2025 — requisiti per modelli AI general-purpose (GPAI) e modelli con impatto sistemico (>10²⁵ FLOPs di addestramento). 2 agosto 2026 — obblighi completi per sistemi ad alto rischio: selezione del personale, scoring creditizio, sistemi biometrici, istruzione, sanità, infrastrutture critiche. 2 agosto 2027 — adeguamento dei sistemi già in commercio prima di agosto 2026.",
+          q: "Quali sanzioni prevede l'AI Act per le aziende?",
+          a: "Le sanzioni dell'AI Act arrivano fino a 35 milioni di euro o al 7% del fatturato mondiale annuo per l'uso di pratiche vietate, fino a 15 milioni o al 3% per la violazione degli altri obblighi, e fino a 7,5 milioni o all'1% per informazioni inesatte fornite alle autorità. Per le PMI e le startup si applica l'importo più basso tra la cifra fissa e la percentuale.",
+          link: { href: '/temi/ai-act', label: "Aggiornamenti su AI Act e normativa" },
         },
         {
-          q: 'Quali startup AI italiane sono più rilevanti nel 2025–2026?',
-          a: "Le startup AI italiane più rilevanti includono: Musixmatch (Milano, NLP per lyrics e metadata musicali, 100M+ utenti), Translated (Roma, piattaforma traduzione AI e dati per LLM), Datrix (Milano, AI predittiva e NLP enterprise), Spindox (AI consulting per PA e banche), TeaStore (AI per retail e supply chain). Sul fronte corporate, Leonardo, Fincantieri, Intesa Sanpaolo e Generali investono centinaia di milioni in AI. La Fondazione FAIR finanziata dal PNRR con €114M coordina la ricerca AI nazionale.",
+          q: "Dove trovo i round di finanziamento e gli investimenti nell'AI in Europa?",
+          a: "Ogni edizione di AI Europa Weekly ha una sezione Funding & Mercati con round, acquisizioni e grandi investimenti in Europa e in Italia. Li raccogliamo tutti, dal più recente, in una pagina dedicata, aggiornata ogni settimana con il link alla fonte di ogni notizia.",
+          link: { href: '/temi/investimenti-ai', label: 'Investimenti e round AI' },
         },
         {
-          q: "Quanto investe l'Europa in intelligenza artificiale?",
-          a: "Nel 2024 gli investimenti in AI in Europa hanno superato €22 miliardi (+67% crescita startup AI UE rispetto al 2023). Per paese: Francia >€6 miliardi (piano IA Macron), Germania >€5 miliardi (Zukunftsstrategie KI), UK >£2,5 miliardi (AI Opportunities Action Plan), Italia ~€3,5 miliardi (PNRR + privati). L'infrastruttura compute europea include i supercomputer EuroHPC: Leonardo a Bologna (4° al mondo per potenza), LUMI in Finlandia e Marenostrum 5 in Spagna.",
+          q: "Come posso seguire le notizie sull'AI per argomento?",
+          a: "Nella sezione Temi le notizie di tutte le edizioni sono raccolte per argomento: AI Act e normativa, investimenti e round, intelligenza artificiale in Italia, data center e infrastrutture. Ogni pagina si aggiorna da sola a ogni nuova edizione e riporta le fonti originali.",
+          link: { href: '/temi', label: 'Sfoglia le notizie per tema' },
         },
         {
-          q: "Cos'è il Briefing Strategico Mensile di apulia.ai?",
-          a: "Il Briefing Strategico Mensile è la pubblicazione premium di apulia.ai: un report di 8–12 pagine in PDF pubblicato ogni primo lunedì del mese. Include executive summary bilingue (italiano e inglese), analisi strategica mensile con fatto/contesto/implicazione, radar normativo approfondito, briefing per i 9 paesi EU principali più UK, analisi dei round di finanziamento e M&A, Company Watch (5 aziende da monitorare con motivazione strategica), matrice capacità AI per paese e settore, e outlook a 12 mesi.",
+          q: 'La newsletter AI Europa Weekly è gratuita? Quando esce?',
+          a: "Sì, AI Europa Weekly è gratuita. Esce ogni domenica pomeriggio (ora italiana), così la trovi nella tua inbox il lunedì mattina. Per iscriverti basta l'email, senza carta di credito, e puoi disiscriverti in qualsiasi momento con un clic dal link in fondo a ogni email.",
+          link: { href: '#subscribe', label: 'Iscriviti gratis' },
         },
         {
-          q: "Come mi iscrivo alla newsletter sull'AI europea?",
-          a: "L'iscrizione è gratuita e richiede meno di 30 secondi: inserisci la tua email nel form in fondo alla pagina, scegli se ricevere solo la AI Europa Weekly (gratuita, ogni domenica pomeriggio) o anche il Briefing Strategico Mensile (premium), accetta la privacy policy GDPR e clicca Iscriviti. Riceverai una email di conferma entro pochi minuti. Puoi disdire in qualsiasi momento con un click, senza preavviso.",
+          q: 'Posso leggere le edizioni passate?',
+          a: "Sì. Tutte le edizioni sono elencate nell'archivio. L'ultima è leggibile da chiunque; le precedenti sono riservate agli iscritti, che accedono con un link inviato via email, senza password. Le notizie su normativa, investimenti, Italia e infrastrutture sono consultabili da tutti anche nelle pagine per tema.",
+          link: { href: '/weekly', label: "Vai all'archivio" },
         },
         {
-          q: "Quali sono i principali modelli AI europei alternativi a ChatGPT?",
-          a: "I principali modelli AI fondazionali europei sono: Mistral AI (Francia) con Mistral 7B, Mixtral 8x7B e Mistral Large — open-weight, disponibili su Hugging Face; Aleph Alpha (Germania) con Luminous, focalizzato su sovranità digitale e uso nella PA europea; Silo AI (Finlandia, acquisita da AMD) con modelli multilingue europei; LightOn (Francia) per AI enterprise. La Commissione Europea finanzia lo sviluppo di modelli AI europei attraverso il programma AI Factories nell'ambito di EuroHPC.",
+          q: 'Come vengono selezionate e verificate le notizie?',
+          a: "Monitoriamo ogni settimana oltre 30 fonti primarie in cinque lingue, tra testate, istituzioni e pubblicazioni di settore. Strumenti di AI ci aiutano a raccogliere e classificare gli articoli; la selezione finale, la scrittura e la verifica sono fatte dalla redazione. Ogni notizia riporta il link alla fonte originale e nessun contenuto è pubblicato senza revisione umana.",
         },
         {
-          q: "Come viene prodotta la newsletter? È curata da redattori o generata da AI?",
-          a: "La newsletter usa un sistema editoriale ibrido: raccolta automatica da oltre 30 fonti primarie (Wired Italia, Il Sole 24 Ore Tecnologia, AgendaDigitale, Sifted, Tech.eu, POLITICO Tech, MIT Technology Review e altri), classificazione e prioritizzazione con modelli AI, redazione e verifica finale da parte del team editoriale umano. Ogni notizia cita le fonti originali. Non pubblichiamo contenuti generati interamente da AI senza revisione umana.",
+          q: "Cos'è il Briefing Strategico Mensile?",
+          a: "È il report premium di apulia.ai: 8–12 pagine in PDF, pubblicato il primo lunedì di ogni mese. Approfondisce i fatti del mese con contesto e implicazioni, il radar normativo, i briefing per paese, i round e le acquisizioni principali, le aziende da monitorare e uno scenario a 12 mesi.",
+          link: { href: '#products', label: 'Scopri le analisi' },
         },
       ],
     },
@@ -453,47 +462,56 @@ export const translations = {
     // FAQ
     faq: {
       sectionTitle: 'Frequently Asked Questions',
-      sectionSubtitle: 'Everything you need to know about European AI and apulia.ai.',
+      sectionSubtitle: 'The AI Act, investment, AI in Italy and how apulia.ai works.',
       items: [
         {
-          q: 'What is apulia.ai?',
-          a: 'apulia.ai is Italy\'s independent newsletter specialised in European artificial intelligence: published every Sunday afternoon (AI Europa Weekly, free) — landing in your inbox ready for Monday morning — and every first Monday of the month (Monthly Strategic Briefing, premium). It covers the EU AI Act, Italian and European AI startups, VC and public investment, academic research, compute infrastructure and industrial policy across 9 major EU countries plus the UK.',
+          q: 'What is apulia.ai and who is behind it?',
+          a: 'apulia.ai is an independent publication on artificial intelligence in Europe and Italy, written for business decision-makers. Every week it publishes AI Europa Weekly: the developments that matter on regulation, investment, infrastructure and the Italian market, with original sources. It was founded by Massimiliano Masi, a former Partner at Boston Consulting Group, who signs every edition.',
+          link: { href: '/chi-siamo', label: 'The apulia.ai team' },
         },
         {
-          q: 'What is the EU AI Act and what does it mean for companies?',
-          a: 'The EU AI Act (Regulation EU 2024/1689) is the world\'s first comprehensive AI regulatory framework, in force since 1 August 2024. Key deadlines: February 2025 (ban on unacceptable AI — social scoring, cognitive manipulation); August 2025 (requirements for general-purpose AI models, GPAI); August 2026 (full compliance for high-risk systems in HR, credit, healthcare and critical infrastructure). Penalties reach up to €35 million or 7% of global turnover.',
+          q: 'What are the AI Act deadlines after the Digital Omnibus?',
+          a: 'The AI Act (Regulation (EU) 2024/1689) entered into force on 1 August 2024. Bans on prohibited practices apply from 2 February 2025 and the rules for general-purpose AI models from 2 August 2025. The Digital Omnibus (Regulation (EU) 2026/1744, in force since 27 July 2026) postponed the obligations for high-risk systems: to 2 December 2027 for Annex III systems (e.g. recruitment, credit scoring, biometrics) and to 2 August 2028 for AI embedded in regulated Annex I products such as medical devices.',
+          link: { href: '/temi/ai-act', label: 'All AI Act updates (in Italian)' },
         },
         {
-          q: 'Is the AI Europa Weekly newsletter free?',
-          a: 'Yes, AI Europa Weekly is completely free and will remain so. Published every Sunday afternoon (CET) so it lands in your inbox in time for Monday morning, with 8 key weekly developments, EU AI Act regulatory radar, Italian AI ecosystem focus, per-country briefings (France, Germany, Spain, UK and others), and startup funding updates. Sign up with just your email — no credit card required.',
+          q: "What does Italy's national AI law require?",
+          a: 'With Law 132/2025, passed in September 2025, Italy became the first EU Member State to adopt a comprehensive AI law. On 10 June 2026 the Council of Ministers approved its two implementing decrees: they give supervisory powers to ACN (the National Cybersecurity Agency) and AgID, create a criminal offence for failing to apply safety measures to high-risk systems, and introduce a presumption of causality for damage caused by AI. They complement the AI Act rather than replace it.',
+          link: { href: '/temi/ai-italia', label: 'AI in Italy news (in Italian)' },
         },
         {
-          q: 'When does the AI Act come into force? What are the key deadlines?',
-          a: 'The EU AI Act timeline: 2 February 2025 — unacceptable-risk AI systems banned (social scoring, real-time biometrics in public spaces, subliminal manipulation). 2 August 2025 — general-purpose AI (GPAI) model requirements apply, including systemic-impact models (>10²⁵ FLOPs training compute). 2 August 2026 — full obligations for high-risk systems: HR selection, credit scoring, biometric systems, education, healthcare, critical infrastructure management. 2 August 2027 — high-risk systems already on market before August 2026 must comply.',
+          q: 'What penalties does the AI Act set for companies?',
+          a: "AI Act fines reach up to €35 million or 7% of worldwide annual turnover for prohibited practices, up to €15 million or 3% for breaches of other obligations, and up to €7.5 million or 1% for supplying incorrect information to authorities. For SMEs and start-ups, the lower of the fixed amount and the percentage applies.",
+          link: { href: '/temi/ai-act', label: 'AI Act and regulation updates (in Italian)' },
         },
         {
-          q: 'Which Italian AI startups are most relevant in 2025–2026?',
-          a: 'Leading Italian AI startups include: Musixmatch (Milan, NLP for music lyrics and metadata, 100M+ users), Translated (Rome, AI translation platform and LLM training data), Datrix (Milan, predictive AI and enterprise NLP), Spindox (AI consulting for public sector and banks), TeaStore (AI for retail and supply chain). On the corporate side, Leonardo, Fincantieri, Intesa Sanpaolo and Generali are each investing hundreds of millions in AI. The PNRR-funded Fondazione FAIR (€114M) coordinates national AI research.',
+          q: 'Where can I track AI funding rounds and investment in Europe?',
+          a: 'Every edition of AI Europa Weekly has a Funding & Markets section covering rounds, acquisitions and major investments in Europe and Italy. We collect them all, newest first, on a dedicated page updated every week, with a link to the source of each story.',
+          link: { href: '/temi/investimenti-ai', label: 'AI investment and rounds (in Italian)' },
         },
         {
-          q: 'How much does Europe invest in artificial intelligence?',
-          a: 'In 2024, AI investments in Europe exceeded €22 billion, with EU AI startup growth of +67% versus 2023. By country: France >€6 billion (Macron AI plan), Germany >€5 billion (Zukunftsstrategie KI), UK >£2.5 billion (AI Opportunities Action Plan), Italy ~€3.5 billion (PNRR + private). European compute infrastructure includes EuroHPC supercomputers: Leonardo in Bologna (4th globally by power), LUMI in Finland and Marenostrum 5 in Spain.',
+          q: 'How can I follow AI news by topic?',
+          a: 'The Topics section groups the news from every edition by subject: the AI Act and regulation, investment and funding rounds, artificial intelligence in Italy, data centres and infrastructure. Each page updates automatically with every new edition and lists the original sources.',
+          link: { href: '/temi', label: 'Browse news by topic (in Italian)' },
         },
         {
-          q: 'What is the Monthly Strategic Briefing from apulia.ai?',
-          a: 'The Monthly Strategic Briefing is the premium publication from apulia.ai: an 8–12 page PDF report published every first Monday of the month. It includes a bilingual executive summary (Italian and English), monthly strategic analysis with fact/context/implication structure, in-depth regulatory radar, per-country briefings for 9 EU countries plus UK, funding round and M&A analysis, Company Watch (5 companies to monitor with strategic rationale), updated AI capability matrix by country and sector, and a 12-month outlook.',
+          q: 'Is AI Europa Weekly free? When is it published?',
+          a: 'Yes, AI Europa Weekly is free. It is published every Sunday afternoon (Italian time), so it is in your inbox on Monday morning. You only need an email address to subscribe, no credit card, and you can unsubscribe at any time with one click from the link at the bottom of every email.',
+          link: { href: '#subscribe', label: 'Subscribe for free' },
         },
         {
-          q: 'How do I subscribe to the European AI newsletter?',
-          a: 'Subscribing is free and takes under 30 seconds: enter your email in the form at the bottom of the page, choose whether to receive just the free AI Europa Weekly (every Sunday afternoon) or also the premium Monthly Strategic Briefing, accept the GDPR privacy policy and click Subscribe. You will receive a confirmation email within a few minutes. You can unsubscribe at any time with one click — no notice period required.',
+          q: 'Can I read past editions?',
+          a: 'Yes. Every edition is listed in the archive. The latest one is open to everyone; earlier ones are reserved for subscribers, who sign in with a link sent by email, with no password. News on regulation, investment, Italy and infrastructure is also open to everyone on the topic pages.',
+          link: { href: '/weekly', label: 'Go to the archive' },
         },
         {
-          q: 'What are the main European AI models alternative to ChatGPT?',
-          a: 'The main European foundational AI models are: Mistral AI (France) with Mistral 7B, Mixtral 8x7B and Mistral Large — open-weight models available on Hugging Face; Aleph Alpha (Germany) with Luminous, focused on digital sovereignty and EU public sector use; Silo AI (Finland, acquired by AMD) with European multilingual models; LightOn (France) for enterprise AI. The European Commission funds European AI model development through the AI Factories programme under EuroHPC.',
+          q: 'How are stories selected and verified?',
+          a: 'Every week we monitor more than 30 primary sources in five languages, including news outlets, institutions and industry publications. AI tools help us collect and classify articles; final selection, writing and fact-checking are done by the editorial team. Every story links to its original source and nothing is published without human review.',
         },
         {
-          q: 'How is the newsletter produced — is it AI-generated or human-edited?',
-          a: 'The newsletter uses a hybrid editorial system: automated collection from 30+ primary sources (Wired Italia, Il Sole 24 Ore Tecnologia, AgendaDigitale, Sifted, Tech.eu, POLITICO Tech, MIT Technology Review and others), AI-assisted classification and prioritisation, and final writing and fact-checking by a human editorial team. Every story cites its original sources. We do not publish fully AI-generated content without human review.',
+          q: 'What is the Monthly Strategic Briefing?',
+          a: "It is apulia.ai's premium report: 8–12 pages in PDF, published on the first Monday of every month. It goes deeper into the month's developments with context and implications, the regulatory radar, country briefings, the main funding rounds and acquisitions, companies to watch and a 12-month outlook.",
+          link: { href: '#products', label: 'Discover the analysis' },
         },
       ],
     },
@@ -612,7 +630,11 @@ export type TranslationKeys = {
   faq: {
     sectionTitle: string
     sectionSubtitle: string
-    items: readonly { readonly q: string; readonly a: string }[]
+    items: readonly {
+      readonly q: string
+      readonly a: string
+      readonly link?: { readonly href: string; readonly label: string }
+    }[]
   }
   footer: {
     tagline: string
