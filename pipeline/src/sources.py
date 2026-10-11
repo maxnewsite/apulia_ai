@@ -72,8 +72,13 @@ def _parse_published(entry) -> datetime | None:
     return None
 
 
-def _fetch_feed(url: str, source_name: str) -> list[Article]:
-    """Fetch one RSS feed via httpx and parse into Articles."""
+def _fetch_feed(url: str, source_name: str, via_google_news: bool = False) -> list[Article]:
+    """Fetch one RSS feed via httpx and parse into Articles.
+
+    `via_google_news`: a curated source read through a site-restricted Google
+    News query. Titles carry the ' - Publisher' suffix, but the article keeps
+    the curated source name.
+    """
     try:
         resp = httpx.get(
             url,
@@ -103,6 +108,9 @@ def _fetch_feed(url: str, source_name: str) -> list[Article]:
 
         if source_name.startswith("Google News:"):
             cleaned_title, publisher = _extract_publisher(title, source_name)
+        elif via_google_news:
+            cleaned_title, _ = _extract_publisher(title, source_name)
+            publisher = source_name
         else:
             cleaned_title, publisher = title, source_name
 
@@ -135,7 +143,10 @@ def fetch_all(config_path: Path, lookback_days: int | None = None) -> list[Artic
 
     print(f"[fetch] curated RSS feeds ({len(cfg.get('rss_feeds', []))})")
     for feed in cfg.get("rss_feeds", []):
-        items = _fetch_feed(feed["url"], feed["name"])
+        if feed.get("google_news"):
+            items = _fetch_feed(_google_news_url(feed["google_news"]), feed["name"], via_google_news=True)
+        else:
+            items = _fetch_feed(feed["url"], feed["name"])
         print(f"  {feed['name']}: {len(items)} items")
         all_articles.extend(items)
 

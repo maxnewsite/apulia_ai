@@ -8,8 +8,10 @@ rss_feeds:
     url: https://www.wired.it/feed/rss
     weight: primary
 
+  # Il feed diretto è dietro Cloudflare (403 ai client automatici): si passa
+  # da Google News limitato al dominio, mantenendo il trattamento da fonte curata.
   - name: StartupItalia
-    url: https://startupitalia.eu/feed
+    google_news: 'site:startupitalia.eu "intelligenza artificiale" OR AI'
     weight: primary
 
   - name: AI4Business
@@ -17,7 +19,7 @@ rss_feeds:
     weight: primary
 
   - name: Il Sole 24 Ore Tecnologia
-    url: https://www.ilsole24ore.com/rss/tecnologie-e-scienze.xml
+    url: https://www.ilsole24ore.com/rss/tecnologia.xml
     weight: secondary
 
   - name: AgendaDigitale
