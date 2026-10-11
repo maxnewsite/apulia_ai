@@ -87,6 +87,18 @@ def _extract_json_object(text: str) -> dict:
     return json.loads(text[start : end + 1])
 
 
+def _response_text(resp) -> str:
+    """Testo della risposta, ignorando i blocchi non testuali.
+
+    I modelli con thinking attivo di default (es. Haiku 5.5) antepongono un
+    blocco `thinking` al testo: `resp.content[0].text` non è più affidabile.
+    """
+    text = "".join(b.text for b in resp.content if b.type == "text")
+    if not text:
+        raise ValueError(f"nessun blocco di testo nella risposta (stop_reason={resp.stop_reason})")
+    return text
+
+
 # --------------------------------------------------------------------------
 # Classificatore
 # --------------------------------------------------------------------------
@@ -150,7 +162,7 @@ def classify_articles(articles: list[Article], batch_size: int = 25) -> list[dic
         try:
             resp = client.messages.create(
                 model=HAIKU,
-                max_tokens=4096,
+                max_tokens=16000,
                 system=[
                     {
                         "type": "text",
@@ -160,7 +172,7 @@ def classify_articles(articles: list[Article], batch_size: int = 25) -> list[dic
                 ],
                 messages=[{"role": "user", "content": user_msg}],
             )
-            text = resp.content[0].text  # type: ignore
+            text = _response_text(resp)  # type: ignore
             results = _extract_json_array(text)
             kept = sum(1 for r in results if not r.get("skip", True))
             print(f"    [classify] batch {batch_num}: {kept}/{len(batch)} tenuti")
@@ -243,7 +255,7 @@ def write_section(section_name: str, articles: list[Article], target_bullets: in
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        text = resp.content[0].text  # type: ignore
+        text = _response_text(resp)  # type: ignore
         bullets = _extract_json_array(text)
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] write {section_name} fallito: {e}")
@@ -307,7 +319,7 @@ def write_regulatory_section(articles: list[Article], target_bullets: int = 5) -
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        text = resp.content[0].text  # type: ignore
+        text = _response_text(resp)  # type: ignore
         bullets = _extract_json_array(text)
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] write RADAR NORMATIVO fallito: {e}")
@@ -374,7 +386,7 @@ def write_english_summary(articles: list[Article], target_bullets: int = 5) -> l
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        text = resp.content[0].text  # type: ignore
+        text = _response_text(resp)  # type: ignore
         bullets = _extract_json_array(text)
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] write ENGLISH SUMMARY fallito: {e}")
@@ -437,7 +449,7 @@ def grade_matrix(cells: list[tuple[str, str, list[Article]]]) -> list[dict]:
     try:
         resp = client.messages.create(
             model=HAIKU,
-            max_tokens=3072,
+            max_tokens=16000,
             system=[
                 {
                     "type": "text",
@@ -447,7 +459,7 @@ def grade_matrix(cells: list[tuple[str, str, list[Article]]]) -> list[dict]:
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        text = resp.content[0].text  # type: ignore
+        text = _response_text(resp)  # type: ignore
         graded = _extract_json_array(text)
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] grade fallito: {e}")
@@ -507,7 +519,7 @@ def write_spotlight(articles: list[Article]) -> dict:
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        return _extract_json_object(resp.content[0].text)  # type: ignore
+        return _extract_json_object(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] spotlight fallito: {e}")
         return {"title_it": "Spotlight non disponibile", "title_en": "Spotlight unavailable", "bullets": []}
@@ -573,7 +585,7 @@ def write_seo_meta(
             ],
             messages=[{"role": "user", "content": user_msg}],
         )
-        data = _extract_json_object(resp.content[0].text)  # type: ignore
+        data = _extract_json_object(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] titolo SEO fallito: {e}")
         return None

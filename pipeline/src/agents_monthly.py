@@ -18,7 +18,7 @@ import anthropic
 from anthropic import Anthropic
 
 from .sources import Article
-from .agents import HAIKU, SONNET, _client, _extract_json_array, _extract_json_object
+from .agents import HAIKU, SONNET, _client, _extract_json_array, _extract_json_object, _response_text
 
 
 # --------------------------------------------------------------------------
@@ -62,7 +62,7 @@ def write_strategic_analysis(articles: list[Article], target_bullets: int = 8) -
             system=[{"type": "text", "text": MONTHLY_ANALYSIS_SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
-        bullets = _extract_json_array(resp.content[0].text)  # type: ignore
+        bullets = _extract_json_array(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] analisi strategica fallita: {e}")
         return []
@@ -110,7 +110,7 @@ def write_executive_summary(articles: list[Article]) -> dict:
             system=[{"type": "text", "text": EXECUTIVE_SUMMARY_SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
-        return _extract_json_object(resp.content[0].text)  # type: ignore
+        return _extract_json_object(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] sintesi esecutiva fallita: {e}")
         return {"paragraphs_it": [], "paragraphs_en": []}
@@ -154,7 +154,7 @@ def write_company_watch(articles: list[Article], target: int = 5) -> list[dict]:
             system=[{"type": "text", "text": COMPANY_WATCH_SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
-        companies = _extract_json_array(resp.content[0].text)  # type: ignore
+        companies = _extract_json_array(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] company watch fallito: {e}")
         return []
@@ -210,7 +210,7 @@ def write_outlook(articles: list[Article], target: int = 5) -> list[dict]:
             system=[{"type": "text", "text": OUTLOOK_SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
-        bullets = _extract_json_array(resp.content[0].text)  # type: ignore
+        bullets = _extract_json_array(_response_text(resp))  # type: ignore
     except (anthropic.APIError, ValueError, json.JSONDecodeError) as e:
         print(f"    [warn] outlook fallito: {e}")
         return []
