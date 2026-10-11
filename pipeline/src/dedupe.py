@@ -8,16 +8,78 @@ in two consecutive editions.
 Each entry: {fingerprint, url, title, first_seen}.
 A retention window (default 60 days) prunes very old entries so the file
 doesn't grow without bound.
+
+On Cloud Run the container filesystem is discarded after every execution,
+so the local file alone never survives between editions. When Supabase
+credentials are present the file is mirrored to the private storage bucket:
+`pull_remote()` before loading, `push_remote()` after saving.
 """
 
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .sources import Article
+
+
+REMOTE_BUCKET = "apulia-archive"
+REMOTE_DIR = "state"
+
+
+def _storage():
+    """Bucket Supabase, o None se le credenziali non sono configurate."""
+    url = (os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "").strip()
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    if not url or not key:
+        return None
+    from supabase import create_client
+    return create_client(url, key).storage.from_(REMOTE_BUCKET)
+
+
+def pull_remote(path: Path) -> bool:
+    """Scarica la copia remota del seen store su `path`. True se scaricata.
+
+    Senza credenziali, o se il file remoto non esiste ancora, resta valido
+    il file locale: la deduplica non deve mai bloccare la pipeline.
+    """
+    try:
+        bucket = _storage()
+        if bucket is None:
+            return False
+        remote = f"{REMOTE_DIR}/{path.name}"
+        if not any(f["name"] == path.name for f in bucket.list(REMOTE_DIR)):
+            print(f"[dedupe] nessuna copia remota ({REMOTE_BUCKET}/{remote}); uso il file locale")
+            return False
+        data = bucket.download(remote)
+    except Exception as e:  # noqa: BLE001 — qualsiasi errore: si prosegue col locale
+        print(f"[dedupe] WARN download copia remota fallito: {e}")
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    return True
+
+
+def push_remote(path: Path) -> bool:
+    """Carica `path` nello storage Supabase. True se caricato."""
+    try:
+        bucket = _storage()
+        if bucket is None:
+            return False
+        remote = f"{REMOTE_DIR}/{path.name}"
+        bucket.upload(
+            path=remote,
+            file=path.read_bytes(),
+            file_options={"content-type": "application/json", "upsert": "true"},
+        )
+    except Exception as e:  # noqa: BLE001 — l'edizione è già pubblicata: solo avviso
+        print(f"[dedupe] ERRORE upload copia remota fallito, la prossima edizione potrà ripetere notizie: {e}")
+        return False
+    print(f"[dedupe] copia remota aggiornata ({REMOTE_BUCKET}/{remote})")
+    return True
 
 
 @dataclass

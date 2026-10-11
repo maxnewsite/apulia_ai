@@ -29,7 +29,7 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
-from src.dedupe import SeenStore
+from src.dedupe import SeenStore, pull_remote, push_remote
 from src.pdf import render_pdf
 from src.pipeline import build_newsletter, load_newsletter_meta, save_newsletter
 from src.render import render_html
@@ -83,7 +83,10 @@ def main() -> int:
 
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
 
-    # 1. Dedup store
+    # 1. Dedup store — su Cloud Run il filesystem è effimero: la copia che fa
+    #    fede è quella nello storage Supabase, scaricata prima di caricare.
+    if not args.reset_seen:
+        pull_remote(SEEN_PATH)
     seen_store = SeenStore(SEEN_PATH)
     if args.reset_seen:
         print("[dedupe] reset seen store")
@@ -162,6 +165,7 @@ def main() -> int:
     if should_persist_seen:
         added = seen_store.add(cited)
         seen_store.save()
+        push_remote(SEEN_PATH)
         print(f"[dedupe] aggiunti {added} nuovi fingerprint (totale: {len(seen_store.fingerprints())})")
     elif cited:
         print("[dedupe] fingerprint NON persistiti (dry-run, no-publish o publish fallito)")
