@@ -34,3 +34,6 @@ pipeline/output/monthly-*.pdf
 
 # Report locali del monitoraggio SEO settimanale
 claudedocs/seo-monitor/
+
+# Stato della deduplica (la copia che fa fede è nello storage Supabase)
+pipeline/cache/*.json
